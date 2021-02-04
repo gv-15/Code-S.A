@@ -18,33 +18,33 @@ public class Contacto
 		Email = email;
 	}
 
-	public String getNombre()
+	public String GetNombre()
     {
 		return Nombre;
     }
 
-	public void setNombre(String nombre)
+	public void SetNombre(String nombre)
 	{
 		Nombre = nombre;
 	}
 
 
-	public int getTelefono()
+	public int GetTelefono()
 	{
 		return Telefono;
 	}
 
-	public void setTelefono(int telefono)
+	public void SetTelefono(int telefono)
 	{
 		Telefono = telefono;
 	}
 
-	public String getEmail()
+	public String GetEmail()
 	{
 		return Email;
 	}
 
-	public void setEmail(String email)
+	public void SetEmail(String email)
 	{
 		Email = email;
 	}
