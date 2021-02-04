@@ -3,6 +3,8 @@
 /// <summary>
 /// Summary description for Class1
 /// </summary>
+
+namespace Agenda { 
 public class Contacto
 {
 	public String Nombre;
@@ -46,4 +48,5 @@ public class Contacto
 	{
 		Email = email;
 	}
+}
 }
