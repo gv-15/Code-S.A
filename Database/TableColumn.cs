@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Database
 {
-    class TableColumn
+    public class TableColumn
     {
         private List<String> Columns;
         public TableColumn()
