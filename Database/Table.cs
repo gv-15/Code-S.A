@@ -17,5 +17,13 @@ namespace Database
         {
             columns.Add(column);
         }
+
+        public List<TableColumn> GetColumnsTable(List<TableColumn> tablecolumn)
+        {
+
+            return tablecolumn;
+        }
+
+
     }
 }
