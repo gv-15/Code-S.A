@@ -4,5 +4,6 @@ namespace Database
 {
     public class Table
     {
+
     }
 }
