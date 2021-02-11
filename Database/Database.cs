@@ -2,7 +2,7 @@
 
 namespace Database
 {
-    public class Table
+    public class Database
     {
     }
 }
