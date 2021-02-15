@@ -21,12 +21,12 @@ namespace Database
             columns.Add(column);
         }
 
-        public  List<int> SelectRows(List<TableColumn> list, String condition)
+        public  List<int> SelectRows(List<TableColumn> list, Condition condition)
         {
             return null;
         }
 
-        public void DeleteRows(List<TableColumn> list, String condition)
+        public void DeleteRows(List<TableColumn> list, Condition condition)
         {
            
         }
