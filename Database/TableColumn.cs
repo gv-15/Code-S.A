@@ -19,6 +19,9 @@ namespace Database
         { 
 
         }
-        
+        public List<String> Select(List<String> listColumns, String condition)
+        {
+            return null;
+        }
     }
 }
