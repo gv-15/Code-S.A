@@ -7,8 +7,14 @@ namespace UnitTests
     public class TestTableColumn
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestDeleteCondition()
         {
+
+        }
+
+        public void TestSelect()
+        {
+        
         }
     }
 }
