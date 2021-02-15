@@ -7,8 +7,10 @@ namespace Database
     public class TableColumn
     {
         private List<String> Columns;
-        public TableColumn()
+        private String Name;
+        public TableColumn(String name)
         {
+            Name = name;
             Columns = new List<string>();
         }
         public List<String> GetColumn()
@@ -17,6 +19,14 @@ namespace Database
         }
         public void DeleteFrom()
         { 
+
+        }
+        public void AddColumn()
+        {
+
+        }
+        public void DeleteCondition(List<String> List, String Condition)
+        {
 
         }
         
