@@ -4,11 +4,13 @@ using System.Text;
 
 namespace Database
 {
-    class TableColumn
+    public class TableColumn
     {
         private List<String> Columns;
-        public TableColumn()
+        private String Name;
+        public TableColumn(String name)
         {
+            Name = name;
             Columns = new List<string>();
         }
         public List<String> GetColumn()
@@ -19,6 +21,18 @@ namespace Database
         { 
 
         }
+        public void AddColumn()
+        {
+
+        }
+        public void DeleteCondition(List<String> List, Condition Condition)
+        {
+
+        }
         
+        public List<String> Select(List<String> listColumns, Condition condition)
+        {
+            return null;
+        }
     }
 }
