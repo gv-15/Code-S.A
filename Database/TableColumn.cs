@@ -25,12 +25,12 @@ namespace Database
         {
 
         }
-        public void DeleteCondition(List<String> List, String Condition)
+        public void DeleteCondition(List<String> List, Condition Condition)
         {
 
         }
         
-        public List<String> Select(List<String> listColumns, String condition)
+        public List<String> Select(List<String> listColumns, Condition condition)
         {
             return null;
         }
