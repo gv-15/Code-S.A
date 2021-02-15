@@ -6,16 +6,16 @@ namespace Database
 {
     public class TableColumn
     {
-        private List<String> Columns;
-        private String Name;
+        private List<String> m_columns;
+        private String m_name;
         public TableColumn(String name)
         {
-            Name = name;
-            Columns = new List<string>();
+            m_name = name;
+            m_columns = new List<string>();
         }
         public List<String> GetColumn()
         {
-            return Columns;
+            return m_columns;
         }
         public void DeleteFrom()
         { 
@@ -25,7 +25,7 @@ namespace Database
         {
 
         }
-        public void DeleteCondition(List<String> List, Condition Condition)
+        public void DeleteCondition(List<String> list, Condition condition)
         {
 
         }

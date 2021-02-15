@@ -6,16 +6,14 @@ namespace Database
 {
    public class Condition
     {
-
-        private Enum Operator;
-        private String Value;
-        private TableColumn ColumnName;
+        private Enum m_operation;
+        private String m_value;
+        private TableColumn m_columnName;
         public Condition(Enum operation, String value, TableColumn column)
         {
-            Operator = operation;
-            Value = value;
-            ColumnName = column;
-
+            m_operation = operation;
+            m_value = value;
+            m_columnName = column;
         }
     }
 }

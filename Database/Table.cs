@@ -5,20 +5,20 @@ namespace Database
 {
     public class Table
     {
-        private String Name;
-        private List<TableColumn> columns; 
+        private String m_name;
+        private List<TableColumn> m_columns; 
 
         public Table(String name)
         {
-            Name = name;
-            columns = new List<TableColumn>();
+            m_name = name;
+            m_columns = new List<TableColumn>();
 
 
         }
 
         public void AddColumn(TableColumn column)
         {
-            columns.Add(column);
+            m_columns.Add(column);
         }
 
         public  List<int> SelectRows(List<TableColumn> list, Condition condition)
