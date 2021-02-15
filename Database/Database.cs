@@ -18,17 +18,6 @@ namespace Database
         { 
         
         
-        }
-        public List<Table> SelectAll() 
-        {
-
-            return null;
-        }
-
-       public void Close()
-        {
-
-        }
-
+        } 
     }
 }
