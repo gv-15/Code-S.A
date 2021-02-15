@@ -5,9 +5,12 @@ namespace Database
 {
     public class Table
     {
+        private String Name;
         private List<TableColumn> columns; 
-        public Table()
+
+        public Table(String name)
         {
+            Name = name;
             columns = new List<TableColumn>();
 
 
@@ -18,12 +21,15 @@ namespace Database
             columns.Add(column);
         }
 
-        public List<TableColumn> GetColumnsTable(List<TableColumn> tablecolumn)
+        public  List<int> SelectRows(List<TableColumn> list, String condition)
         {
-
-            return tablecolumn;
+            return null;
         }
 
+        public void DeleteRows(List<TableColumn> list, String condition)
+        {
+           
+        }
 
     }
 }
