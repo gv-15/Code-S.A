@@ -7,8 +7,19 @@ namespace UnitTests
     public class TableUnitTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestAddColumn()
         {
         }
+
+        public void TestSelectRows()
+        {
+
+        }
+        public void TestDeleteRows()
+        {
+
+        }
+
+
     }
 }
