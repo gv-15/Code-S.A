@@ -18,14 +18,6 @@ namespace Database
         { 
         
         
-        }
-        public List<Table> SelectAll() 
-        {
-
-            return null;
-        }
-
-       
-
+        } 
     }
 }
