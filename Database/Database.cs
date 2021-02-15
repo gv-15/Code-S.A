@@ -25,7 +25,7 @@ namespace Database
             return null;
         }
 
-       public void close()
+       public void Close()
         {
 
         }
