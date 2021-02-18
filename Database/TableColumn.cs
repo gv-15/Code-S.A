@@ -13,18 +13,22 @@ namespace Database
             m_name = name;
             m_columns = new List<string>();
         }
+
         public List<String> GetColumn()
         {
             return m_columns;
         }
-        public void DeleteFrom()
-        { 
 
-        }
-        public void AddColumn()
+        public void DeleteFrom(String p)
         {
-
+            m_columns.Remove(p);
         }
+
+        public void AddString(String parameter)
+        {
+            m_columns.Add(parameter);
+        }
+
         public void DeleteCondition(List<String> list, Condition condition)
         {
 

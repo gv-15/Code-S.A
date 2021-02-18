@@ -6,6 +6,8 @@ namespace Database
 {
    public class Condition
     {
+        public enum Operations {max, min, equals };
+       
         private Enum m_operation;
         private String m_value;
         private TableColumn m_columnName;
