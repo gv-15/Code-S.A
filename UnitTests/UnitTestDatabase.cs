@@ -7,15 +7,16 @@ namespace UnitTests
     [TestClass]
     public class UnitTestDatabase
     {
-        private UnitTestDatabase m_db;
+        private DB m_db;
         private String m_nombre;
         [TestMethod]
-      
         public void TestAddTable()
         {
-            m_db = new UnitTestDatabase();
+            m_db = new DB();
             Table table = new Table(m_nombre);
-            
+            m_db.AddTable(table);
+            int size = m_db.GetDBTable().Count;
+            Assert.AreEqual(1,size);
         }
     }
 }
