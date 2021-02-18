@@ -13,8 +13,8 @@ namespace UnitTests
         public void TestDeleteFrom()
         {
             TableColumn names = new TableColumn("myColumn");
-            names.AddColumn("Ane");
-            names.AddColumn("Joseba");
+            names.AddString("Ane");
+            names.AddString("Joseba");
 
             names.DeleteFrom("Ane");
 
@@ -27,7 +27,7 @@ namespace UnitTests
         public void TestAddColumn()
         {
             TableColumn names = new TableColumn("myColumn");
-            names.AddColumn("Ane");
+            names.AddString("Ane");
 
             int num = names.GetColumn().Count;
 
