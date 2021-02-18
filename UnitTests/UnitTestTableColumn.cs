@@ -35,19 +35,26 @@ namespace UnitTests
            
             
             TableColumn list = new TableColumn("column");
-            list.AddColumn("name");
-            list.AddColumn("surname");
-            Condition condition = new Condition(Condition.Operations.equals,"column",list);
+            list.AddString("name");
+            list.AddString("surname");
+            Condition condition = new Condition(Condition.Operations.equals,"name",list);
             List<String> list1 = list.GetColumn();
             list.DeleteCondition(list1,condition);
 
-            
+            Assert.AreEqual(1,list.GetColumn().Count);
 
         }
         [TestMethod]
         public void TestSelect()
         {
-        
+            TableColumn list = new TableColumn("column");
+            list.AddString("name");
+            list.AddString("surname");
+            Condition condition = new Condition(Condition.Operations.equals, "name", list);
+            List<String> list1 = list.GetColumn();
+            list.Select(list1, condition);
+
+            Assert.AreEqual(1,list.GetColumn().Count);
         }
     }
 }

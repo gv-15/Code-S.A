@@ -21,7 +21,7 @@ namespace Database
         { 
 
         }
-        public void AddColumn()
+        public void AddString()
         {
 
         }
