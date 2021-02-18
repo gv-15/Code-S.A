@@ -39,8 +39,11 @@ namespace UnitTests
            
             
             TableColumn list = new TableColumn("column");
-            Condition condition = new Condition();
-            int resultado = TableColumn.DeleteCondition(list.GetColumn(),condition);
+            list.AddColumn("name");
+            list.AddColumn("surname");
+            Condition condition = new Condition(Condition.Operations.equals,"column",list);
+            List<String> list1 = list.GetColumn();
+            list.DeleteCondition(list1,condition);
 
             
 
