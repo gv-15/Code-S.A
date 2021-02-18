@@ -26,6 +26,7 @@ namespace UnitTests
         [TestMethod]
         public void TestSelectRows()
         {
+            tabla.AddColumn(t);
             Condition c = new Condition(Condition.Operations.equals, "prueba", t);
             List<int> n= tabla.SelectRows(tabla.GetColumns(), c);
             Assert.IsNotNull(n);
@@ -35,6 +36,7 @@ namespace UnitTests
         [TestMethod]
         public void TestDeleteRows()
         {
+            tabla.AddColumn(t);
             Condition c = new Condition(Condition.Operations.equals, "prueba", t);
 
             tabla.DeleteRows(tabla.GetColumns(), c);
