@@ -11,7 +11,7 @@ namespace Database
         public TableColumn(String name)
         {
             m_name = name;
-            m_columns = new List<string>();
+            m_columns = new List<String>();
         }
 
         public List<String> GetColumn()

@@ -21,6 +21,18 @@ namespace UnitTests
             int num = names.GetColumn().Count;
 
             Assert.AreEqual(1, num);
+
+            Boolean encontrado = false;
+
+            foreach (String element in names.GetColumn())
+            { 
+                if (element.Equals("Ane"))
+                {   
+                    encontrado = true;
+                }
+            }
+
+            Assert.Fail();
         }
 
         [TestMethod]
