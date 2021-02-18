@@ -30,6 +30,14 @@ namespace Database
         {
            
         }
+        public String GetName() 
+        {
+            return m_name;
+        }
 
+        public List<TableColumn> GetColumns()
+        {
+            return m_columns;
+        }
     }
 }

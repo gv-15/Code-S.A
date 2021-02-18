@@ -12,27 +12,27 @@ namespace UnitTests
         {
 
         }
-
+        [TestMethod]
         public void TestGetColumn()
         {
 
         }
-
+        [TestMethod]
         public void TestDeleteFrom()
         {
 
         }
-
+        [TestMethod]
         public void TestAddColumn()
         {
 
         }
-
+        [TestMethod]
         public void TestDeleteCondition()
         {
 
         }
-
+        [TestMethod]
         public void TestSelect()
         {
         
