@@ -58,7 +58,7 @@ namespace UnitTests
             List<String> list1 = list.GetColumn();
             list.Select(list1, condition);
 
-            Assert.AreEqual(1,list.GetColumn().Count);
+            Assert.AreEqual("name", list.Select(list1, condition));
         }
     }
 }
