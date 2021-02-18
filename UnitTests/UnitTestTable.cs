@@ -17,6 +17,7 @@ namespace UnitTests
         public void TestAddColumn()
         {
             TableColumn t2 = new TableColumn("prueba2");
+            tabla.AddColumn(t2);
             tabla.AddColumn(t);
             int n = tabla.GetColumns().Count;
             Assert.AreEqual(2, n);
