@@ -24,7 +24,7 @@ namespace Database
             m_columns.Remove(p);
         }
 
-        public void AddColumn(String parameter)
+        public void AddString(String parameter)
         {
             m_columns.Add(parameter);
         }
