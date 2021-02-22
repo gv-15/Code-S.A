@@ -33,11 +33,14 @@ namespace Database
         {
             foreach (String element in list)
             {
-                
-            
+                if (condition.GetOperation().Equals("equals"))
+                {
+                    if (element.Equals(condition.GetValue()))
+                    {
+                        list.Remove(element);
+                    }
+                }
             }
-            
-
         }
         
         public List<String> Select(List<String> listColumns, Condition condition)
