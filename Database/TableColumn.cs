@@ -31,13 +31,23 @@ namespace Database
 
         public void DeleteCondition(List<String> list, Condition condition)
         {
+            List<String> list2 = new List<String>();
+
             foreach (String element in list)
             {
-                
+                if (condition.GetOperation().Equals("equals"))
+                {
+                    if (element.Equals(condition.GetValue()))
+                    {
+                        list2.Add(element);
+                    }
+                }
+            }
+            foreach (String element in list2)
+            {
+                list.Remove(element);
             
             }
-            
-
         }
         
         public List<String> Select(List<String> listColumns, Condition condition)
