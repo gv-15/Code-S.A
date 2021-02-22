@@ -51,13 +51,13 @@ namespace UnitTests
         public void TestDeleteCondition()
         {
            
-            TableColumn list = new TableColumn("column");
-            list.AddString("name");
-            list.AddString("surname");
-            Condition condition = new Condition(Condition.Operations.equals,"name",list);
-            List<String> list1 = list.GetColumn();
-            list.DeleteCondition(list1,condition);
-            Assert.AreEqual(1,list.GetColumn().Count);
+            TableColumn column = new TableColumn("column");
+            column.AddString("name");
+            column.AddString("surname");
+            Condition condition = new Condition(Condition.Operations.equals,"name",column);
+            List<String> list1 = column.GetColumn();
+            column.DeleteCondition(list1,condition);
+            Assert.AreEqual(1,column.GetColumn().Count);
 
             Condition condition1 = new Condition(Condition.Operations.min, "2", list);
             TableColumn list2 = new TableColumn("column1");
@@ -77,8 +77,15 @@ namespace UnitTests
             Condition condition = new Condition(Condition.Operations.equals, "name", list);
             List<String> list1 = list.GetColumn();
             list.Select(list1, condition);
+            List<String> listaR = new List<String>();
+            listaR.Add("name");
+            
+            for(int i = 0; i>list1.Count; i++)            
+            {
+                Assert.AreEqual(listaR., list.Select(list1, condition));
+            }
 
-            Assert.AreEqual("name", list.Select(list1, condition));
+            Assert.AreEqual(null, list.Select(list1, condition));
         }
     }
 }

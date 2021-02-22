@@ -42,6 +42,25 @@ namespace Database
                         list2.Add(element);
                     }
                 }
+
+                else if (condition.GetOperation().Equals("min"))
+                {
+
+                    if (int.Parse(element) < int.Parse(condition.GetValue()))
+                    {
+                        list2.Add(element);
+                    }
+                }
+
+                else if (condition.GetOperation().Equals("max"))
+                {
+
+                    if (int.Parse(element) > int.Parse(condition.GetValue()))
+                    {
+                        list2.Add(element);
+                    }
+                }
+
             }
             foreach (String element in list2)
             {
@@ -54,7 +73,17 @@ namespace Database
         {
             List<String> list1 = new List<String>();
 
+            if(condition.GetOperation().Equals("equals"))
+            {
+                foreach(String element in listColumns)
+                {
+                    if (element.Equals(condition.GetValue()))
+                    {
+                        list1.Add(element);
+                    }
+                }
 
+            }
 
             return list1;
         }
