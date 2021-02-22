@@ -31,12 +31,22 @@ namespace Database
 
         public void DeleteCondition(List<String> list, Condition condition)
         {
+            foreach (String element in list)
+            {
+                
+            
+            }
+            
 
         }
         
         public List<String> Select(List<String> listColumns, Condition condition)
         {
-            return null;
+            List<String> list1 = new List<String>();
+
+
+
+            return list1;
         }
 
     }

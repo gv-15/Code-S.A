@@ -49,14 +49,12 @@ namespace UnitTests
         public void TestDeleteCondition()
         {
            
-            
             TableColumn list = new TableColumn("column");
             list.AddString("name");
             list.AddString("surname");
             Condition condition = new Condition(Condition.Operations.equals,"name",list);
             List<String> list1 = list.GetColumn();
             list.DeleteCondition(list1,condition);
-
             Assert.AreEqual(1,list.GetColumn().Count);
 
         }
