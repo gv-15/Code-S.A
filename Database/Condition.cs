@@ -18,9 +18,9 @@ namespace Database
             m_columnName = column;
         }
 
-        public Enum GetOperation()
+        public String GetOperation()
         {
-            return m_operation;
+            return m_operation.ToString();
         }
 
         public String GetValue()
