@@ -23,15 +23,30 @@ namespace Database
 
         public  List<String> SelectRows(List<TableColumn> list, Condition condition)
         {
+            List<String> list2 = new List<String>();
+            List<String> lista = new List<String>();
 
-            if (condition.GetOperation().Equals("equals"))
+            foreach (TableColumn element in list)
             {
+                list2 = element.GetColumn();
+                foreach (String element2 in list2)
+                {
+                    if (condition.GetOperation().Equals("equals"))
+                    {
+                        if (element.Equals(condition.GetValue()))
+                        {
+                            lista.Add(element2);
+                        }
+                    }
+                }
+                
+            }
+            foreach (String element in list2)
+            {
+                list.Add(element);
 
             }
-            
-            
-            
-            return null;
+            return list;
         }
 
         public void DeleteRows(List<TableColumn> list, Condition condition)
