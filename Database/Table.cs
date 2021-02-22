@@ -23,6 +23,14 @@ namespace Database
 
         public  List<String> SelectRows(List<TableColumn> list, Condition condition)
         {
+
+            if (condition.GetOperation().Equals("equals"))
+            {
+
+            }
+            
+            
+            
             return null;
         }
 
