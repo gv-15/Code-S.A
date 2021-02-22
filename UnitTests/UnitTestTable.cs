@@ -28,7 +28,7 @@ namespace UnitTests
         {
             tabla.AddColumn(t);
             Condition c = new Condition(Condition.Operations.equals, "prueba", t);
-            List<int> n= tabla.SelectRows(tabla.GetColumns(), c);
+            List<String> n= tabla.SelectRows(tabla.GetColumns(), c);
             Assert.IsNotNull(n);
             Assert.AreEqual(1, n.Count);
         }
