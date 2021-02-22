@@ -17,5 +17,20 @@ namespace Database
             m_value = value;
             m_columnName = column;
         }
+
+        public Enum GetOperation()
+        {
+            return m_operation;
+        }
+
+        public String GetValue()
+        {
+            return m_value;
+        }
+
+        public TableColumn GetColumnName()
+        {
+            return m_columnName;
+        }
     }
 }
