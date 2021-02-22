@@ -31,8 +31,10 @@ namespace UnitTests
                     encontrado = true;
                 }
             }
+            
+            if(encontrado)
 
-            Assert.Fail();
+                Assert.Fail();
         }
 
         [TestMethod]
