@@ -17,5 +17,20 @@ namespace Database
             m_value = value;
             m_columnName = column;
         }
+
+        public String GetOperation()
+        {
+            return m_operation.ToString();
+        }
+
+        public String GetValue()
+        {
+            return m_value;
+        }
+
+        public TableColumn GetColumnName()
+        {
+            return m_columnName;
+        }
     }
 }

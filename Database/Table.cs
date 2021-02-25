@@ -21,8 +21,16 @@ namespace Database
             m_columns.Add(column);
         }
 
-        public  List<int> SelectRows(List<TableColumn> list, Condition condition)
+        public  List<String> SelectRows(List<TableColumn> list, Condition condition)
         {
+
+            if (condition.GetOperation().Equals("equals"))
+            {
+
+            }
+            
+            
+            
             return null;
         }
 
@@ -30,6 +38,14 @@ namespace Database
         {
            
         }
+        public String GetName() 
+        {
+            return m_name;
+        }
 
+        public List<TableColumn> GetColumns()
+        {
+            return m_columns;
+        }
     }
 }
