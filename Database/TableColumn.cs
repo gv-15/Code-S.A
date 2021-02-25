@@ -14,7 +14,7 @@ namespace Database
             m_columns = new List<String>();
         }
 
-        public List<String> GetColumn()
+        public List<String> GetColumns()
         {
             return m_columns;
         }

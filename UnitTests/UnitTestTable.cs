@@ -33,8 +33,8 @@ namespace UnitTests
         [TestMethod]
         public void TestSelectRows()
         {
-            t.GetColumn().Add("Jon");
-            t2.GetColumn().Add("Andrea");
+            t.GetColumns().Add("Jon");
+            t2.GetColumns().Add("Andrea");
 
             tabla.AddColumn(t);
             tabla.AddColumn(t2);
@@ -43,7 +43,7 @@ namespace UnitTests
             List<String> i = tabla.SelectRows(c);
             foreach (String p in i) {
                 foreach (TableColumn t in tabla.GetColumns()) {
-                    foreach (String s in t.GetColumn())
+                    foreach (String s in t.GetColumns())
                     {
                         if (s.Equals(p))
                         {
