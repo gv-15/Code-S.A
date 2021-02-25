@@ -59,13 +59,24 @@ namespace UnitTests
             column.DeleteCondition(list1,condition);
             Assert.AreEqual(1,column.GetColumn().Count);
 
-            Condition condition1 = new Condition(Condition.Operations.min, "2", list);
+          
             TableColumn list2 = new TableColumn("column1");
             list2.AddString("0");
             list2.AddString("4");
+            Condition condition1 = new Condition(Condition.Operations.min, "2", list2);
             List<String> list3 = list2.GetColumn();
             list2.DeleteCondition(list3, condition);
             Assert.AreEqual(1, list2.GetColumn().Count);
+            
+
+            TableColumn list4 = new TableColumn("column2");
+            list4.AddString("0");
+            list4.AddString("4");
+            Condition conditio2 = new Condition(Condition.Operations.max, "2", list4);
+            List<String> list5 = list4.GetColumn();
+            list4.DeleteCondition(list5, condition);
+            Assert.AreEqual(1, list4.GetColumn().Count);
+
 
         }
         [TestMethod]
