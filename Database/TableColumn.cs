@@ -111,19 +111,51 @@ namespace Database
         public List<String> Select(List<String> listColumns, Condition condition)
         {
             List<String> list1 = new List<String>();
+            String element1= "abcdefghijklmnñopqrstuvwxyz";
+            String element2= "1234567890";
 
-            if(condition.GetOperation().Equals("equals"))
+            foreach (String element in listColumns)
             {
-                foreach(String element in listColumns)
+                if (condition.GetOperation().Equals("equals"))
                 {
+
                     if (element.Equals(condition.GetValue()))
                     {
                         list1.Add(element);
                     }
+
                 }
-
+                else if (condition.GetOperation().Equals("min"))
+                {
+                    if (condition.GetValue().Contains(element1) && !condition.GetValue().Contains(element2))
+                    {
+                        String a = compareStrings(element, condition.GetValue());
+                        list1.Add(a);
+                    }
+                    else
+                    {
+                        if (int.Parse(element) < int.Parse(condition.GetValue()))
+                        {
+                            list1.Add(element);
+                        }
+                    }
+                }
+                else if (condition.GetOperation().Equals("max"))
+                {
+                    if (condition.GetValue().Contains(element1) && !condition.GetValue().Contains(element2))
+                    {
+                        String a = compareStrings(element, condition.GetValue());
+                        list1.Add(a);
+                    }
+                    else
+                    {
+                        if (int.Parse(element) > int.Parse(condition.GetValue()))
+                        {
+                            list1.Add(element);
+                        }
+                    }
+                }
             }
-
             return list1;
         }
 
