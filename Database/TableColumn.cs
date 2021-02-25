@@ -32,8 +32,6 @@ namespace Database
         public void DeleteCondition(List<String> list, Condition condition)
         {
             List<String> list2 = new List<String>();
-            String cadena = "abcdefghijklmnñopqrstuvwxyz";
-            String cadena2 = "1234567890";
 
             foreach (String element in list)
             {
@@ -47,36 +45,21 @@ namespace Database
 
                 else if (condition.GetOperation().Equals("min"))
                 {
-                    if (condition.GetValue().Contains(cadena) && !condition.GetValue().Contains(cadena2))
+                    if (int.Parse(element) < int.Parse(condition.GetValue()))
                     {
-                        String s = compareStrings(element, condition.GetValue());
-                        list2.Add(s);
+                        list2.Add(element);
                     }
-                    else 
-                    {
-                        if (int.Parse(element) < int.Parse(condition.GetValue()))
-                        {
-                            list2.Add(element);
-                        }
-                    }
-                        
+
                 }
 
                 else if (condition.GetOperation().Equals("max"))
                 {
-                    if (condition.GetValue().Contains(cadena)&& !condition.GetValue().Contains(cadena2))
+
+                    if (int.Parse(element) > int.Parse(condition.GetValue()))
                     {
-                        String s = compareStrings(element, condition.GetValue());
-                        list2.Add(s);
+                        list2.Add(element);
                     }
-                    else
-                    {
-                        if (int.Parse(element) > int.Parse(condition.GetValue()))
-                        {
-                            list2.Add(element);
-                        }
-                    }
-                    
+
                 }
 
             }
