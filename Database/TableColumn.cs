@@ -32,8 +32,7 @@ namespace Database
         public void DeleteCondition(List<String> list, Condition condition)
         {
             List<String> list2 = new List<String>();
-            String cadena = "abcdefghijklmnñopqrstuvwxyz";
-            String cadena2 = "1234567890";
+           
 
             foreach (String element in list)
             {
@@ -47,38 +46,21 @@ namespace Database
 
                 else if (condition.GetOperation().Equals("min"))
                 {
-                    if (condition.GetValue().Contains(cadena) && !condition.GetValue().Contains(cadena2))
-                    {
-                        String s = compareStrings(element, condition.GetValue());
-                        list2.Add(s);
-                    }
-                    else 
-                    {
                         if (int.Parse(element) < int.Parse(condition.GetValue()))
                         {
                             list2.Add(element);
                         }
-                    }
-                        
                 }
-
+                        
+                
                 else if (condition.GetOperation().Equals("max"))
                 {
-                    if (condition.GetValue().Contains(cadena)&& !condition.GetValue().Contains(cadena2))
-                    {
-                        String s = compareStrings(element, condition.GetValue());
-                        list2.Add(s);
-                    }
-                    else
-                    {
+                    
                         if (int.Parse(element) > int.Parse(condition.GetValue()))
                         {
                             list2.Add(element);
                         }
-                    }
-                    
-                }
-
+                    } 
             }
             foreach (String element in list2)
             {
@@ -87,32 +69,11 @@ namespace Database
             }
         }
 
-        private String compareStrings(String s1, String s2)
-        {
-            int i = s1.CompareTo(s2);
-
-            if (i > 0)
-            {
-                return s2;
-            }
-            
-            else if (i < 0)
-            {
-                return s1;
-            }
-
-            else
-            {
-                return s1;
-            }
-            
-        }
+        
 
         public List<String> Select(List<String> listColumns, Condition condition)
         {
             List<String> list1 = new List<String>();
-            String element1= "abcdefghijklmnñopqrstuvwxyz";
-            String element2= "1234567890";
 
             foreach (String element in listColumns)
             {
@@ -127,33 +88,20 @@ namespace Database
                 }
                 else if (condition.GetOperation().Equals("min"))
                 {
-                    if (condition.GetValue().Contains(element1) && !condition.GetValue().Contains(element2))
-                    {
-                        String a = compareStrings(element, condition.GetValue());
-                        list1.Add(a);
-                    }
-                    else
-                    {
                         if (int.Parse(element) < int.Parse(condition.GetValue()))
                         {
                             list1.Add(element);
                         }
-                    }
+                    
                 }
                 else if (condition.GetOperation().Equals("max"))
                 {
-                    if (condition.GetValue().Contains(element1) && !condition.GetValue().Contains(element2))
-                    {
-                        String a = compareStrings(element, condition.GetValue());
-                        list1.Add(a);
-                    }
-                    else
-                    {
-                        if (int.Parse(element) > int.Parse(condition.GetValue()))
-                        {
-                            list1.Add(element);
-                        }
-                    }
+                    
+                   if (int.Parse(element) > int.Parse(condition.GetValue()))
+                   {
+                      list1.Add(element);
+                   }
+                    
                 }
             }
             return list1;
