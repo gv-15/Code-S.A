@@ -67,7 +67,11 @@ namespace UnitTests
             List<String> list3 = list2.GetColumn();
             list2.DeleteCondition(list3, condition);
             Assert.AreEqual(1, list2.GetColumn().Count);
-            
+            foreach (String element in list2.GetColumn())
+            {
+                Assert.AreEqual("0",element);
+            }
+                
 
             TableColumn list4 = new TableColumn("column2");
             list4.AddString("0");
@@ -76,6 +80,13 @@ namespace UnitTests
             List<String> list5 = list4.GetColumn();
             list4.DeleteCondition(list5, condition);
             Assert.AreEqual(1, list4.GetColumn().Count);
+            foreach (String element in list2.GetColumn())
+            {
+                Assert.AreEqual("4", element);
+            }
+
+
+
 
 
         }
