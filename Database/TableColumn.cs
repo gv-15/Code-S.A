@@ -36,7 +36,26 @@ namespace Database
         
         public List<String> Select(List<String> listColumns, Condition condition)
         {
-            return null;
+            List<String> list1 = new List<String>();
+
+            if (condition.GetOperation().Equals("equals"))
+            {
+                foreach (String element in listColumns)
+                {
+                    if (element.Equals(condition.GetValue()))
+                    {
+                        list1.Add(element);
+                    }
+                }
+
+            } 
+            
+            else if(condition.GetOperation().Equals("min"))
+            { 
+                
+            }
+
+            return list1;
         }
 
     }
