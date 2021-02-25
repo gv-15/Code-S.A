@@ -51,33 +51,70 @@ namespace UnitTests
         public void TestDeleteCondition()
         {
            
-            TableColumn list = new TableColumn("column");
-            list.AddString("name");
-            list.AddString("surname");
-            Condition condition = new Condition(Condition.Operations.equals,"name",list);
-            List<String> list1 = list.GetColumn();
-            list.DeleteCondition(list1,condition);
-            Assert.AreEqual(1,list.GetColumn().Count);
+            TableColumn column = new TableColumn("column");
+            column.AddString("name");
+            column.AddString("surname");
+            Condition condition = new Condition(Condition.Operations.equals,"name",column);
+            List<String> list1 = column.GetColumn();
+            column.DeleteCondition(list1,condition);
+            Assert.AreEqual(1,column.GetColumn().Count);
+            column.AddString("lastname");
+            Condition condition6 = new Condition(Condition.Operations.min, "name", column);
+            List<String> list7 = column.GetColumn();
+            column.DeleteCondition(list7, condition6);
+            foreach (String element in column.GetColumn())
+            {
+                Assert.AreEqual("lastname", element);
+            }
+
+            TableColumn list2 = new TableColumn("column1");
+            list2.AddString("0");
+            list2.AddString("4");
+            Condition condition1 = new Condition(Condition.Operations.min, "2", list2);
+            List<String> list3 = list2.GetColumn();
+            list2.DeleteCondition(list3, condition1);
+            Assert.AreEqual(1, list2.GetColumn().Count);
+            foreach (String element in list2.GetColumn())
+            {
+                Assert.AreEqual("0",element);
+            }
+                
+
+            TableColumn list4 = new TableColumn("column2");
+            list4.AddString("0");
+            list4.AddString("4");
+            Condition condition2 = new Condition(Condition.Operations.max, "2", list4);
+            List<String> list5 = list4.GetColumn();
+            list4.DeleteCondition(list5, condition2);
+            Assert.AreEqual(1, list4.GetColumn().Count);
+            foreach (String element in list4.GetColumn())
+            {
+                Assert.AreEqual("4", element);
+            }
+
+
+
+
 
         }
         [TestMethod]
         public void TestSelect()
         {
-            TableColumn list = new TableColumn("column");
-            list.AddString("name");
-            list.AddString("surname");
-            Condition condition = new Condition(Condition.Operations.equals, "name", list);
-            List<String> list1 = list.GetColumn();
-            list.Select(list1, condition);
-            List<String> listaR = new List<String>();
-            listaR.Add("name");
-            
-            for(int i = 0; i>list1.Count; i++)            
+            TableColumn column = new TableColumn("name");
+            column.AddString("adolfo");
+            column.AddString("eider");
+            Condition condition = new Condition(Condition.Operations.equals, "adolfo", column);
+
+            List<String> col = column.GetColumn();
+
+            List<String> l = column.Select(col, condition);
+
+            foreach (String element in l)
             {
-               // Assert.AreEqual(listaR., list.Select(list1, condition));
+                Assert.AreEqual(element, "adolfo");
             }
 
-            Assert.AreEqual(null, list.Select(list1, condition));
+            Assert.IsTrue(l.Count > 0);
         }
     }
 }
