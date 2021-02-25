@@ -38,6 +38,20 @@ namespace Database
                             lista.Add(element2);
                         }
                     }
+                    else if (condition.GetOperation().Equals("max"))
+                    {
+                        if (int.Parse(element2) > int.Parse(condition.GetValue()))
+                        {
+                            list2.Add(element2);
+                        }
+                    }
+                    else
+                    {
+                        if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                        {
+                            list2.Add(element2);
+                        }
+                    }
                 }
                 
             }

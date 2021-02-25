@@ -35,28 +35,45 @@ namespace UnitTests
         {
             t.GetColumn().Add("Jon");
             t2.GetColumn().Add("Andrea");
-
+            t.GetColumn().Add("33");
+            t2.GetColumn().Add("45");
             tabla.AddColumn(t);
             tabla.AddColumn(t2);
-            Condition c = new Condition(Condition.Operations.equals, "Jon", t);
+            Condition c = new Condition(Condition.Operations.max, "36", t);
 
-            List<String> i = tabla.SelectRows(c);
-            foreach (String p in i) {
-                foreach (TableColumn t in tabla.GetColumns()) {
-                    foreach (String s in t.GetColumn())
+            List<String> seleccion = tabla.SelectRows(c);
+            foreach (String individual in seleccion) {
+                foreach (TableColumn columna in tabla.GetColumns()) {
+                    foreach (String iteracion in columna.GetColumn())
                     {
-                        if (s.Equals(p))
+                        if (c.GetOperation().Equals("equals")) {
+                            if (iteracion.Equals(individual))
+                            {
+                                Assert.AreEqual(iteracion, individual);
+                            }
+                        }
+                        else if (c.GetOperation().Equals("max")) 
                         {
-                           Assert.AreEqual(s, p);
+                            if (int.Parse(individual) > int.Parse(iteracion))
+                            {
+                                Assert.IsTrue(int.Parse(individual) > int.Parse(iteracion));
+                            }
+                        }
+                        else 
+                        {
+                            if (int.Parse(individual) < int.Parse(iteracion))
+                            {
+                                Assert.IsTrue(int.Parse(individual) < int.Parse(iteracion));
+                            }
                         }
 
 
                     }
                 }
             }
-            if(i.Count == 0)
+            if(seleccion.Count == 0)
             {
-                Assert.IsTrue(i.Count == 0);
+                Assert.IsTrue(seleccion.Count == 0);
             }
         }
 
