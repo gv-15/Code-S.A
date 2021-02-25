@@ -57,8 +57,15 @@ namespace UnitTests
             Condition condition = new Condition(Condition.Operations.equals, "name", list);
             List<String> list1 = list.GetColumn();
             list.Select(list1, condition);
+            List<String> listaR = new List<String>();
+            listaR.Add("name");
+            
+            for(int i = 0; i>list1.Count; i++)            
+            {
+                Assert.AreEqual(listaR, list.Select(list1, condition));
+            }
 
-            Assert.AreEqual("name", list.Select(list1, condition));
+            Assert.AreEqual(null, list.Select(list1, condition));
         }
     }
 }
