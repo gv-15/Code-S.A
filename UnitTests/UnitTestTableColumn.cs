@@ -74,7 +74,7 @@ namespace UnitTests
             
             for(int i = 0; i>list1.Count; i++)            
             {
-                Assert.AreEqual(listaR., list.Select(list1, condition));
+               // Assert.AreEqual(listaR., list.Select(list1, condition));
             }
 
             Assert.AreEqual(null, list.Select(list1, condition));

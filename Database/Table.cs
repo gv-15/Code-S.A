@@ -21,12 +21,12 @@ namespace Database
             m_columns.Add(column);
         }
 
-        public  List<String> SelectRows(List<TableColumn> list, Condition condition)
+        public  List<String> SelectRows(Condition condition)
         {
             List<String> list2 = new List<String>();
             List<String> lista = new List<String>();
 
-            foreach (TableColumn element in list)
+            foreach (TableColumn element in m_columns)
             {
                 list2 = element.GetColumn();
                 foreach (String element2 in list2)
@@ -41,12 +41,8 @@ namespace Database
                 }
                 
             }
-            foreach (String element in list2)
-            {
-                list.Add(element);
-
-            }
-            return list;
+            
+            return lista;
         }
 
         public void DeleteRows(List<TableColumn> list, Condition condition)
