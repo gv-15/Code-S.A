@@ -100,21 +100,21 @@ namespace UnitTests
         [TestMethod]
         public void TestSelect()
         {
-            TableColumn list = new TableColumn("column");
-            list.AddString("name");
-            list.AddString("surname");
-            Condition condition = new Condition(Condition.Operations.equals, "name", list);
-            List<String> list1 = list.GetColumn();
-            list.Select(list1, condition);
-            List<String> listaR = new List<String>();
-            listaR.Add("name");
-            
-            for(int i = 0; i>list1.Count; i++)            
+            TableColumn column = new TableColumn("name");
+            column.AddString("adolfo");
+            column.AddString("eider");
+            Condition condition = new Condition(Condition.Operations.equals, "adolfo", column);
+
+            List<String> col = column.GetColumn();
+
+            List<String> l = column.Select(col, condition);
+
+            foreach (String element in l)
             {
-                Assert.AreEqual(listaR., list.Select(list1, condition));
+                Assert.AreEqual(element, "adolfo");
             }
 
-            Assert.AreEqual(null, list.Select(list1, condition));
+            Assert.IsTrue(l.Count > 0);
         }
     }
 }
