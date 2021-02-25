@@ -21,17 +21,28 @@ namespace Database
             m_columns.Add(column);
         }
 
-        public  List<String> SelectRows(List<TableColumn> list, Condition condition)
+        public  List<String> SelectRows(Condition condition)
         {
+            List<String> list2 = new List<String>();
+            List<String> lista = new List<String>();
 
-            if (condition.GetOperation().Equals("equals"))
+            foreach (TableColumn element in m_columns)
             {
-
+                list2 = element.GetColumn();
+                foreach (String element2 in list2)
+                {
+                    if (condition.GetOperation().Equals("equals"))
+                    {
+                        if (element2.Equals(condition.GetValue()))
+                        {
+                            lista.Add(element2);
+                        }
+                    }
+                }
+                
             }
             
-            
-            
-            return null;
+            return lista;
         }
 
         public void DeleteRows(List<TableColumn> list, Condition condition)

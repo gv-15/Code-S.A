@@ -9,14 +9,21 @@ namespace UnitTests
     public class UnitTestTable
     {
 
+
+        //Table CreateTestTable()
+        //{
+
+        //}
         Table tabla = new Table("tabla");
         TableColumn t = new TableColumn("prueba");
+        TableColumn t2 = new TableColumn("prueba2");
         
+
 
         [TestMethod]
         public void TestAddColumn()
         {
-            TableColumn t2 = new TableColumn("prueba2");
+            
             tabla.AddColumn(t2);
             tabla.AddColumn(t);
             int n = tabla.GetColumns().Count;
@@ -26,12 +33,33 @@ namespace UnitTests
         [TestMethod]
         public void TestSelectRows()
         {
+            t.GetColumn().Add("Jon");
+            t2.GetColumn().Add("Andrea");
+
             tabla.AddColumn(t);
-            Condition c = new Condition(Condition.Operations.equals, "prueba", t);
-            List<String> n= tabla.SelectRows(tabla.GetColumns(), c);
-            Assert.IsNotNull(n);
-            Assert.AreEqual(1, n.Count);
+            tabla.AddColumn(t2);
+            Condition c = new Condition(Condition.Operations.equals, "Jon", t);
+
+            List<String> i = tabla.SelectRows(c);
+            foreach (String p in i) {
+                foreach (TableColumn t in tabla.GetColumns()) {
+                    foreach (String s in t.GetColumn())
+                    {
+                        if (s.Equals(p))
+                        {
+                           Assert.AreEqual(s, p);
+                        }
+
+
+                    }
+                }
+            }
+            if(i.Count == 0)
+            {
+                Assert.IsTrue(i.Count == 0);
+            }
         }
+
 
         [TestMethod]
         public void TestDeleteRows()
