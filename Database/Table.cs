@@ -33,7 +33,7 @@ namespace Database
                 {
                     if (condition.GetOperation().Equals("equals"))
                     {
-                        if (element.Equals(condition.GetValue()))
+                        if (element2.Equals(condition.GetValue()))
                         {
                             lista.Add(element2);
                         }

@@ -33,12 +33,12 @@ namespace UnitTests
         [TestMethod]
         public void TestSelectRows()
         {
-            t.GetColumn().Add("pru");
-            t2.GetColumn().Add("eba");
+            t.GetColumn().Add("Jon");
+            t2.GetColumn().Add("Andrea");
 
             tabla.AddColumn(t);
             tabla.AddColumn(t2);
-            Condition c = new Condition(Condition.Operations.equals, "pru", t);
+            Condition c = new Condition(Condition.Operations.equals, "Jon", t);
 
             List<String> i = tabla.SelectRows(c);
             foreach (String p in i) {
@@ -53,7 +53,11 @@ namespace UnitTests
 
                     }
                 }
-            } 
+            }
+            if(i.Count == 0)
+            {
+                Assert.IsTrue(i.Count == 0);
+            }
         }
 
 
