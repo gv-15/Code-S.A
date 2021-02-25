@@ -58,15 +58,7 @@ namespace UnitTests
             List<String> list1 = column.GetColumn();
             column.DeleteCondition(list1,condition);
             Assert.AreEqual(1,column.GetColumn().Count);
-            column.AddString("lastname");
-            Condition condition6 = new Condition(Condition.Operations.min, "name", column);
-            List<String> list7 = column.GetColumn();
-            column.DeleteCondition(list7, condition6);
-            foreach (String element in column.GetColumn())
-            {
-                Assert.AreEqual("lastname", element);
-            }
-
+           
             TableColumn list2 = new TableColumn("column1");
             list2.AddString("0");
             list2.AddString("4");
@@ -74,10 +66,7 @@ namespace UnitTests
             List<String> list3 = list2.GetColumn();
             list2.DeleteCondition(list3, condition1);
             Assert.AreEqual(1, list2.GetColumn().Count);
-            foreach (String element in list2.GetColumn())
-            {
-                Assert.AreEqual("0",element);
-            }
+           
                 
 
             TableColumn list4 = new TableColumn("column2");
@@ -87,10 +76,7 @@ namespace UnitTests
             List<String> list5 = list4.GetColumn();
             list4.DeleteCondition(list5, condition2);
             Assert.AreEqual(1, list4.GetColumn().Count);
-            foreach (String element in list4.GetColumn())
-            {
-                Assert.AreEqual("4", element);
-            }
+       
 
 
 
