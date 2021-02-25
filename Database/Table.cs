@@ -28,7 +28,7 @@ namespace Database
 
             foreach (TableColumn element in m_columns)
             {
-                list2 = element.GetColumn();
+                list2 = element.GetColumns();
                 foreach (String element2 in list2)
                 {
                     if (condition.GetOperation().Equals("equals"))

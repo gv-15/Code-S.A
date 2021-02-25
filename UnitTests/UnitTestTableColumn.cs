@@ -18,13 +18,13 @@ namespace UnitTests
 
             names.DeleteFrom("Ane");
 
-            int num = names.GetColumn().Count;
+            int num = names.GetColumns().Count;
 
             Assert.AreEqual(1, num);
 
             Boolean encontrado = false;
 
-            foreach (String element in names.GetColumn())
+            foreach (String element in names.GetColumns())
             { 
                 if (element.Equals("Ane"))
                 {   
@@ -43,35 +43,51 @@ namespace UnitTests
             TableColumn names = new TableColumn("myColumn");
             names.AddString("Ane");
 
-            int num = names.GetColumn().Count;
+            int num = names.GetColumns().Count;
 
             Assert.AreEqual(1,num);
         }
         [TestMethod]
         public void TestDeleteCondition()
         {
-           
+
             TableColumn column = new TableColumn("name");
             column.AddString("Ane");
             column.AddString("Lara");
-            Condition condition = new Condition(Condition.Operations.equals,"Ane",column);
+            Condition condition = new Condition(Condition.Operations.equals, "Ane", column);
 
-            List<String> names = column.GetColumn();
-            column.DeleteCondition(names,condition);
+            List<String> names = column.GetColumns();
+            column.DeleteCondition(names, condition);
 
-            Assert.AreEqual(1,column.GetColumn().Count);
+            Assert.AreEqual(1, column.GetColumns().Count);
+
+            Boolean find = false;
+            foreach (String element in names)
+            {
+                if (element.Equals("Ane"))
+                {
+                    find = true;
+                }
+            }
+
+            if (find)
+                Assert.Fail();
 
             TableColumn column2 = new TableColumn("numbers");
-            column.AddString("7");
-            column.AddString("10");
-            Condition condition1 = new Condition(Condition.Operations.min, "8", column);
+            column2.AddString("7");
+            column2.AddString("10");
+            Condition condition1 = new Condition(Condition.Operations.min, "8", column2);
 
-            List<String> numbers = column.GetColumn();
-            column.DeleteCondition(numbers, condition);
+            List<String> numbers = column2.GetColumns();
+            column2.DeleteCondition(numbers, condition1);
+            foreach (String element in column2.GetColumns())
+            {
 
+                Assert.AreEqual("10", element);
+
+            }
+            Assert.AreEqual(1, column2.GetColumns().Count);
         }
-
-         
 
             
         [TestMethod]
@@ -82,7 +98,7 @@ namespace UnitTests
             column.AddString("eider");
             Condition condition = new Condition(Condition.Operations.equals, "adolfo", column);
 
-            List<String> col = column.GetColumn();
+            List<String> col = column.GetColumns();
 
             List<String> l = column.Select(col, condition);
 
@@ -92,6 +108,24 @@ namespace UnitTests
             }
 
             Assert.IsTrue(l.Count > 0);
+
+            TableColumn column2 = new TableColumn("numbers");
+            column2.AddString("6");
+            column2.AddString("9");
+            Condition condition2 = new Condition(Condition.Operations.min, "7", column2);
+
+            List<String> numbers = column2.GetColumns();
+            List <String> list = column2.Select(numbers, condition2);
+            foreach (String element in list)
+            {
+
+                Assert.AreEqual("6", element);
+
+            }
+          
         }
+
+
     }
 }
+
