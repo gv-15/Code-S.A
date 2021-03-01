@@ -117,48 +117,5 @@ namespace Database
             return list1;
         }
 
-        public List<String> SelectMatches(Condition condition)
-        {
-            List<String> lista = new List<String>();
-            List<String> list2 = new List<String>();
-            list2 = this.GetColumns();
-            foreach (String element2 in list2)
-            {
-                if (condition.GetOperation().Equals("equals"))
-                {
-                    if (element2.Equals(condition.GetValue()))
-                    {
-                        lista.Add(element2);
-                    }
-                }
-                else if (condition.GetOperation().Equals("max"))
-                {
-
-                    if (int.TryParse(element2, out int n))
-                    {
-                        if (int.Parse(element2) > int.Parse(condition.GetValue()))
-                        {
-                            list2.Add(element2);
-                        }
-                    }
-                }
-                else
-                {
-
-                    if (int.TryParse(element2, out int n))
-                    {
-                        if (int.Parse(element2) < int.Parse(condition.GetValue()))
-                        {
-                            list2.Add(element2);
-                        }
-
-                    }
-
-
-                }
-
-            }
-            return lista;
-        }
     }
 }
