@@ -33,10 +33,10 @@ namespace UnitTests
         [TestMethod]
         public void TestSelectRows()
         {
-            t.GetColumn().Add("Jon");
-            t2.GetColumn().Add("Andrea");
-            t.GetColumn().Add("33");
-            t2.GetColumn().Add("45");
+            t.GetColumns().Add("Jon");
+            t2.GetColumns().Add("Andrea");
+            t.GetColumns().Add("33");
+            t2.GetColumns().Add("45");
             tabla.AddColumn(t);
             tabla.AddColumn(t2);
             Condition c = new Condition(Condition.Operations.max, "36", t);
@@ -44,7 +44,7 @@ namespace UnitTests
             List<String> seleccion = tabla.SelectRows(c);
             foreach (String individual in seleccion) {
                 foreach (TableColumn columna in tabla.GetColumns()) {
-                    foreach (String iteracion in columna.GetColumn())
+                    foreach (String iteracion in columna.GetColumns())
                     {
                         if (c.GetOperation().Equals("equals")) {
                             if (iteracion.Equals(individual))
