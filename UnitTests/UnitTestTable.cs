@@ -31,66 +31,7 @@ namespace UnitTests
             Assert.AreEqual(2, n);
         }
 
-        [TestMethod]
-        public void TestSelectRows()
-        {
-            t.GetColumns().Add("Jon");
-            t2.GetColumns().Add("Andrea");
-            t.GetColumns().Add("33");
-            t2.GetColumns().Add("45");
-            tabla.AddColumn(t);
-            tabla.AddColumn(t2);
-            Condition c = new Condition(Condition.Operations.max, "36", t);
-
-            List<String> seleccion = tabla.SelectRows(c);
-            foreach (String individual in seleccion) 
-            {
-                foreach (TableColumn columna in tabla.GetColumns()) 
-                {
-                    foreach (String iteracion in columna.GetColumns())
-                    {
-                        if (c.GetOperation().Equals("equals")) 
-                        {
-                            if (iteracion.Equals(individual))
-                            {
-                                Assert.AreEqual(iteracion, individual);
-                            }
-                        }
-                        else if (c.GetOperation().Equals("max")) 
-                        {
-                            Regex regex = new Regex(@"^[0-9]+$");
-
-                            if (regex.IsMatch(iteracion))
-                            {
-                                if (int.Parse(individual) > int.Parse(iteracion))
-                                {
-                                    Assert.IsTrue(int.Parse(individual) > int.Parse(iteracion));
-                                }
-                            }
-                        }
-                        else 
-                        {
-                            Regex regex = new Regex(@"^[0-9]+$");
-
-                            if (regex.IsMatch(iteracion))
-                            {
-                                if (int.Parse(individual) < int.Parse(iteracion))
-                                {
-                                    Assert.IsTrue(int.Parse(individual) < int.Parse(iteracion));
-                                }
-                            }
-                        }
-
-
-                    }
-                }
-            }
-            if(seleccion.Count == 0)
-            {
-                Assert.IsTrue(seleccion.Count == 0);
-            }
-        }
-
+ 
 
         [TestMethod]
         public void TestDeleteRows()
