@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace UnitTests
 {
@@ -41,7 +42,7 @@ namespace UnitTests
             tabla.AddColumn(t2);
             Condition c = new Condition(Condition.Operations.max, "36", t);
 
-            List<String> seleccion = tabla.SelectRowsPositions(c);
+            List<String> seleccion = tabla.SelectRows(c);
             foreach (String individual in seleccion) {
                 foreach (TableColumn columna in tabla.GetColumns()) {
                     foreach (String iteracion in columna.GetColumns())
