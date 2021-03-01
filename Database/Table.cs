@@ -41,10 +41,8 @@ namespace Database
                     }
                     else if (condition.GetOperation().Equals("max"))
                     {
-                        // Regex regex = new Regex(@"^[0-9]+$");
                        
-
-                        if (int.TryParse(element2, out int n)) //regex.IsMatch(element2)
+                        if (int.TryParse(element2, out int n))
                         {
                             if (int.Parse(element2) > int.Parse(condition.GetValue()))
                             {
@@ -54,9 +52,8 @@ namespace Database
                     }
                     else
                     {
-                        Regex regex = new Regex(@"^[0-9]+$");
 
-                        if (regex.IsMatch(element2))
+                        if (int.TryParse(element2, out int n))
                         {
                             if (int.Parse(element2) < int.Parse(condition.GetValue()))
                             {
