@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Database
 {
@@ -40,22 +41,33 @@ namespace Database
                     }
                     else if (condition.GetOperation().Equals("max"))
                     {
-                        if (int.Parse(element2) > int.Parse(condition.GetValue()))
+                        Regex regex = new Regex(@"^[0-9]$");
+
+                        if (regex.IsMatch(element2))
                         {
-                            list2.Add(element2);
+                            if (int.Parse(element2) > int.Parse(condition.GetValue()))
+                            {
+                                list2.Add(element2);
+                            }
                         }
                     }
                     else
                     {
-                        if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                        Regex regex = new Regex(@"^[0-9]$");
+
+                        if (regex.IsMatch(element2))
                         {
-                            list2.Add(element2);
+                            if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                            {
+                                list2.Add(element2);
+                            }
+
                         }
                     }
-                }
                 
-            }
+                }  
             
+            }
             return lista;
         }
 
