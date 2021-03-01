@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace UnitTests
 {
@@ -54,16 +55,26 @@ namespace UnitTests
                         }
                         else if (c.GetOperation().Equals("max")) 
                         {
-                            if (int.Parse(individual) > int.Parse(iteracion))
+                            Regex regex = new Regex(@"^[0-9]$");
+
+                            if (regex.IsMatch(iteracion))
                             {
-                                Assert.IsTrue(int.Parse(individual) > int.Parse(iteracion));
+                                if (int.Parse(individual) > int.Parse(iteracion))
+                                {
+                                    Assert.IsTrue(int.Parse(individual) > int.Parse(iteracion));
+                                }
                             }
                         }
                         else 
                         {
-                            if (int.Parse(individual) < int.Parse(iteracion))
+                            Regex regex = new Regex(@"^[0-9]$");
+
+                            if (regex.IsMatch(iteracion))
                             {
-                                Assert.IsTrue(int.Parse(individual) < int.Parse(iteracion));
+                                if (int.Parse(individual) < int.Parse(iteracion))
+                                {
+                                    Assert.IsTrue(int.Parse(individual) < int.Parse(iteracion));
+                                }
                             }
                         }
 
