@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Database
 {
@@ -32,7 +33,7 @@ namespace Database
         public void DeleteCondition(List<String> list, Condition condition)
         {
             List<String> list2 = new List<String>();
-           
+
 
             foreach (String element in list)
             {
@@ -46,30 +47,30 @@ namespace Database
 
                 else if (condition.GetOperation().Equals("min"))
                 {
-                        if (int.Parse(element) < int.Parse(condition.GetValue()))
-                        {
-                            list2.Add(element);
-                        }
+                    if (int.Parse(element) < int.Parse(condition.GetValue()))
+                    {
+                        list2.Add(element);
+                    }
                 }
-                        
-                
+
+
                 else if (condition.GetOperation().Equals("max"))
                 {
-                    
-                        if (int.Parse(element) > int.Parse(condition.GetValue()))
-                        {
-                            list2.Add(element);
-                        }
-                    } 
+
+                    if (int.Parse(element) > int.Parse(condition.GetValue()))
+                    {
+                        list2.Add(element);
+                    }
+                }
             }
             foreach (String element in list2)
             {
                 list.Remove(element);
-            
+
             }
         }
 
-        
+
 
         public List<String> Select(List<String> listColumns, Condition condition)
         {
@@ -88,24 +89,69 @@ namespace Database
                 }
                 else if (condition.GetOperation().Equals("min"))
                 {
-                        if (int.Parse(element) < int.Parse(condition.GetValue()))
-                        {
-                            list1.Add(element);
-                        }
-                    
+                    if (int.Parse(element) < int.Parse(condition.GetValue()))
+                    {
+                        list1.Add(element);
+                    }
+
                 }
                 else if (condition.GetOperation().Equals("max"))
                 {
-                    
-                   if (int.Parse(element) > int.Parse(condition.GetValue()))
-                   {
-                      list1.Add(element);
-                   }
-                    
+
+                    if (int.Parse(element) > int.Parse(condition.GetValue()))
+                    {
+                        list1.Add(element);
+                    }
+
                 }
             }
             return list1;
         }
 
+        public List<String> SelectMatches(TableColumn tc, Condition condition)
+        {
+            List<String> lista = new List<String>();
+            List<String> list2 = new List<String>();
+            list2 = tc.GetColumns();
+            foreach (String element2 in list2)
+            {
+                if (condition.GetOperation().Equals("equals"))
+                {
+                    if (element2.Equals(condition.GetValue()))
+                    {
+                        lista.Add(element2);
+                    }
+                }
+                else if (condition.GetOperation().Equals("max"))
+                {
+                    Regex regex = new Regex(@"^[0-9]$");
+
+                    if (regex.IsMatch(element2))
+                    {
+                        if (int.Parse(element2) > int.Parse(condition.GetValue()))
+                        {
+                            list2.Add(element2);
+                        }
+                    }
+                }
+                else
+                {
+                    Regex regex = new Regex(@"^[0-9]$");
+
+                    if (regex.IsMatch(element2))
+                    {
+                        if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                        {
+                            list2.Add(element2);
+                        }
+
+                    }
+
+
+                }
+
+            }
+            return lista;
+        }
     }
 }
