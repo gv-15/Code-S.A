@@ -47,19 +47,24 @@ namespace Database
 
                 else if (condition.GetOperation().Equals("min"))
                 {
-                    if (int.Parse(element) < int.Parse(condition.GetValue()))
+                    if (int.TryParse(element, out int n))
                     {
-                        list2.Add(element);
+                        if (int.Parse(element) < int.Parse(condition.GetValue()))
+                        {
+                            list2.Add(element);
+                        }
                     }
                 }
 
 
                 else if (condition.GetOperation().Equals("max"))
                 {
-
-                    if (int.Parse(element) > int.Parse(condition.GetValue()))
+                    if (int.TryParse(element, out int n))
                     {
-                        list2.Add(element);
+                        if (int.Parse(element) > int.Parse(condition.GetValue()))
+                        {
+                            list2.Add(element);
+                        }
                     }
                 }
             }
@@ -89,22 +94,26 @@ namespace Database
                 }
                 else if (condition.GetOperation().Equals("min"))
                 {
-                    if (int.Parse(element) < int.Parse(condition.GetValue()))
+                    if (int.TryParse(element, out int n))
                     {
-                        list1.Add(element);
+                        if (int.Parse(element) < int.Parse(condition.GetValue()))
+                        {
+                            list1.Add(element);
+                        }
                     }
-
                 }
                 else if (condition.GetOperation().Equals("max"))
                 {
 
-                    if (int.Parse(element) > int.Parse(condition.GetValue()))
-                    {
-                        list1.Add(element);
+                    if (int.TryParse(element, out int n)) 
+                    { 
+                        if (int.Parse(element) > int.Parse(condition.GetValue()))
+                        {
+                            list1.Add(element);
+                        }
                     }
-
                 }
-            }
+                }
             return list1;
         }
 
@@ -124,9 +133,8 @@ namespace Database
                 }
                 else if (condition.GetOperation().Equals("max"))
                 {
-                    Regex regex = new Regex(@"^[0-9]$");
 
-                    if (regex.IsMatch(element2))
+                    if (int.TryParse(element2, out int n))
                     {
                         if (int.Parse(element2) > int.Parse(condition.GetValue()))
                         {
@@ -136,9 +144,8 @@ namespace Database
                 }
                 else
                 {
-                    Regex regex = new Regex(@"^[0-9]$");
 
-                    if (regex.IsMatch(element2))
+                    if (int.TryParse(element2, out int n))
                     {
                         if (int.Parse(element2) < int.Parse(condition.GetValue()))
                         {
