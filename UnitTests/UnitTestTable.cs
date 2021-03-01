@@ -41,7 +41,7 @@ namespace UnitTests
             tabla.AddColumn(t2);
             Condition c = new Condition(Condition.Operations.max, "36", t);
 
-            List<String> seleccion = tabla.SelectRows(c);
+            List<String> seleccion = tabla.SelectRowsPositions(c);
             foreach (String individual in seleccion) {
                 foreach (TableColumn columna in tabla.GetColumns()) {
                     foreach (String iteracion in columna.GetColumns())

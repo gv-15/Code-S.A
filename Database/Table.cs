@@ -21,42 +21,53 @@ namespace Database
             m_columns.Add(column);
         }
 
-        public  List<String> SelectRows(Condition condition)
+        public  List<int> SelectRowsPositions(Condition condition)
         {
-            List<String> list2 = new List<String>();
-            List<String> lista = new List<String>();
+          
+            List<String> columnslist = new List<String>();
+            List<int> position = new List<int>();
 
             foreach (TableColumn element in m_columns)
             {
-                list2 = element.GetColumns();
-                foreach (String element2 in list2)
+                int counter = 0;
+
+                columnslist = element.GetColumns();
+
+                foreach (String element2 in columnslist)
                 {
                     if (condition.GetOperation().Equals("equals"))
                     {
                         if (element2.Equals(condition.GetValue()))
                         {
-                            lista.Add(element2);
+                            position.Add(counter);
                         }
                     }
                     else if (condition.GetOperation().Equals("max"))
                     {
                         if (int.Parse(element2) > int.Parse(condition.GetValue()))
                         {
-                            list2.Add(element2);
+                            position.Add(counter);
                         }
                     }
                     else
                     {
                         if (int.Parse(element2) < int.Parse(condition.GetValue()))
                         {
-                            list2.Add(element2);
+                            position.Add(counter);
                         }
                     }
+                    counter++;
                 }
+
                 
             }
             
-            return lista;
+            return position;
+        }
+
+        public void SelectRows (List<int> positions)
+        {
+
         }
 
         public void DeleteRows(List<TableColumn> list, Condition condition)
