@@ -6,11 +6,11 @@ namespace Database
 {
     public class DB
     {
-
+        private String Name;
         private List<Table> m_db;
-        public DB()
+        public DB(String name)
         {
-
+           Name = name;
            m_db = new List<Table>();
 
         }
