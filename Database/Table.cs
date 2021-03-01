@@ -7,7 +7,8 @@ namespace Database
     public class Table
     {
         private String m_name;
-        private List<TableColumn> m_columns; 
+        private List<TableColumn> m_columns;
+        private List<TableColumn> m_columnsPass;
 
         public Table(String name)
         {
@@ -22,7 +23,7 @@ namespace Database
             m_columns.Add(column);
         }
 
-        public  List<int> SelectRowsPositions(Condition condition)
+        public List<int> SelectRowsPositions(Condition condition)
         {
           
             List<String> columnslist = new List<String>();
@@ -66,10 +67,6 @@ namespace Database
             return position;
         }
 
-        public void SelectRows (List<int> positions)
-        {
-
-        }
 
         public void DeleteRows(List<TableColumn> list, Condition condition)
         {
