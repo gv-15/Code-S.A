@@ -43,11 +43,14 @@ namespace UnitTests
             Condition c = new Condition(Condition.Operations.max, "36", t);
 
             List<String> seleccion = tabla.SelectRows(c);
-            foreach (String individual in seleccion) {
-                foreach (TableColumn columna in tabla.GetColumns()) {
+            foreach (String individual in seleccion) 
+            {
+                foreach (TableColumn columna in tabla.GetColumns()) 
+                {
                     foreach (String iteracion in columna.GetColumns())
                     {
-                        if (c.GetOperation().Equals("equals")) {
+                        if (c.GetOperation().Equals("equals")) 
+                        {
                             if (iteracion.Equals(individual))
                             {
                                 Assert.AreEqual(iteracion, individual);
@@ -55,7 +58,7 @@ namespace UnitTests
                         }
                         else if (c.GetOperation().Equals("max")) 
                         {
-                            Regex regex = new Regex(@"^[0-9]$");
+                            Regex regex = new Regex(@"^[0-9]+$");
 
                             if (regex.IsMatch(iteracion))
                             {
@@ -67,7 +70,7 @@ namespace UnitTests
                         }
                         else 
                         {
-                            Regex regex = new Regex(@"^[0-9]$");
+                            Regex regex = new Regex(@"^[0-9]+$");
 
                             if (regex.IsMatch(iteracion))
                             {
