@@ -108,11 +108,11 @@ namespace Database
             return list1;
         }
 
-        public List<String> SelectMatches(TableColumn tc, Condition condition)
+        public List<String> SelectMatches(Condition condition)
         {
             List<String> lista = new List<String>();
             List<String> list2 = new List<String>();
-            list2 = tc.GetColumns();
+            list2 = this.GetColumns();
             foreach (String element2 in list2)
             {
                 if (condition.GetOperation().Equals("equals"))
