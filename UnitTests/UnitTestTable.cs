@@ -10,11 +10,6 @@ namespace UnitTests
     public class UnitTestTable
     {
 
-
-        //Table CreateTestTable()
-        //{
-
-        //}
         Table tabla = new Table("tabla");
         TableColumn t = new TableColumn("prueba");
         TableColumn t2 = new TableColumn("prueba2");
