@@ -37,7 +37,7 @@ namespace UnitTests
 
             tabla.DeleteRows(tabla.GetColumns(), c);
             int n = tabla.GetColumns().Count;
-            Assert.AreEqual(1, n);
+            Assert.AreEqual(1, n); //Esto esta mal, tendria que dar 0 pero el metodo no esta hecho
         }
 
         [TestMethod]

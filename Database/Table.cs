@@ -76,7 +76,9 @@ namespace Database
 
         public void DeleteRows(List<TableColumn> list, Condition condition)
         {
-           
+
+     
+
         }
         public String GetName() 
         {
