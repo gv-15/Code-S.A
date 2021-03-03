@@ -12,7 +12,7 @@ namespace Database
             myDatabase.Save("fichero.txt");
 
             DB myDatabase2 = new DB("myDatabase2");
-            myDatabase2.Save("fichero.txt");
+            myDatabase.Load("fichero.txt");
         }
     }
 }
