@@ -8,7 +8,6 @@ namespace Database
     {
         private String m_name;
         private List<TableColumn> m_columns;
-        private List<TableColumn> m_columnsPass;
 
         public Table(String name)
         {
