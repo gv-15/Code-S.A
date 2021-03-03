@@ -26,18 +26,18 @@ namespace Database
         
         }
 
-        public void Load(string filename)
+        public void Load(String filename)
         {
-            string text = File.ReadAllText(filename);
+            String text = File.ReadAllText(filename);
 
-            string[] values= text.Split(new char[] { '\n' });
+            String[] values= text.Split(new Char[] { '\n' });
         
             
         }
 
-        public void Save(string filename)
+        public void Save(String filename)
         {
-            string text = null;
+            String text = null;
             for (int i = 0; i < 10; i++)
             {
               text += i.ToString() + "\n";

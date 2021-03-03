@@ -46,16 +46,22 @@ namespace Database
                     }
                     else if (condition.GetOperation().Equals("max"))
                     {
-                        if (int.Parse(element2) > int.Parse(condition.GetValue()))
-                        {
+                        if (int.TryParse(element2, out int n))
+                        { 
+                            if (int.Parse(element2) > int.Parse(condition.GetValue()))
+                            {
                             position.Add(counter);
+                            }
                         }
                     }
                     else
                     {
-                        if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                        if (int.TryParse(element2, out int n))
                         {
-                            position.Add(counter);
+                            if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                            {
+                                position.Add(counter);
+                            }
                         }
                     }
                     counter++;
