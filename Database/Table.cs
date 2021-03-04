@@ -14,7 +14,6 @@ namespace Database
             m_name = name;
             m_columns = new List<TableColumn>();
 
-
         }
 
         public string GetTableName()

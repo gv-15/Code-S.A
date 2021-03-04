@@ -15,6 +15,11 @@ namespace Database
             m_columns = new List<String>();
         }
 
+        public string GetTableColumnName()
+        {
+            return m_name;
+        }
+
         public List<String> GetColumns()
         {
             return m_columns;

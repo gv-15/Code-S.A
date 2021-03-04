@@ -4,14 +4,15 @@ using System.Text;
 
 namespace Database.MiniSqlParser
 {
-   public class SelectWhere : IQuery
+   public class SelectColumns : IQuery
    {
         private string m_table;
         private string[] m_columnNames;
 
-        public SelectWhere()
-        { 
-        
+        public SelectColumns(string table, string[] columnNames)
+        {
+            m_table = table;
+            m_columnNames = columnNames;
         }
         public string Run(DB database)
         {

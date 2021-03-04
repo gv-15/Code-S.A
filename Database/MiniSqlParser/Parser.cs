@@ -23,8 +23,9 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, selectColumnsPattern);
             if (match.Success)
             {
-               // SelectWhere selectWhere = new SelectWhere(match.Groups[1].Value);
-               // return selectWhere;
+                string [] columnNames = match.Groups[1].Value.Split(',');
+                SelectColumns selectColumns = new SelectColumns(match.Groups[2].Value, columnNames);
+                return selectColumns;
             }
           return null;
         }
