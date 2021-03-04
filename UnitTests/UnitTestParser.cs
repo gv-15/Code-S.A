@@ -11,10 +11,14 @@ namespace UnitTests
         [TestMethod]
         public void Parsing()
         {
-           // IQuery query = Parser.Parse("Select")
+            // IQuery query = Parser.Parse("Select")
+            IQuery query = Parser.Parse("SELECT * FROM Table1;");
+            Assert.IsTrue(query is SelectAll);
+            Assert.AreEqual("Table1", (query as SelectAll).Table());
+
 
         }
 
- 
+
     }
 }

@@ -94,24 +94,21 @@ namespace Database
                 }
                 else if (condition.GetOperation().Equals("min"))
                 {
-                    if (int.TryParse(element, out int n))
-                    {
-                        if (int.Parse(element) < int.Parse(condition.GetValue()))
+                       if (int.Parse(element) < int.Parse(condition.GetValue()))
                         {
                             list1.Add(element);
                         }
-                    }
+                    
                 }
                 else if (condition.GetOperation().Equals("max"))
                 {
 
-                    if (int.TryParse(element, out int n)) 
-                    { 
+                    
                         if (int.Parse(element) > int.Parse(condition.GetValue()))
                         {
                             list1.Add(element);
                         }
-                    }
+                    
                 }
                 }
             return list1;
