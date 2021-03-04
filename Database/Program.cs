@@ -6,7 +6,7 @@ namespace Database
 {
     class Program
     {
-      static void Main(string[] args)
+        static void Main(string[] args)
         {
             DB myDatabase = new DB("myDatabase");
             myDatabase.Save("fichero.txt");

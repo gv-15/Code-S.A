@@ -6,11 +6,11 @@ namespace Database
 {
     public class DB
     {
-        private String Name;
+        private string m_name;
         private List<Table> m_db;
-        public DB(String name)
+        public DB(string name)
         {
-           Name = name;
+           m_name = name;
            m_db = new List<Table>();
 
         }
@@ -20,24 +20,30 @@ namespace Database
             return m_db;
         }
 
+        public string GetDBname()
+        {
+
+            return m_name;
+        }
+
         public void AddTable(Table table)
         {
             m_db.Add(table);
         
         }
 
-        public void Load(String filename)
+        public void Load(string filename)
         {
-            String text = File.ReadAllText(filename);
+            string text = File.ReadAllText(filename);
 
-            String[] values= text.Split(new Char[] { '\n' });
+            string[] values= text.Split(new Char[] { '\n' });
         
             
         }
 
-        public void Save(String filename)
+        public void Save(string filename)
         {
-            String text = null;
+            string text = null;
             for (int i = 0; i < 10; i++)
             {
               text += i.ToString() + "\n";

@@ -18,16 +18,6 @@ namespace UnitTests
             Assert.AreEqual(1,size);
         }
 
-        [TestMethod]
-        public void TestLoad()
-        {
-           
-        }
-
-        [TestMethod]
-        public void TestSave()
-        {
-
-        }
+ 
     }
 }
