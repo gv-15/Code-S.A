@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database.MiniSqlParser;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -14,7 +15,13 @@ namespace Database
            m_db = new List<Table>();
 
         }
-        public List<Table> GetDBTable()
+        public Table GetTable()
+        {
+
+            return null;
+        }
+
+        public List<Table> GetDBTableList()
         {
 
             return m_db;
@@ -52,5 +59,13 @@ namespace Database
             File.WriteAllText(filename, text);
         
         }
+
+        public string RunMiniSqlQuery(string query)
+        {
+          IQuery  queryObject = MiniSqlParser.Parser.Parse(query);
+
+            return queryObject.Run(this);
+        }
+        
     }
 }
