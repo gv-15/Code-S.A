@@ -39,25 +39,17 @@ namespace Database
         
         }
 
-        public void Load(string filename)
+        public void dropTable(Table table)
         {
-            string text = File.ReadAllText(filename);
-
-            string[] values= text.Split(new Char[] { '\n' });
-        
             
+            //Falta por implementarlo
         }
 
-        public void Save(string filename)
-        {
-            string text = null;
-            for (int i = 0; i < 10; i++)
-            {
-              text += i.ToString() + "\n";
 
-            }
-            File.WriteAllText(filename, text);
-        
+        public string Insert(string table, List<string> columns, List<string> values)
+        {
+            //Do whatever you have to do
+            return null;
         }
 
         public Table SelectAll(string table)
@@ -76,6 +68,28 @@ namespace Database
 
             return queryObject.Run(this);
         }
-        
+
+
+        public void Load(string filename)
+        {
+            string text = File.ReadAllText(filename);
+
+            string[] values = text.Split(new Char[] { '\n' });
+
+
+        }
+
+        public void Save(string filename)
+        {
+            string text = null;
+            for (int i = 0; i < 10; i++)
+            {
+                text += i.ToString() + "\n";
+
+            }
+            File.WriteAllText(filename, text);
+
+        }
+
     }
 }
