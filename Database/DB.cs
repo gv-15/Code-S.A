@@ -9,10 +9,21 @@ namespace Database
     {
         private string m_name;
         private List<Table> m_db;
+        private String m_username;
+        private String m_password;
         public DB(string name)
         {
            m_name = name;
            m_db = new List<Table>();
+
+        }
+
+        public DB(string name, String username, String password)
+        {
+            m_name = name;
+            m_username = username;
+            m_password = password;
+            m_db = new List<Table>();
 
         }
         public Table GetTable()
@@ -39,10 +50,25 @@ namespace Database
         
         }
 
-        public void dropTable(Table table)
+        public void dropTable(String tableName)
         {
-            
-            //Falta por implementarlo
+            m_db.RemoveAt(FindTableWithName(tableName));
+        }
+
+        public void CreateTable(String nameOfTable, List<TableColumn> tableColumns)
+        {
+            Table table = new Table(nameOfTable, tableColumns);
+            m_db.Add(table);
+        }
+
+        public int FindTableWithName(String tableName)
+        {
+            for (int i = 0; i < m_db.Count; i++)
+            {
+                if (m_db[i].GetName() == tableName)
+                    return i;
+            }
+            return -1;
         }
 
 

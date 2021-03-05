@@ -28,7 +28,7 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, selectColumnsPattern);
             if (match.Success)
             { //Falta mirar hacer el split pero con listas, o cambiar las cosas anteriores a array
-                string [] columnNames = match.Groups[1].Value.Split(',');
+                string [] columnNames = match.Groups[1].Value.Split(','); // string s = list.Aggregate((i, j) => i + "," + j).ToString();
                 SelectColumns selectColumns = new SelectColumns(match.Groups[2].Value, columnNames);
                 return selectColumns;
             }

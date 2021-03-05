@@ -27,7 +27,7 @@ namespace Database.MiniSqlParser
             public string Run(DB database)
             {
 
-            // return database.GetTable(m_table).toString();
+            //return database.GetTable(m_table).toString();
             return null;
             }
         }

@@ -8,6 +8,7 @@ namespace Database
     {
         private string m_name;
         private List<TableColumn> m_columns;
+        private List<String> rows = new List<string>();
 
         public Table(String name)
         {
@@ -16,10 +17,11 @@ namespace Database
 
         }
 
-        public string GetTableName()
+        public Table(String name, List<TableColumn> tableColumns)
         {
+            m_name = name;
+            m_columns = tableColumns;
 
-            return m_name;
         }
 
         public void AddColumn(TableColumn column)

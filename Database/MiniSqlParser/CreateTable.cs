@@ -6,17 +6,22 @@ namespace Database.MiniSqlParser
 {
     public class CreateTable : IQuery
     {
-        public CreateTable()
+
+        private string m_table;
+        private List<TableColumn> m_tableColumns;
+        public CreateTable(string table, List<TableColumn> tableColumns)
         {
             //Falta por implementar todo, esta lo basico para hacer un run
-
+            m_table = table;
+            m_tableColumns = tableColumns;
         }
 
 
         public string Run(DB database)
         {
-            return null;
 
+            // return database.CreateTable(m_table, m_tableColumns).toString();
+            return null;
         }
     }
     

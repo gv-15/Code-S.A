@@ -6,16 +6,17 @@ namespace Database.MiniSqlParser
 {
     public class DropTable : IQuery
     {
-        public DropTable()
+        private string tableName;
+        public DropTable(string name)
         {
-            //Falta por implementar todo, esta lo basico para hacer un run
+            tableName = name;
         }
 
 
         public string Run(DB database)
         {
+            //return database.dropTable(tableName).toString();
             return null;
-
         }
     }
 }
