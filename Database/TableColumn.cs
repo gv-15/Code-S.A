@@ -15,6 +15,11 @@ namespace Database
             m_columns = new List<String>();
         }
 
+        public string GetTableColumnName()
+        {
+            return m_name;
+        }
+
         public List<String> GetColumns()
         {
             return m_columns;
@@ -94,24 +99,21 @@ namespace Database
                 }
                 else if (condition.GetOperation().Equals("min"))
                 {
-                    if (int.TryParse(element, out int n))
-                    {
-                        if (int.Parse(element) < int.Parse(condition.GetValue()))
+                       if (int.Parse(element) < int.Parse(condition.GetValue()))
                         {
                             list1.Add(element);
                         }
-                    }
+                    
                 }
                 else if (condition.GetOperation().Equals("max"))
                 {
 
-                    if (int.TryParse(element, out int n)) 
-                    { 
+                    
                         if (int.Parse(element) > int.Parse(condition.GetValue()))
                         {
                             list1.Add(element);
                         }
-                    }
+                    
                 }
                 }
             return list1;
