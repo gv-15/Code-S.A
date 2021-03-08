@@ -26,9 +26,15 @@ namespace Database
             m_db = new List<Table>();
 
         }
-        public Table GetTable(int position)
+     
+        public Table GetTableWithName(string name)
         {
+            int position = FindTableWithName(name);
+            return m_db[position];
+        }
 
+        public Table GetTable(int position)
+        { 
             return m_db[position];
         }
 
@@ -50,15 +56,19 @@ namespace Database
         
         }
 
-        public void dropTable(String tableName)
+        public string dropTable(String tableName)
         {
+            string respuesta = "Tabla borrada correctamente";
             m_db.RemoveAt(FindTableWithName(tableName));
+            return respuesta;
         }
 
-        public void CreateTable(String nameOfTable, List<TableColumn> tableColumns)
+        public string CreateTable(String nameOfTable, List<TableColumn> tableColumns)
         {
+            string respuesta = "Tabla creada correctamente";
             Table table = new Table(nameOfTable, tableColumns);
             m_db.Add(table);
+            return respuesta;
         }
 
         public int FindTableWithName(String tableName)

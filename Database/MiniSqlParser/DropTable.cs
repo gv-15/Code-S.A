@@ -15,8 +15,8 @@ namespace Database.MiniSqlParser
 
         public string Run(DB database)
         {
-            //return database.dropTable(tableName).toString();
-            return null;
+            return database.dropTable(tableName);
+           
         }
     }
 }
