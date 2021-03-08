@@ -7,9 +7,9 @@ namespace Database.MiniSqlParser
    public class SelectWhere : IQuery
     {
         private string m_table;
-        private string[] m_columnNames;
+        private List<Table> m_columnNames;
 
-        public SelectWhere(string table, string[] columnNames) //Falta la condition
+        public SelectWhere(string table, List<Table> columnNames,Condition condition) //Falta la condition
         {
             m_table = table;
             m_columnNames = columnNames;
