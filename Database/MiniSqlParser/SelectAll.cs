@@ -27,8 +27,8 @@ namespace Database.MiniSqlParser
             public string Run(DB database)
             {
 
-            //return database.GetTable(m_table).toString();
-            return null;
+            return database.GetTableWithName(m_table).ToString();
+            //Aqui devuelve un lista de tableColumns y eso falta por pasarlo a string del .ToString() no hace lo que deberia ahi que sobreescribirlo en otro metodo 
             }
         }
 }

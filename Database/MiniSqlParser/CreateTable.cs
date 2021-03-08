@@ -11,7 +11,6 @@ namespace Database.MiniSqlParser
         private List<TableColumn> m_tableColumns;
         public CreateTable(string table, List<TableColumn> tableColumns)
         {
-            //Falta por implementar todo, esta lo basico para hacer un run
             m_table = table;
             m_tableColumns = tableColumns;
         }
@@ -20,8 +19,8 @@ namespace Database.MiniSqlParser
         public string Run(DB database)
         {
 
-            // return database.CreateTable(m_table, m_tableColumns).toString();
-            return null;
+            return database.CreateTable(m_table, m_tableColumns);
+           
         }
     }
     
