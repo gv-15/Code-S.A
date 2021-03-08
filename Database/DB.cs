@@ -80,7 +80,9 @@ namespace Database
 
         public Table SelectAll(string table)
         {
-            return null;
+            int i = FindTableWithName(table);
+
+            return m_db[i];
         }
 
         public Table SelectColumns(string table, List<string> columnNames)
