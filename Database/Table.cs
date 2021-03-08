@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Database
@@ -8,7 +9,6 @@ namespace Database
     {
         private string m_name;
         private List<TableColumn> m_columns;
-        private List<String> rows = new List<string>();
 
         public Table(String name)
         {
@@ -27,6 +27,19 @@ namespace Database
         public void AddColumn(TableColumn column)
         {
             m_columns.Add(column);
+        }
+
+        public void AddRow(List<string> values)
+        {
+            if (values.Count == m_columns.Count)
+            {
+                for (int i = 0; i < values.Count; i++)
+                {
+                    string value = values.ElementAt(i);
+                    m_columns.ElementAt(i).AddString(value);
+                }
+            }
+
         }
 
         public List<int> SelectRowsPositions(Condition condition)
