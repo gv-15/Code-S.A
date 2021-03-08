@@ -27,7 +27,7 @@ namespace Database.MiniSqlParser
 
             match = Regex.Match(miniSqlSentence, selectColumnsPattern);
             if (match.Success)
-            { //Falta mirar hacer el split pero con listas, o cambiar las cosas anteriores a array
+            { 
                 string [] columnNames = match.Groups[1].Value.Split(',');
                 SelectColumns selectColumns = new SelectColumns(match.Groups[2].Value, Utils.ToList(columnNames));
                 return selectColumns;
@@ -36,8 +36,8 @@ namespace Database.MiniSqlParser
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
                 string[] columnNames = match.Groups[1].Value.Split(',');
-               // Insert insert= new Insert(match.Groups[2].Value, columnNames);
-               //return insert;
+                // Insert insert= new Insert(match.Groups[2].Value, Utils.ToList(columnNames));
+                //return insert;
             }
 
 
@@ -45,15 +45,15 @@ namespace Database.MiniSqlParser
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
                 string[] columnNames = match.Groups[1].Value.Split(',');
-                //DeleteFrom deleteFrom = new DeleteFrom(match.Groups[3].Value, columnNames,);
-               // return deleteFrom;
+                //DeleteFrom deleteFrom = new DeleteFrom(match.Groups[3].Value,Utils.ToList(columnNames));
+                // return deleteFrom;
             }
 
             match = Regex.Match(miniSqlSentence, selectWherePattern);
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
                 string[] columnNames = match.Groups[1].Value.Split(',');
-                //SelectWhere selectWhere = new SelectWhere(match.Groups[4].Value, columnNames,);
+                //SelectWhere selectWhere = new SelectWhere(match.Groups[4].Value, Utils.ToList(columnNames));
                 //return selectWhere;
             }
 
@@ -61,7 +61,7 @@ namespace Database.MiniSqlParser
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
                 string[] columnNames = match.Groups[1].Value.Split(',');
-                //DropTable dropTable = new DropTable(match.Groups[5].Value, columnNames);
+                //DropTable dropTable = new DropTable(match.Groups[5].Value, Utils.ToList(columnNames));
                 //return dropTable;
             }
 
@@ -69,7 +69,7 @@ namespace Database.MiniSqlParser
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
                 string[] columnNames = match.Groups[1].Value.Split(',');
-                //CreateTable createTable = new CreateTable(match.Groups[6].Value, columnNames);
+                //CreateTable createTable = new CreateTable(match.Groups[6].Value, Utils.ToList(columnNames));
                 //return createTable;
             }
 
