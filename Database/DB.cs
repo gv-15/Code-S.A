@@ -128,6 +128,25 @@ namespace Database
             return newTable;
         }
 
+        public Table SelectWhere(string table, List<string> columnNames,Condition condition)
+        {
+            Table FilteredColumnTable = SelectColumns(table, columnNames);
+            Table newTable = new Table("SelectedTable");
+            List<String> rows;
+            foreach (string name in columnNames)
+            {
+                newTable.AddColumn(new TableColumn(name));
+            }
+
+            foreach(TableColumn column in FilteredColumnTable.GetColumns())
+            {
+                rows=column.Select(column.GetColumns(), condition);
+                newTable.AddRow(rows);
+            }
+
+            return newTable;
+        }
+
         public string RunMiniSqlQuery(string query)
         {
             IQuery  queryObject = MiniSqlParser.Parser.Parse(query);
