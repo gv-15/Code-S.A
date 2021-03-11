@@ -7,9 +7,9 @@ namespace Database.MiniSqlParser
    public class SelectColumns : IQuery
    {
         private string m_table;
-        private string[] m_columnNames;
+        private List<String> m_columnNames;
 
-        public SelectColumns(string table, string[] columnNames)
+        public SelectColumns(string table, List<string> columnNames)
         {
             m_table = table;
             m_columnNames = columnNames;

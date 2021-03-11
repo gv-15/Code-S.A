@@ -26,10 +26,16 @@ namespace Database
             m_db = new List<Table>();
 
         }
-        public Table GetTable()
+     
+        public Table GetTableWithName(string name)
         {
+            int position = FindTableWithName(name);
+            return m_db[position];
+        }
 
-            return null;
+        public Table GetTable(int position)
+        { 
+            return m_db[position];
         }
 
         public List<Table> GetDBTableList()
@@ -50,15 +56,19 @@ namespace Database
         
         }
 
-        public void dropTable(String tableName)
+        public string dropTable(String tableName)
         {
+            string respuesta = "Tabla borrada correctamente";
             m_db.RemoveAt(FindTableWithName(tableName));
+            return respuesta;
         }
 
-        public void CreateTable(String nameOfTable, List<TableColumn> tableColumns)
+        public string CreateTable(String nameOfTable, List<TableColumn> tableColumns)
         {
+            string respuesta = "Tabla creada correctamente";
             Table table = new Table(nameOfTable, tableColumns);
             m_db.Add(table);
+            return respuesta;
         }
 
         public int FindTableWithName(String tableName)
@@ -72,20 +82,50 @@ namespace Database
         }
 
 
-        public string Insert(string table, List<string> columns, List<string> values)
+        public string Insert(string table, List<TableColumn> columns, List<string> values)
         {
+            Table t = new Table(table);
+            foreach(TableColumn newColumn in columns)
+            {
+                t.AddColumn(newColumn);
+            }
+
+            //m_db.Insert();
+
             //Do whatever you have to do
             return null;
         }
 
         public Table SelectAll(string table)
         {
-            return null;
+            int i = FindTableWithName(table);
+
+            return m_db[i];
         }
 
         public Table SelectColumns(string table, List<string> columnNames)
         {
-            return null;
+            Table newTable = null;
+
+            int p = FindTableWithName(table);
+
+            Table t = this.GetTable(p);
+            List<TableColumn> list = t.GetColumns();
+
+            for (int i = 0; i < columnNames.Count; i++)
+            {
+                String name = columnNames[i];
+
+                foreach (TableColumn col in list)
+                {
+                    if (col.GetTableColumnName().Equals(name))
+                    {
+                        newTable.AddColumn(col);
+                    }
+                }
+            }
+
+            return newTable;
         }
 
         public string RunMiniSqlQuery(string query)
