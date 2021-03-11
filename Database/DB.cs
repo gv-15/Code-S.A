@@ -13,8 +13,8 @@ namespace Database
         private String m_password;
         public DB(string name)
         {
-           m_name = name;
-           m_db = new List<Table>();
+            m_name = name;
+            m_db = new List<Table>();
 
         }
 
@@ -26,7 +26,7 @@ namespace Database
             m_db = new List<Table>();
 
         }
-     
+
         public Table GetTableWithName(string name)
         {
             int position = FindTableWithName(name);
@@ -34,7 +34,7 @@ namespace Database
         }
 
         public Table GetTable(int position)
-        { 
+        {
             return m_db[position];
         }
 
@@ -53,7 +53,7 @@ namespace Database
         public void AddTable(Table table)
         {
             m_db.Add(table);
-        
+
         }
 
         public string dropTable(String tableName)
@@ -89,7 +89,7 @@ namespace Database
             Table t = GetTable(i);
             List<String> columnNames = null;
 
-            foreach(TableColumn tc in columns)
+            foreach (TableColumn tc in columns)
             {
                 columnNames.Add(tc.GetTableColumnName());
             }
@@ -97,12 +97,12 @@ namespace Database
             Table tableColumns = SelectColumns(t.GetName(), columnNames);
             List<TableColumn> list = tableColumns.GetColumns();
 
-            for(int c = 0; c < list.Count; c++)
+            for (int c = 0; c < list.Count; c++)
             {
-                     list[c].AddString(values[c]);
-                     st += values[c];
+                list[c].AddString(values[c]);
+                st += values[c];
             }
-            
+
             return st;
         }
 
@@ -138,9 +138,31 @@ namespace Database
             return newTable;
         }
 
+
+        public void DeleteFrom(string table, List<string> columnNames, Condition condition)
+        {
+
+            int p = FindTableWithName(table);
+            Table t = this.GetTable(p);
+            List<TableColumn> list = t.GetColumns();
+
+            for (int i = 0; i < columnNames.Count; i++)
+            {
+                string name = columnNames[i];
+                foreach (TableColumn col in list)
+                {
+                    if (col.GetTableColumnName().Equals(name))
+                    {
+                        t.DeleteRows(list, condition);
+                    }
+                }
+
+            }
+        }
+
         public string RunMiniSqlQuery(string query)
         {
-            IQuery  queryObject = MiniSqlParser.Parser.Parse(query);
+            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
 
             return queryObject.Run(this);
         }
@@ -155,7 +177,7 @@ namespace Database
 
         }
 
-        public void Save(string filename)
+        public void Save()
         {
             string namesOfTables = null;
             string columnValue = null;
@@ -163,7 +185,7 @@ namespace Database
 
             if (!Directory.Exists(GetDBname()))
                 Directory.CreateDirectory(GetDBname());
-                string directory = GetDBname();
+            string directory = GetDBname();
 
             foreach (Table table in m_db)
             {
@@ -185,34 +207,11 @@ namespace Database
                         string tableColumnVal = "tableColumnVal," + value;
                         columnValue += tableColumnVal.Replace(",", "[[delimiter]]") + ",";
                     }
-                   File.WriteAllText(tableColumnDirectory, column.GetType() + "[[delimiter]]" + columnValue);
+                    File.WriteAllText(tableColumnDirectory, column.GetType() + "[[delimiter]]" + columnValue);
                 }
             }
         }
 
-
     }
 
-
-        public void DeleteFrom(string table, List<string> columnNames, Condition condition)
-        {
-         
-            int p = FindTableWithName(table);
-            Table t = this.GetTable(p);
-            List<TableColumn> list = t.GetColumns();
-
-            for (int i = 0; i < columnNames.Count; i++)
-            {
-                string name = columnNames[i];
-                foreach (TableColumn col in list)
-                {
-                    if (col.GetTableColumnName().Equals(name))
-                    {
-                        t.DeleteRows(list, condition);
-                    }
-                }
-                
-            }
-        }
-    }
 }
