@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -7,12 +8,12 @@ namespace Database
 {
     public class TableColumn
     {
-        private List<String> m_columns;
+        private List<string> m_columns;
         private String m_name;
-        public TableColumn(String name)
+        public TableColumn(string name)
         {
             m_name = name;
-            m_columns = new List<String>();
+            m_columns = new List<string>();
         }
 
         public string GetTableColumnName()
@@ -118,6 +119,58 @@ namespace Database
                 }
             return list1;
         }
+
+        public List<int> GetPositions(Condition condition)
+        {
+            List<int> positions = new List<int>();
+
+            if (condition.GetOperation().Equals("equals"))
+            {
+                for (int i = 0; i < m_columns.Count; i++)
+                {
+                    if (condition.GetValue().Equals(m_columns.ElementAt(i)))
+                    {
+                        positions.Add(i);
+                    }
+                };
+            }
+
+            else if (condition.GetOperation().Equals("min"))
+            {
+                for (int i = 0; i < m_columns.Count; i++)
+                {
+                    if (condition.GetValue().CompareTo(m_columns.ElementAt(i)) == 1) //Este if no me inspira confianza
+                    {
+                        positions.Add(i);
+                    }
+                };
+            }
+
+            else if (condition.GetOperation().Equals("max"))
+            {
+                for (int i = 0; i < m_columns.Count; i++)
+                {
+                    if (condition.GetValue().CompareTo(m_columns.ElementAt(i)) == -1) //Este if tampoco me inspira confianza 
+                    {
+                        positions.Add(i);
+                    }
+                };
+            }
+
+            return positions;
+        }
+
+        public List<string> GetValues(List<int> positions)
+        {
+            List<string> list = new List<string>();
+            foreach (int p in positions)
+            {
+                string value = m_columns.ElementAt(p);
+                list.Add(value);
+            }
+            return list;
+        }
+
 
     }
 }
