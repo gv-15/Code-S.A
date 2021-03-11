@@ -7,8 +7,8 @@ namespace Database.MiniSqlParser
     public class DeleteFrom : IQuery
     {
         private string m_table;
-        private string[] m_columnNames;
-        public DeleteFrom(string table, string[] columnNames) //Falta la condition
+        private List<string> m_columnNames;
+        public DeleteFrom(string table, List<string> columnNames) //Falta la condition
         {
             m_table = table;
             m_columnNames = columnNames;
