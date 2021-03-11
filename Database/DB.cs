@@ -87,7 +87,14 @@ namespace Database
             String st = "";
             int i = FindTableWithName(table);
             Table t = GetTable(i);
-            Table tableColumns = SelectColumns(t.GetName(), columns);
+            List<String> columnNames = null;
+
+            foreach(TableColumn tc in columns)
+            {
+                columnNames.Add(tc.GetTableColumnName());
+            }
+
+            Table tableColumns = SelectColumns(t.GetName(), columnNames);
             List<TableColumn> list = tableColumns.GetColumns();
 
             for(int c = 0; c < list.Count; c++)
