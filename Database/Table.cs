@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Database
@@ -16,15 +17,29 @@ namespace Database
 
         }
 
-        public string GetTableName()
+        public Table(String name, List<TableColumn> tableColumns)
         {
+            m_name = name;
+            m_columns = tableColumns;
 
-            return m_name;
         }
 
         public void AddColumn(TableColumn column)
         {
             m_columns.Add(column);
+        }
+
+        public void AddRow(List<string> values)
+        {
+            if (values.Count == m_columns.Count)
+            {
+                for (int i = 0; i < values.Count; i++)
+                {
+                    string value = values.ElementAt(i);
+                    m_columns.ElementAt(i).AddString(value);
+                }
+            }
+
         }
 
         public List<int> SelectRowsPositions(Condition condition)
@@ -45,7 +60,10 @@ namespace Database
                     {
                         if (element2.Equals(condition.GetValue()))
                         {
-                            position.Add(counter);
+                            if (!position.Contains(counter))
+                            {
+                                position.Add(counter);
+                            }
                         }
                     }
                     else if (condition.GetOperation().Equals("max"))
@@ -54,7 +72,10 @@ namespace Database
                         { 
                             if (int.Parse(element2) > int.Parse(condition.GetValue()))
                             {
-                            position.Add(counter);
+                                if (!position.Contains(counter))
+                                {
+                                    position.Add(counter);
+                                }
                             }
                         }
                     }
@@ -64,7 +85,10 @@ namespace Database
                         {
                             if (int.Parse(element2) < int.Parse(condition.GetValue()))
                             {
-                                position.Add(counter);
+                                if (!position.Contains(counter))
+                                {
+                                    position.Add(counter);
+                                }
                             }
                         }
                     }
@@ -73,17 +97,24 @@ namespace Database
 
                 
             }
-            
+            //Ordenamos la lista de menor a mayor. A la hora de usar Delete hay que recorrer la lista de mayor a menor.
+            position.Sort();
             return position;
         }
 
 
         public void DeleteRows(List<TableColumn> list, Condition condition)
         {
-
-     
+          
+            List<int> index = SelectRowsPositions(condition);
+            
+            for(int i = index.Count-1; i>=0; i--)
+            {
+                list.RemoveAt(i);
+            }
 
         }
+        
         public String GetName() 
         {
             return m_name;
