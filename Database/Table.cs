@@ -105,10 +105,16 @@ namespace Database
 
         public void DeleteRows(List<TableColumn> list, Condition condition)
         {
-
-     
+          
+            List<int> index = SelectRowsPositions(condition);
+            
+            for(int i = index.Count-1; i>=0; i--)
+            {
+                list.RemoveAt(i);
+            }
 
         }
+        
         public String GetName() 
         {
             return m_name;
