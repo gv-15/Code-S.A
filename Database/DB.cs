@@ -33,7 +33,10 @@ namespace Database
             return m_db[position];
         }
 
-
+        public Table GetTable(int position)
+        { 
+            return m_db[position];
+        }
 
         public List<Table> GetDBTableList()
         {
@@ -87,12 +90,34 @@ namespace Database
 
         public Table SelectAll(string table)
         {
-            return null;
+            int i = FindTableWithName(table);
+
+            return m_db[i];
         }
 
         public Table SelectColumns(string table, List<string> columnNames)
         {
-            return null;
+            Table newTable = null;
+
+            int p = FindTableWithName(table);
+
+            Table t = this.GetTable(p);
+            List<TableColumn> list = t.GetColumns();
+
+            for (int i = 0; i < columnNames.Count; i++)
+            {
+                String name = columnNames[i];
+
+                foreach (TableColumn col in list)
+                {
+                    if (col.GetTableColumnName().Equals(name))
+                    {
+                        newTable.AddColumn(col);
+                    }
+                }
+            }
+
+            return newTable;
         }
 
         public string RunMiniSqlQuery(string query)
