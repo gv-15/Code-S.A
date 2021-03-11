@@ -82,8 +82,16 @@ namespace Database
         }
 
 
-        public string Insert(string table, List<string> columns, List<string> values)
+        public string Insert(string table, List<TableColumn> columns, List<string> values)
         {
+            Table t = new Table(table);
+            foreach(TableColumn newColumn in columns)
+            {
+                t.AddColumn(newColumn);
+            }
+
+            //m_db.Insert();
+
             //Do whatever you have to do
             return null;
         }

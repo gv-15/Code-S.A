@@ -60,7 +60,10 @@ namespace Database
                     {
                         if (element2.Equals(condition.GetValue()))
                         {
-                            position.Add(counter);
+                            if (!position.Contains(counter))
+                            {
+                                position.Add(counter);
+                            }
                         }
                     }
                     else if (condition.GetOperation().Equals("max"))
@@ -69,7 +72,10 @@ namespace Database
                         { 
                             if (int.Parse(element2) > int.Parse(condition.GetValue()))
                             {
-                            position.Add(counter);
+                                if (!position.Contains(counter))
+                                {
+                                    position.Add(counter);
+                                }
                             }
                         }
                     }
@@ -79,7 +85,10 @@ namespace Database
                         {
                             if (int.Parse(element2) < int.Parse(condition.GetValue()))
                             {
-                                position.Add(counter);
+                                if (!position.Contains(counter))
+                                {
+                                    position.Add(counter);
+                                }
                             }
                         }
                     }
@@ -88,7 +97,8 @@ namespace Database
 
                 
             }
-            
+            //Ordenamos la lista de menor a mayor. A la hora de usar Delete hay que recorrer la lista de mayor a menor.
+            position.Sort();
             return position;
         }
 
