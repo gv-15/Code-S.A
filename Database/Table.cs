@@ -105,57 +105,13 @@ namespace Database
 
         public void DeleteRows(List<TableColumn> list, Condition condition)
         {
-            List<String> columnslist = new List<String>();
-            List<int> position = new List<int>();
+          
+            List<int> index = SelectRowsPositions(condition);
             
-            foreach (TableColumn element in m_columns)
+            for(int i = index.Count-1; i>=0; i--)
             {
-                int counter = 0;
-
-                columnslist = element.GetColumns();
-
-                foreach (String element2 in columnslist)
-                {
-                    if (condition.GetOperation().Equals("equals"))
-                    {
-                        if (element2.Equals(condition.GetValue()))
-                        {
-                            position.Add(counter);
-                        }
-                    }
-                    else if (condition.GetOperation().Equals("max"))
-                    {
-                        if (int.TryParse(element2, out int n))
-                        {
-                            if (int.Parse(element2) > int.Parse(condition.GetValue()))
-                            {
-                                position.Add(counter);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (int.TryParse(element2, out int n))
-                        {
-                            if (int.Parse(element2) < int.Parse(condition.GetValue()))
-                            {
-                                position.Add(counter);
-                            }
-                        }
-                    }
-                    counter++;
-                }
-
-
+                list.RemoveAt(i);
             }
-            int index;
-            for (int i = 0; i < position.Count; i++)
-            {
-                index = i;
-                list.RemoveAt(index);
-            }
-            
-            
 
         }
         
