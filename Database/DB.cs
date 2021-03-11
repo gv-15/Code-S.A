@@ -157,5 +157,26 @@ namespace Database
 
         }
 
+
+        public void DeleteFrom(string table, List<string> columnNames, Condition condition)
+        {
+         
+            int p = FindTableWithName(table);
+            Table t = this.GetTable(p);
+            List<TableColumn> list = t.GetColumns();
+
+            for (int i = 0; i < columnNames.Count; i++)
+            {
+                string name = columnNames[i];
+                foreach (TableColumn col in list)
+                {
+                    if (col.GetTableColumnName().Equals(name))
+                    {
+                        t.DeleteRows(list, condition);
+                    }
+                }
+                
+            }
+        }
     }
 }
