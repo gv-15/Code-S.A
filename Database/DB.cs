@@ -84,8 +84,19 @@ namespace Database
 
         public string Insert(string table, List<string> columns, List<string> values)
         {
-            //Do whatever you have to do
-            return null;
+            String st = "";
+            int i = FindTableWithName(table);
+            Table t = GetTable(i);
+            Table tableColumns = SelectColumns(t.GetName(), columns);
+            List<TableColumn> list = tableColumns.GetColumns();
+
+            for(int c = 0; c < list.Count; c++)
+            {
+                     list[c].AddString(values[c]);
+                     st += values[c];
+            }
+            
+            return st;
         }
 
         public Table SelectAll(string table)
