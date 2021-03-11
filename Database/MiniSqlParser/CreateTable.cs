@@ -20,7 +20,6 @@ namespace Database.MiniSqlParser
         {
 
             return database.CreateTable(m_table, m_tableColumns);
-           
         }
     }
     

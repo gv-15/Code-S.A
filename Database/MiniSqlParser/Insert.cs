@@ -7,10 +7,10 @@ namespace Database.MiniSqlParser
     public class Insert : IQuery
     {
         public string Table = null;
-        public List<string> Columns = null;
+        public List<TableColumn> Columns = null;
         public List<string> Values = null;
 
-        public Insert(string table, List<string> columns, List<string> values)
+        public Insert(string table, List<TableColumn> columns, List<string> values)
         {
             Table = table;
             Columns = columns;

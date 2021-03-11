@@ -28,15 +28,15 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, selectColumnsPattern);
             if (match.Success)
             { 
-                string [] columnNames = match.Groups[1].Value.Split(',');
+                string [] columnNames = match.Groups[2].Value.Split(',');
                 SelectColumns selectColumns = new SelectColumns(match.Groups[2].Value, Utils.ToList(columnNames));
                 return selectColumns;
             }
             match = Regex.Match(miniSqlSentence, insertIntoPattern);
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
-                string[] columnNames = match.Groups[1].Value.Split(',');
-                // Insert insert= new Insert(match.Groups[2].Value, Utils.ToList(columnNames));
+                string[] columnNames = match.Groups[3].Value.Split(',');
+                // Insert insert= new Insert(match.Groups[3].Value, Utils.ToList(columnNames));
                 //return insert;
             }
 
@@ -44,32 +44,32 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, deleteFromPattern);
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
-                string[] columnNames = match.Groups[1].Value.Split(',');
-                //DeleteFrom deleteFrom = new DeleteFrom(match.Groups[3].Value,Utils.ToList(columnNames));
+                string[] columnNames = match.Groups[4].Value.Split(',');
+                //DeleteFrom deleteFrom = new DeleteFrom(match.Groups[4].Value,Utils.ToList(columnNames));
                 // return deleteFrom;
             }
 
             match = Regex.Match(miniSqlSentence, selectWherePattern);
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
-                string[] columnNames = match.Groups[1].Value.Split(',');
-                //SelectWhere selectWhere = new SelectWhere(match.Groups[4].Value, Utils.ToList(columnNames));
+                string[] columnNames = match.Groups[5].Value.Split(',');
+                //SelectWhere selectWhere = new SelectWhere(match.Groups[5].Value, Utils.ToList(columnNames));
                 //return selectWhere;
             }
 
             match = Regex.Match(miniSqlSentence, dropTablePattern);
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
-                string[] columnNames = match.Groups[1].Value.Split(',');
-                //DropTable dropTable = new DropTable(match.Groups[5].Value, Utils.ToList(columnNames));
+                string[] columnNames = match.Groups[6].Value.Split(',');
+                //DropTable dropTable = new DropTable(match.Groups[6].Value, Utils.ToList(columnNames));
                 //return dropTable;
             }
 
             match = Regex.Match(miniSqlSentence, createTablePattern);
             if (match.Success)
             { //Falta implementarlo bien, esta puesto lo basico
-                string[] columnNames = match.Groups[1].Value.Split(',');
-                //CreateTable createTable = new CreateTable(match.Groups[6].Value, Utils.ToList(columnNames));
+                string[] columnNames = match.Groups[7].Value.Split(',');
+                //CreateTable createTable = new CreateTable(match.Groups[7].Value, Utils.ToList(columnNames));
                 //return createTable;
             }
 

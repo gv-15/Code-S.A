@@ -82,7 +82,7 @@ namespace Database
         }
 
 
-        public string Insert(string table, List<string> columns, List<string> values)
+        public string Insert(string table, List<TableColumn> columns, List<string> values)
         {
             String st = "";
             int i = FindTableWithName(table);
@@ -108,7 +108,7 @@ namespace Database
 
         public Table SelectColumns(string table, List<string> columnNames)
         {
-            Table newTable = null;
+            Table newTable = new Table("newTable");
 
             int p = FindTableWithName(table);
 
@@ -150,15 +150,41 @@ namespace Database
 
         public void Save(string filename)
         {
-            string text = null;
-            for (int i = 0; i < 10; i++)
+            string namesOfTables = null;
+            string columnValue = null;
+            string nameOfColumn = null;
+
+            if (!Directory.Exists(GetDBname()))
+                Directory.CreateDirectory(GetDBname());
+                string directory = GetDBname();
+
+            foreach (Table table in m_db)
             {
-                text += i.ToString() + "\n";
+                string tableDirectory = directory + "\\" + table.GetName();
 
+                if (!Directory.Exists(tableDirectory))
+                    Directory.CreateDirectory(tableDirectory);
+                string tableName = "tableName," + table.GetName();
+                namesOfTables += tableName.Replace(",", "[[delimiter]]") + ",";
+
+                foreach (TableColumn column in table.GetColumns())
+                {
+                    string tableColumnDirectory = directory + "\\" + tableDirectory + "\\" + column.GetTableColumnName();
+                    string tableColumnNames = "tableColumnNames," + column.GetTableColumnName();
+                    nameOfColumn += tableColumnNames.Replace(",", "[[delimiter]]") + ",";
+
+                    foreach (string value in column.GetColumns())
+                    {
+                        string tableColumnVal = "tableColumnVal," + value;
+                        columnValue += tableColumnVal.Replace(",", "[[delimiter]]") + ",";
+                    }
+                   File.WriteAllText(tableColumnDirectory, column.GetType() + "[[delimiter]]" + columnValue);
+                }
             }
-            File.WriteAllText(filename, text);
-
         }
 
+
     }
+
 }
+
