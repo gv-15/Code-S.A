@@ -105,7 +105,7 @@ namespace Database
 
         public Table SelectColumns(string table, List<string> columnNames)
         {
-            Table newTable = null;
+            Table newTable = new Table("newTable");
 
             int p = FindTableWithName(table);
 
