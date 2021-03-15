@@ -13,8 +13,8 @@ namespace Database
         private String m_password;
         public DB(string name)
         {
-           m_name = name;
-           m_db = new List<Table>();
+            m_name = name;
+            m_db = new List<Table>();
 
         }
 
@@ -26,7 +26,7 @@ namespace Database
             m_db = new List<Table>();
 
         }
-     
+
         public Table GetTableWithName(string name)
         {
             int position = FindTableWithName(name);
@@ -34,7 +34,7 @@ namespace Database
         }
 
         public Table GetTable(int position)
-        { 
+        {
             return m_db[position];
         }
 
@@ -53,7 +53,7 @@ namespace Database
         public void AddTable(Table table)
         {
             m_db.Add(table);
-        
+
         }
 
         public string dropTable(String tableName)
@@ -84,16 +84,26 @@ namespace Database
 
         public string Insert(string table, List<TableColumn> columns, List<string> values)
         {
-            Table t = new Table(table);
-            foreach(TableColumn newColumn in columns)
+            String st = "";
+            int i = FindTableWithName(table);
+            Table t = GetTable(i);
+            List<String> columnNames = null;
+
+            foreach (TableColumn tc in columns)
             {
-                t.AddColumn(newColumn);
+                columnNames.Add(tc.GetTableColumnName());
             }
 
-            //m_db.Insert();
+            Table tableColumns = SelectColumns(t.GetName(), columnNames);
+            List<TableColumn> list = tableColumns.GetColumns();
 
-            //Do whatever you have to do
-            return null;
+            for (int c = 0; c < list.Count; c++)
+            {
+                list[c].AddString(values[c]);
+                st += values[c];
+            }
+
+            return st;
         }
 
         public Table SelectAll(string table)
@@ -147,9 +157,31 @@ namespace Database
             return newTable;
         }
 
+
+        public void DeleteFrom(string table, List<string> columnNames, Condition condition)
+        {
+
+            int p = FindTableWithName(table);
+            Table t = this.GetTable(p);
+            List<TableColumn> list = t.GetColumns();
+
+            for (int i = 0; i < columnNames.Count; i++)
+            {
+                string name = columnNames[i];
+                foreach (TableColumn col in list)
+                {
+                    if (col.GetTableColumnName().Equals(name))
+                    {
+                        t.DeleteRows(list, condition);
+                    }
+                }
+
+            }
+        }
+
         public string RunMiniSqlQuery(string query)
         {
-            IQuery  queryObject = MiniSqlParser.Parser.Parse(query);
+            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
 
             return queryObject.Run(this);
         }
@@ -164,17 +196,41 @@ namespace Database
 
         }
 
-        public void Save(string filename)
+        public void Save()
         {
-            string text = null;
-            for (int i = 0; i < 10; i++)
+            string namesOfTables = null;
+            string columnValue = null;
+            string nameOfColumn = null;
+
+            if (!Directory.Exists(GetDBname()))
+                Directory.CreateDirectory(GetDBname());
+            string directory = GetDBname();
+
+            foreach (Table table in m_db)
             {
-                text += i.ToString() + "\n";
+                string tableDirectory = directory + "\\" + table.GetName();
 
+                if (!Directory.Exists(tableDirectory))
+                    Directory.CreateDirectory(tableDirectory);
+                string tableName = "tableName," + table.GetName();
+                namesOfTables += tableName.Replace(",", "[[delimiter]]") + ",";
+
+                foreach (TableColumn column in table.GetColumns())
+                {
+                    string tableColumnDirectory = directory + "\\" + tableDirectory + "\\" + column.GetTableColumnName();
+                    string tableColumnNames = "tableColumnNames," + column.GetTableColumnName();
+                    nameOfColumn += tableColumnNames.Replace(",", "[[delimiter]]") + ",";
+
+                    foreach (string value in column.GetColumns())
+                    {
+                        string tableColumnVal = "tableColumnVal," + value;
+                        columnValue += tableColumnVal.Replace(",", "[[delimiter]]") + ",";
+                    }
+                    File.WriteAllText(tableColumnDirectory, column.GetType() + "[[delimiter]]" + columnValue);
+                }
             }
-            File.WriteAllText(filename, text);
-
         }
 
     }
+
 }
