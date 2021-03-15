@@ -124,5 +124,51 @@ namespace Database
         {
             return m_columns;
         }
+
+        public override string ToString()
+        {
+            string resultadoFinal = "[";
+            foreach (TableColumn column in m_columns)
+            {
+                if (column != m_columns.Last())
+                {
+                    string columnName = column.GetTableColumnName();
+                    resultadoFinal += "'" + columnName + "',";
+                }
+                else
+                {
+                    string ColumnName = column.GetTableColumnName();
+                    resultadoFinal += "'" + ColumnName + "'";
+                }
+            }
+            resultadoFinal += "]";
+                for (int i=0;i<m_columns.ElementAt(0).GetColumns().Count;i++)
+                {
+                    foreach (TableColumn tc in m_columns)
+                    {
+                        if (tc == m_columns.First())
+                        {
+                            if (tc == m_columns.Last())
+                            {
+                                resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "'}";
+                            }
+                                else
+                                {
+                                    resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "',";
+                                }
+                        }
+                        else if (tc != m_columns.Last())
+                        {
+                            resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "',";
+                        }
+
+                            else
+                            {
+                                resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "'}";
+                            }
+                    }
+                }
+          return resultadoFinal;
+        }
     }
 }
