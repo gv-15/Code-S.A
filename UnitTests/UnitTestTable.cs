@@ -11,17 +11,17 @@ namespace UnitTests
     {
 
         Table tabla = new Table("tabla");
-        TableColumn t = new TableColumn("prueba");
-        TableColumn t2 = new TableColumn("prueba2");
-        
+        TableColumn n = new TableColumn("prueba");
+        TableColumn s = new TableColumn("prueba2");
+
 
 
         [TestMethod]
         public void TestAddColumn()
         {
-            
-            tabla.AddColumn(t2);
-            tabla.AddColumn(t);
+
+            tabla.AddColumn(this.n);
+            tabla.AddColumn(s);
             int n = tabla.GetColumns().Count;
             Assert.AreEqual(2, n);
         }
@@ -51,12 +51,28 @@ namespace UnitTests
         [TestMethod]
         public void TestDeleteRows()
         {
-            tabla.AddColumn(t);
-            Condition c = new Condition(Condition.Operations.equals, "prueba", t);
+            Table t3 = new Table("miTabla");
+            TableColumn name = new TableColumn("name");
+            TableColumn surname = new TableColumn("surname");
+            t3.AddColumn(name);
+            t3.AddColumn(surname);
 
-            tabla.DeleteRows(tabla.GetColumns(), c);
-            int n = tabla.GetColumns().Count;
-            Assert.AreEqual(1, n); //Esto esta mal, tendria que dar 0 pero el metodo no esta hecho
+            List<String> list = new List<String>();
+            list.Add("Aitor");
+            list.Add("Garcia");
+            t3.AddRow(list);
+            List<String> list2 = new List<String>();
+            list2.Add("Amelia");
+            list2.Add("Gonzalez");
+            t3.AddRow(list2);
+
+            List<String> l = name.GetColumns();
+            Condition c = new Condition(Condition.Operations.equals, "Aitor", name);
+
+            t3.DeleteRows(t3.GetColumns(), c); //borra la columna no la fila
+            int n = l.Count;
+            
+            Assert.AreEqual(1, n); 
         }
 
         [TestMethod]
