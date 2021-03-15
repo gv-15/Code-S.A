@@ -190,7 +190,7 @@ namespace Database
         public void Load(string filename, string name)
         {
             string text = File.ReadAllText(filename);
-            String nombreDB="";
+            
             int j = 0;
             if (Directory.Exists(text))
             {
@@ -199,16 +199,12 @@ namespace Database
                 {
                     if (nombresDB[i].Equals(name))
                     {
-                        nombreDB = nombresDB[i];
                         j = i;
-                    }
-                        
+                    }      
                 }
-                    
-                DB newDB = new DB(nombreDB);
+
                 String[] dirDBs = Directory.GetDirectories(text);
                 String dirDB = dirDBs[j];
-
 
                 String[] tablas = Directory.GetDirectories(dirDB);
                 foreach(String tabla in tablas)
@@ -226,14 +222,12 @@ namespace Database
                         newTable.AddColumn(newColumn);
                  
                     }
-                    newDB.AddTable(newTable);
+                    AddTable(newTable);
                 }
                 
             }
 
-            string[] values = text.Split(new Char[] { '\n' });
-
-
+            
         }
 
         public void Save()
