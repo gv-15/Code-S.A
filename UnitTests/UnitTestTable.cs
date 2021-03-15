@@ -26,7 +26,26 @@ namespace UnitTests
             Assert.AreEqual(2, n);
         }
 
-      
+
+        [TestMethod]
+        public void TestAddRow()
+        {
+            Table t = new Table("miTabla");
+            TableColumn nombre = new TableColumn("nombre");
+            TableColumn apellido = new TableColumn("apellido");
+            t.AddColumn(nombre);
+            t.AddColumn(apellido);
+
+            List<String> lista = new List<String>();
+            lista.Add("Aitor");
+            lista.Add("Garcia");
+
+            t.AddRow(lista);
+            int i = nombre.GetColumns().Count;
+            int j = apellido.GetColumns().Count;
+            Assert.AreEqual(1, i);
+            Assert.AreEqual(1, j);
+        }
 
 
         [TestMethod]
@@ -43,7 +62,28 @@ namespace UnitTests
         [TestMethod]
         public void TestSelectRowsPositions()
         {
-          
+            Table t2 = new Table("miTabla");
+            TableColumn nombre = new TableColumn("nombre");
+            TableColumn apellido = new TableColumn("apellido");
+            t2.AddColumn(nombre);
+            t2.AddColumn(apellido);
+
+            List<String> lista = new List<String>();
+            lista.Add("Aitor");
+            lista.Add("Garcia");
+            t2.AddRow(lista);
+            List<String> lista2 = new List<String>();
+            lista2.Add("Ana");
+            lista2.Add("Suarez");
+            t2.AddRow(lista2);
+
+            Condition c = new Condition(Condition.Operations.equals, "Ana", nombre);
+           
+            List<int> positions = t2.SelectRowsPositions(c);
+            int p = positions.Count;
+            Assert.AreEqual(1, p);
+
+
         }
 
     }
