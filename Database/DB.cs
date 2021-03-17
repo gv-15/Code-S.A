@@ -153,7 +153,7 @@ namespace Database
                 {
                     if (col.GetTableColumnName().Equals(name))
                     {
-                        t.DeleteRows(list, condition);
+                       t.DeleteColumn(list, condition);
                     }
                 }
 

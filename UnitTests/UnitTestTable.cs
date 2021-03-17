@@ -69,10 +69,11 @@ namespace UnitTests
             List<String> l = name.GetColumns();
             Condition c = new Condition(Condition.Operations.equals, "Aitor", name);
 
-            t3.DeleteRows(t3.GetColumns(), c); //borra la columna no la fila
+            t3.DeleteRows(c); 
             int n = l.Count;
             
-            Assert.AreEqual(1, n); 
+            Assert.AreEqual(1, n);
+            Assert.AreEqual(l[0], "Amelia");
         }
 
         [TestMethod]

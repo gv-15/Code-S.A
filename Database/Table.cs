@@ -102,11 +102,23 @@ namespace Database
             return position;
         }
 
+        public void DeleteColumn(List<TableColumn> list, Condition condition)
+        {
+            List<int> index = SelectRowsPositions(condition);
 
-        public void DeleteRows(List<TableColumn> list, Condition condition)
+            for (int i = index.Count - 1; i >= 0; i--)
+            {
+                list.RemoveAt(i);
+            }
+        }
+
+        public void DeleteRows(Condition condition)
         {
           
             List<int> index = SelectRowsPositions(condition);
+
+            List<TableColumn> l = GetColumns();
+            List<String> list = l[0].GetColumns();
             
             for(int i = index.Count-1; i>=0; i--)
             {
