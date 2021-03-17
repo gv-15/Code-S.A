@@ -77,6 +77,28 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TestDeleteColumn()
+        {
+            Table table = new Table("table");
+            TableColumn name = new TableColumn("namea");
+            TableColumn age = new TableColumn("age");
+
+            table.AddColumn(name);
+            table.AddColumn(age);
+
+            List<TableColumn> tc = table.GetColumns();
+            Condition c = new Condition(Condition.Operations.equals, "Alba", name);
+
+            table.DeleteColumn(tc,c);
+            int h = table.GetColumns().Count;
+
+            Assert.AreEqual(1, h);
+            Assert.AreEqual(age, tc[0]);
+
+
+        }
+
+        [TestMethod]
         public void TestSelectRowsPositions()
         {
             Table t2 = new Table("miTabla");
