@@ -10,14 +10,14 @@ namespace Database
         private string m_name;
         private List<TableColumn> m_columns;
 
-        public Table(String name)
+        public Table(string name)
         {
             m_name = name;
             m_columns = new List<TableColumn>();
 
         }
 
-        public Table(String name, List<TableColumn> tableColumns)
+        public Table(string name, List<TableColumn> tableColumns)
         {
             m_name = name;
             m_columns = tableColumns;
@@ -127,7 +127,7 @@ namespace Database
 
         }
         
-        public String GetName() 
+        public string GetName() 
         {
             return m_name;
         }
@@ -135,6 +135,52 @@ namespace Database
         public List<TableColumn> GetColumns()
         {
             return m_columns;
+        }
+
+        public override string ToString()
+        {
+            string resultadoFinal = "[";
+            foreach (TableColumn column in m_columns)
+            {
+                if (column != m_columns.Last())
+                {
+                    string columnName = column.GetTableColumnName();
+                    resultadoFinal += "'" + columnName + "',";
+                }
+                else
+                {
+                    string ColumnName = column.GetTableColumnName();
+                    resultadoFinal += "'" + ColumnName + "'";
+                }
+            }
+            resultadoFinal += "]";
+                for (int i=0;i<m_columns.ElementAt(0).GetColumns().Count;i++)
+                {
+                    foreach (TableColumn tc in m_columns)
+                    {
+                        if (tc == m_columns.First())
+                        {
+                            if (tc == m_columns.Last())
+                            {
+                                resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "'}";
+                            }
+                                else
+                                {
+                                    resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "',";
+                                }
+                        }
+                        else if (tc != m_columns.Last())
+                        {
+                            resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "',";
+                        }
+
+                            else
+                            {
+                                resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "'}";
+                            }
+                    }
+                }
+          return resultadoFinal;
         }
     }
 }
