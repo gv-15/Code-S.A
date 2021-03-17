@@ -235,10 +235,10 @@ namespace Database
             string namesOfTables = null;
             string columnValue = null;
             string nameOfColumn = null;
-
-            if (!Directory.Exists(GetDBname()))
-                Directory.CreateDirectory(GetDBname());
-            string directory = GetDBname();
+            string path = System.AppDomain.CurrentDomain.BaseDirectory.ToString();
+            if (!Directory.Exists(path +"\\"+ GetDBname()))
+                Directory.CreateDirectory(path + "\\" + GetDBname());
+                string directory = GetDBname();
 
             foreach (Table table in m_db)
             {
@@ -246,21 +246,22 @@ namespace Database
 
                 if (!Directory.Exists(tableDirectory))
                     Directory.CreateDirectory(tableDirectory);
-                string tableName = "tableName," + table.GetName();
-                namesOfTables += tableName.Replace(",", "[[delimiter]]") + ",";
+                    string tableName = "tableName," + table.GetName();
+                    namesOfTables += tableName.Replace(",", "[[delimiter]]") + ",";
 
                 foreach (TableColumn column in table.GetColumns())
                 {
-                    string tableColumnDirectory = directory + "\\" + tableDirectory + "\\" + column.GetTableColumnName();
+                    columnValue = null;
                     string tableColumnNames = "tableColumnNames," + column.GetTableColumnName();
                     nameOfColumn += tableColumnNames.Replace(",", "[[delimiter]]") + ",";
-
+                    string tableColumnDirectory =  directory + "\\" + tableDirectory + "\\" + column.GetTableColumnName();
                     foreach (string value in column.GetColumns())
                     {
                         string tableColumnVal = "tableColumnVal," + value;
                         columnValue += tableColumnVal.Replace(",", "[[delimiter]]") + ",";
                     }
-                    File.WriteAllText(tableColumnDirectory, column.GetType() + "[[delimiter]]" + columnValue);
+                   
+                    File.WriteAllText(tableDirectory+"\\"+column.GetTableColumnName() + ".txt",  "[[delimiter]]" + columnValue);
                 }
             }
         }
