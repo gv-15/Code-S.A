@@ -187,13 +187,47 @@ namespace Database
         }
 
 
-        public void Load(string filename)
+        public void Load(string filename, string name)
         {
             string text = File.ReadAllText(filename);
+            
+            int j = 0;
+            if (Directory.Exists(text))
+            {
+                String[] nombresDB = Directory.GetFiles(text);
+                for(int i=0; i< nombresDB.Length ;i++)
+                {
+                    if (nombresDB[i].Equals(name))
+                    {
+                        j = i;
+                    }      
+                }
 
-            string[] values = text.Split(new Char[] { '\n' });
+                String[] dirDBs = Directory.GetDirectories(text);
+                String dirDB = dirDBs[j];
 
+                String[] tablas = Directory.GetDirectories(dirDB);
+                foreach(String tabla in tablas)
+                {
+                    Table newTable = new Table(tabla);                    
+                    String[] columnas = Directory.GetDirectories(tabla);
+                    foreach(String columna in columnas)
+                    {
+                        TableColumn newColumn = new TableColumn(columna);
+                        String[] valores=Directory.GetFiles(columna);
+                        foreach(String valor in valores)
+                        {
+                            newColumn.AddString(valor);
+                        }
+                        newTable.AddColumn(newColumn);
+                 
+                    }
+                    AddTable(newTable);
+                }
+                
+            }
 
+            
         }
 
         public void Save()
