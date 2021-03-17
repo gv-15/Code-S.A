@@ -10,14 +10,14 @@ namespace Database
         private string m_name;
         private List<TableColumn> m_columns;
 
-        public Table(String name)
+        public Table(string name)
         {
             m_name = name;
             m_columns = new List<TableColumn>();
 
         }
 
-        public Table(String name, List<TableColumn> tableColumns)
+        public Table(string name, List<TableColumn> tableColumns)
         {
             m_name = name;
             m_columns = tableColumns;
@@ -115,7 +115,7 @@ namespace Database
 
         }
         
-        public String GetName() 
+        public string GetName() 
         {
             return m_name;
         }

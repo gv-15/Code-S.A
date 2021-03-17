@@ -9,8 +9,8 @@ namespace Database
     {
         private string m_name;
         private List<Table> m_db;
-        private String m_username;
-        private String m_password;
+        private string m_username;
+        private string m_password;
         public DB(string name)
         {
             m_name = name;
@@ -18,7 +18,7 @@ namespace Database
 
         }
 
-        public DB(string name, String username, String password)
+        public DB(string name, string username, string password)
         {
             m_name = name;
             m_username = username;
@@ -56,14 +56,14 @@ namespace Database
 
         }
 
-        public string dropTable(String tableName)
+        public string dropTable(string tableName)
         {
             string respuesta = "Tabla borrada correctamente";
             m_db.RemoveAt(FindTableWithName(tableName));
             return respuesta;
         }
 
-        public string CreateTable(String nameOfTable, List<TableColumn> tableColumns)
+        public string CreateTable(string nameOfTable, List<TableColumn> tableColumns)
         {
             string respuesta = "Tabla creada correctamente";
             Table table = new Table(nameOfTable, tableColumns);
@@ -71,7 +71,7 @@ namespace Database
             return respuesta;
         }
 
-        public int FindTableWithName(String tableName)
+        public int FindTableWithName(string tableName)
         {
             for (int i = 0; i < m_db.Count; i++)
             {
@@ -84,10 +84,10 @@ namespace Database
 
         public string Insert(string table, List<TableColumn> columns, List<string> values)
         {
-            String st = "";
+            string st = "";
             int i = FindTableWithName(table);
             Table t = GetTable(i);
-            List<String> columnNames = null;
+            List<string> columnNames = null;
 
             foreach (TableColumn tc in columns)
             {
@@ -124,7 +124,7 @@ namespace Database
 
             for (int i = 0; i < columnNames.Count; i++)
             {
-                String name = columnNames[i];
+                string name = columnNames[i];
 
                 foreach (TableColumn col in list)
                 {
@@ -142,7 +142,7 @@ namespace Database
         {
             Table FilteredColumnTable = SelectColumns(table, columnNames);
             Table newTable = new Table("SelectedTable");
-            List<String> rows;
+            List<string> rows;
             foreach (string name in columnNames)
             {
                 newTable.AddColumn(new TableColumn(name));
