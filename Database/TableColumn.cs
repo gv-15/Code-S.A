@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -7,12 +8,12 @@ namespace Database
 {
     public class TableColumn
     {
-        private List<String> m_columns;
-        private String m_name;
-        public TableColumn(String name)
+        private List<string> m_columns;
+        private string m_name;
+        public TableColumn(string name)
         {
             m_name = name;
-            m_columns = new List<String>();
+            m_columns = new List<string>();
         }
 
         public string GetTableColumnName()
@@ -20,27 +21,27 @@ namespace Database
             return m_name;
         }
 
-        public List<String> GetColumns()
+        public List<string> GetColumns()
         {
             return m_columns;
         }
 
-        public void DeleteFrom(String p)
+        public void DeleteFrom(string p)
         {
             m_columns.Remove(p);
         }
 
-        public void AddString(String parameter)
+        public void AddString(string parameter)
         {
             m_columns.Add(parameter);
         }
 
-        public void DeleteCondition(List<String> list, Condition condition)
+        public void DeleteCondition(List<string> list, Condition condition)
         {
-            List<String> list2 = new List<String>();
+            List<string> list2 = new List<string>();
 
 
-            foreach (String element in list)
+            foreach (string element in list)
             {
                 if (condition.GetOperation().Equals("equals"))
                 {
@@ -73,7 +74,7 @@ namespace Database
                     }
                 }
             }
-            foreach (String element in list2)
+            foreach (string element in list2)
             {
                 list.Remove(element);
 
@@ -82,11 +83,11 @@ namespace Database
 
 
 
-        public List<String> Select(List<String> listColumns, Condition condition)
+        public List<string> Select(List<string> listRows, Condition condition)
         {
-            List<String> list1 = new List<String>();
+            List<string> list1 = new List<string>();
 
-            foreach (String element in listColumns)
+            foreach (string element in listRows)
             {
                 if (condition.GetOperation().Equals("equals"))
                 {
@@ -118,6 +119,58 @@ namespace Database
                 }
             return list1;
         }
+
+        public List<int> GetPositions(Condition condition)
+        {
+            List<int> positions = new List<int>();
+
+            if (condition.GetOperation().Equals("equals"))
+            {
+                for (int i = 0; i < m_columns.Count; i++)
+                {
+                    if (condition.GetValue().Equals(m_columns.ElementAt(i)))
+                    {
+                        positions.Add(i);
+                    }
+                };
+            }
+
+            else if (condition.GetOperation().Equals("min"))
+            {
+                for (int i = 0; i < m_columns.Count; i++)
+                {
+                    if (condition.GetValue().CompareTo(m_columns.ElementAt(i)) == 1) //Este if no me inspira confianza
+                    {
+                        positions.Add(i);
+                    }
+                };
+            }
+
+            else if (condition.GetOperation().Equals("max"))
+            {
+                for (int i = 0; i < m_columns.Count; i++)
+                {
+                    if (condition.GetValue().CompareTo(m_columns.ElementAt(i)) == -1) //Este if tampoco me inspira confianza 
+                    {
+                        positions.Add(i);
+                    }
+                };
+            }
+
+            return positions;
+        }
+
+        public List<string> GetValues(List<int> positions)
+        {
+            List<string> list = new List<string>();
+            foreach (int p in positions)
+            {
+                string value = m_columns.ElementAt(p);
+                list.Add(value);
+            }
+            return list;
+        }
+
 
     }
 }

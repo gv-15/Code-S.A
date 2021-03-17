@@ -7,7 +7,7 @@ namespace Database.MiniSqlParser
    public class SelectColumns : IQuery
    {
         private string m_table;
-        private List<String> m_columnNames;
+        private List<string> m_columnNames;
 
         public SelectColumns(string table, List<string> columnNames)
         {
@@ -17,7 +17,7 @@ namespace Database.MiniSqlParser
         public string Run(DB database)
         {
 
-            return null;
+            return database.SelectColumns(m_table,m_columnNames).ToString();
         }
    }
 }
