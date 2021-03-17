@@ -92,8 +92,8 @@ namespace UnitTests
             table.DeleteColumn(tc,c);
             int h = table.GetColumns().Count;
 
-            //Assert.AreEqual(1, h);
-            //Assert.AreEqual(age, tc[0]);
+            Assert.AreEqual(2, h);
+           // Assert.AreEqual(age, tc[0]);  Esta linea da error de compilacion asi que esta entre comentariios hasta que se arregle
 
 
         }
