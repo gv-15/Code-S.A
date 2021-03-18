@@ -48,6 +48,11 @@ namespace Database
                     m_columns.ElementAt(i).AddString(value);
                 }
             }
+            
+        }
+
+        public void AddRowsTrue(List<string> values)
+        {
             m_rows.Add(values);
         }
 

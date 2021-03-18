@@ -84,12 +84,15 @@ namespace Database
 
         public string Insert(string table, List<TableColumn> columns, List<string> values)
         {
-            string st = "";
+            //string st = "";
+
             int i = FindTableWithName(table);
             Table t = GetTable(i);
-            List<string> columnNames = null;
 
-            foreach (TableColumn tc in columns)
+            //List<string> columnNames = null;
+
+            t.AddRowsTrue(values);
+            /*foreach (TableColumn tc in columns)
             {
                 columnNames.Add(tc.GetTableColumnName());
             }
@@ -102,8 +105,9 @@ namespace Database
                 list[c].AddString(values[c]);
                 st += values[c];
             }
-
-            return st;
+            */
+           
+            return t.ToString();
         }
 
         public Table SelectAll(string table)
