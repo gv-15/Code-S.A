@@ -9,11 +9,13 @@ namespace Database
     {
         private string m_name;
         private List<TableColumn> m_columns;
+        private List<List<string>> m_rows;
 
         public Table(string name)
         {
             m_name = name;
             m_columns = new List<TableColumn>();
+            m_rows = new List<List<string>>();
 
         }
 
@@ -21,7 +23,14 @@ namespace Database
         {
             m_name = name;
             m_columns = tableColumns;
+            m_rows = new List<List<string>>();
+        }
 
+        public Table(string name, List<TableColumn> tableColumns,List<List<string>> rows)
+        {
+            m_name = name;
+            m_columns = tableColumns;
+            m_rows = rows;
         }
 
         public void AddColumn(TableColumn column)
@@ -39,7 +48,19 @@ namespace Database
                     m_columns.ElementAt(i).AddString(value);
                 }
             }
+            m_rows.Add(values);
+        }
 
+        public List<List<string>> GetRows()
+        {
+            return m_rows;
+        }
+
+        public List<string> GetRowByName(string name)
+        {
+
+
+            return null;
         }
 
         public List<int> SelectRowsPositions(Condition condition)

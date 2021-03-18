@@ -1,6 +1,7 @@
 ﻿using Database;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace UnitTests
 {
@@ -24,27 +25,20 @@ namespace UnitTests
 
             DB db = new DB("MyDB","Admin","SoyAdmin");
 
-            Table table = new Table("DatosAdmin");
-
             TableColumn tc1 = new TableColumn("NombreAdmin");
-
-            tc1.AddString("Gaizka");
 
             TableColumn tc2 = new TableColumn("EdadAdmin");
 
-            tc2.AddString("22");
-
             TableColumn tc3 = new TableColumn("PerrosAdmin");
 
-            tc3.AddString("Boss");
+            List<TableColumn> tableColumns = new List<TableColumn>() {tc1,tc2,tc3};
 
-            tc3.AddString("Drogo");
+            Table table = new Table("DatosAdmin", tableColumns);
 
-            table.AddColumn(tc1);
-
-            table.AddColumn(tc2);
-
-            table.AddColumn(tc3);
+            table.AddRow(new List<string>() { "Gaizka", "22", "Boss&Drogo" });
+            table.AddRow(new List<string>() {"Edurne", "22", "Zuri"});
+            table.AddRow(new List<string>() { "Iker", "22", "Null" });
+            table.AddRow(new List<string>() { "Xabi", "21", "Null" });
 
             db.AddTable(table);
 
