@@ -56,11 +56,10 @@ namespace Database
             return m_rows;
         }
 
-        public List<string> GetRowByName(string name)
+        public List<string> GetRowByIndex(int index)
         {
 
-
-            return null;
+            return m_rows[index];
         }
 
         public List<int> SelectRowsPositions(Condition condition)
