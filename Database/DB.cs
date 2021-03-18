@@ -56,7 +56,7 @@ namespace Database
 
         }
 
-        public string dropTable(string tableName)
+        public string DropTable(string tableName)
         {
             string respuesta = "Tabla borrada correctamente";
             m_db.RemoveAt(FindTableWithName(tableName));
@@ -143,8 +143,8 @@ namespace Database
         }
 
         public Table SelectWhere(string table, List<string> columnNames,Condition condition)
-        {
-            Table FilteredColumnTable = SelectColumns(table, columnNames);
+        {// Aqui Seleccionamos columnas y lo que hay que seleccionar son filas???
+             Table FilteredColumnTable = SelectColumns(table, columnNames);
             Table newTable = new Table("SelectedTable");
             List<string> rows;
             foreach (string name in columnNames)
@@ -163,7 +163,7 @@ namespace Database
 
 
         public void DeleteFrom(string table, List<string> columnNames, Condition condition)
-        {
+        {//Aqui borramos columnas y lo que hay que borrar son filas???
 
             int p = FindTableWithName(table);
             Table t = this.GetTable(p);
