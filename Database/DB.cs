@@ -9,8 +9,8 @@ namespace Database
     {
         private string m_name;
         private List<Table> m_db;
-        private String m_username;
-        private String m_password;
+        private string m_username;
+        private string m_password;
         public DB(string name)
         {
             m_name = name;
@@ -18,7 +18,7 @@ namespace Database
 
         }
 
-        public DB(string name, String username, String password)
+        public DB(string name, string username, string password)
         {
             m_name = name;
             m_username = username;
@@ -56,14 +56,14 @@ namespace Database
 
         }
 
-        public string dropTable(String tableName)
+        public string DropTable(string tableName)
         {
             string respuesta = "Tabla borrada correctamente";
             m_db.RemoveAt(FindTableWithName(tableName));
             return respuesta;
         }
 
-        public string CreateTable(String nameOfTable, List<TableColumn> tableColumns)
+        public string CreateTable(string nameOfTable, List<TableColumn> tableColumns)
         {
             string respuesta = "Tabla creada correctamente";
             Table table = new Table(nameOfTable, tableColumns);
@@ -71,7 +71,7 @@ namespace Database
             return respuesta;
         }
 
-        public int FindTableWithName(String tableName)
+        public int FindTableWithName(string tableName)
         {
             for (int i = 0; i < m_db.Count; i++)
             {
@@ -82,13 +82,16 @@ namespace Database
         }
 
 
-        public string Insert(string table, List<TableColumn> columns, List<string> values)
-        {
-            String st = "";
+        public string InsertInto(string table, List<TableColumn> columns, List<string> values)
+        {  //ESTE METODO NOS FALTA POR SABER SI HACE TODO LO QUE DEBERIA DESPUES DE LOS CAMBIAOS
+            string st = "";
+
             int i = FindTableWithName(table);
             Table t = GetTable(i);
-            List<String> columnNames = null;
 
+            List<string> columnNames = null;
+
+            t.AddRowsTrue(values);
             foreach (TableColumn tc in columns)
             {
                 columnNames.Add(tc.GetTableColumnName());
@@ -102,8 +105,9 @@ namespace Database
                 list[c].AddString(values[c]);
                 st += values[c];
             }
-
-            return st;
+            
+           
+            return t.ToString();
         }
 
         public Table SelectAll(string table)
@@ -124,7 +128,7 @@ namespace Database
 
             for (int i = 0; i < columnNames.Count; i++)
             {
-                String name = columnNames[i];
+                string name = columnNames[i];
 
                 foreach (TableColumn col in list)
                 {
@@ -138,9 +142,28 @@ namespace Database
             return newTable;
         }
 
+        public Table SelectWhere(string table, List<string> columnNames,Condition condition)
+        {// Aqui Seleccionamos columnas y lo que hay que seleccionar son filas???
+             Table FilteredColumnTable = SelectColumns(table, columnNames);
+            Table newTable = new Table("SelectedTable");
+            List<string> rows;
+            foreach (string name in columnNames)
+            {
+                newTable.AddColumn(new TableColumn(name));
+            }
+
+            foreach(TableColumn column in FilteredColumnTable.GetColumns())
+            {
+                rows=column.Select(column.GetColumns(), condition);
+                newTable.AddRow(rows);
+            }
+
+            return newTable;
+        }
+
 
         public void DeleteFrom(string table, List<string> columnNames, Condition condition)
-        {
+        {//Aqui borramos columnas y lo que hay que borrar son filas???
 
             int p = FindTableWithName(table);
             Table t = this.GetTable(p);
@@ -153,7 +176,7 @@ namespace Database
                 {
                     if (col.GetTableColumnName().Equals(name))
                     {
-                        t.DeleteRows(list, condition);
+                       t.DeleteColumn(list, condition);
                     }
                 }
 
@@ -168,13 +191,57 @@ namespace Database
         }
 
 
-        public void Load(string filename)
+        public DB Load(string directory, string name, string newName)
         {
-            string text = File.ReadAllText(filename);
+            Table t;
+            TableColumn tc;
+            DB db = new DB(newName, "Admin2", "Admin2");
+          
+            //La base de datos que se va a generar es la de arriba con el nombre que le hayas dado.
 
-            string[] values = text.Split(new Char[] { '\n' });
+            if (Directory.Exists(directory))
+            {
+                foreach (string directorie in Directory.GetDirectories(name))
+                {
 
+                    string[] directories = directorie.Split(new char[] { '\\' });
+                    t = new Table(directories[1], new List<TableColumn>());
+                    string[] directorieFiles = Directory.GetFiles(directorie);
 
+                    foreach (string file in directorieFiles)
+                    {
+
+                            string fileText = File.ReadAllText(file);
+                            string[] fileValues = fileText.Split(new char[] { ',' });
+                            string concatenatedValues = "";
+                            string[] valuesSplitCommas;
+
+                        for (int i = 0; i <= fileValues.Length - 1; i++)
+                        {
+
+                            fileValues[i] = fileValues[i].Replace("[[delimiter]]", ",");
+                            concatenatedValues += fileValues[i] + ",";
+                        }
+
+                        valuesSplitCommas = concatenatedValues.Split(new char[] { ',' });
+                        string[] files = file.Split(new char[] { '\\' });
+                        tc = new TableColumn(files[2]);
+
+                        for (int i = 0; i < valuesSplitCommas.Length; i++)
+                        {
+
+                            if (i != 0 && i % 2 == 0)
+                            {
+
+                                tc.AddString(valuesSplitCommas[i]);
+                            }
+                        }
+                        t.AddColumn(tc);
+                    }
+                    db.AddTable(t);
+                }
+            }
+            return db;
         }
 
         public void Save()
@@ -182,10 +249,10 @@ namespace Database
             string namesOfTables = null;
             string columnValue = null;
             string nameOfColumn = null;
-
-            if (!Directory.Exists(GetDBname()))
-                Directory.CreateDirectory(GetDBname());
-            string directory = GetDBname();
+            string path = System.AppDomain.CurrentDomain.BaseDirectory.ToString();
+            if (!Directory.Exists(path +"\\"+ GetDBname()))
+                Directory.CreateDirectory(path + "\\" + GetDBname());
+                string directory = GetDBname();
 
             foreach (Table table in m_db)
             {
@@ -193,21 +260,22 @@ namespace Database
 
                 if (!Directory.Exists(tableDirectory))
                     Directory.CreateDirectory(tableDirectory);
-                string tableName = "tableName," + table.GetName();
-                namesOfTables += tableName.Replace(",", "[[delimiter]]") + ",";
+                    string tableName = "tableName," + table.GetName();
+                    namesOfTables += tableName.Replace(",", "[[delimiter]]") + ",";
 
                 foreach (TableColumn column in table.GetColumns())
                 {
-                    string tableColumnDirectory = directory + "\\" + tableDirectory + "\\" + column.GetTableColumnName();
+                    columnValue = null;
                     string tableColumnNames = "tableColumnNames," + column.GetTableColumnName();
                     nameOfColumn += tableColumnNames.Replace(",", "[[delimiter]]") + ",";
-
+                    string tableColumnDirectory =  directory + "\\" + tableDirectory + "\\" + column.GetTableColumnName();
                     foreach (string value in column.GetColumns())
                     {
                         string tableColumnVal = "tableColumnVal," + value;
                         columnValue += tableColumnVal.Replace(",", "[[delimiter]]") + ",";
                     }
-                    File.WriteAllText(tableColumnDirectory, column.GetType() + "[[delimiter]]" + columnValue);
+                   
+                    File.WriteAllText(tableDirectory+"\\"+column.GetTableColumnName() + ".txt",  "[[delimiter]]" + columnValue);
                 }
             }
         }

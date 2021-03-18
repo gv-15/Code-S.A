@@ -9,7 +9,9 @@ namespace Database
     public class TableColumn
     {
         private List<string> m_columns;
-        private String m_name;
+        private string m_name;
+       
+
         public TableColumn(string name)
         {
             m_name = name;
@@ -21,27 +23,27 @@ namespace Database
             return m_name;
         }
 
-        public List<String> GetColumns()
+        public List<string> GetColumns()
         {
             return m_columns;
         }
 
-        public void DeleteFrom(String p)
+        public void DeleteFrom(string p)
         {
             m_columns.Remove(p);
         }
 
-        public void AddString(String parameter)
+        public void AddString(string parameter)
         {
             m_columns.Add(parameter);
         }
 
-        public void DeleteCondition(List<String> list, Condition condition)
+        public void DeleteCondition(List<string> list, Condition condition)
         {
-            List<String> list2 = new List<String>();
+            List<string> list2 = new List<string>();
 
 
-            foreach (String element in list)
+            foreach (string element in list)
             {
                 if (condition.GetOperation().Equals("equals"))
                 {
@@ -74,7 +76,7 @@ namespace Database
                     }
                 }
             }
-            foreach (String element in list2)
+            foreach (string element in list2)
             {
                 list.Remove(element);
 
@@ -83,11 +85,11 @@ namespace Database
 
 
 
-        public List<String> Select(List<String> listColumns, Condition condition)
+        public List<string> Select(List<string> listRows, Condition condition)
         {
-            List<String> list1 = new List<String>();
+            List<string> list1 = new List<string>();
 
-            foreach (String element in listColumns)
+            foreach (string element in listRows)
             {
                 if (condition.GetOperation().Equals("equals"))
                 {

@@ -125,7 +125,48 @@ namespace UnitTests
           
         }
 
+        [TestMethod]
 
+        public void TestGetPositions()
+        {
+            //List<int> positions = new List<int>();
+            TableColumn column = new TableColumn("name");
+            column.AddString("adolfo");
+            column.AddString("eider");
+            column.AddString("pepe");
+            Condition condition = new Condition(Condition.Operations.equals, "pepe", column);
+
+            
+            List<int> positions = column.GetPositions(condition);
+
+            foreach (int element in positions)
+            {
+                Assert.AreEqual(2, element);
+            }
+            
+        }
+
+        [TestMethod]
+
+        public void TestGetValues()
+        {
+            TableColumn list = new TableColumn("numbers");
+            list.AddString("0");
+            list.AddString("1");
+            list.AddString("2");
+            list.AddString("3");
+            List<int> positions = new List<int>();
+            
+            positions.Add(1);
+      
+            List<string> list2 = new List<string>();
+            list2 = list.GetValues(positions);
+
+            string resultado = list2[0];
+
+            
+            Assert.AreEqual(1, int.Parse(resultado));
+        }
     }
 }
 

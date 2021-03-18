@@ -9,19 +9,28 @@ namespace Database
     {
         private string m_name;
         private List<TableColumn> m_columns;
+        private List<List<string>> m_rows;
 
-        public Table(String name)
+        public Table(string name)
         {
             m_name = name;
             m_columns = new List<TableColumn>();
+            m_rows = new List<List<string>>();
 
         }
 
-        public Table(String name, List<TableColumn> tableColumns)
+        public Table(string name, List<TableColumn> tableColumns)
         {
             m_name = name;
             m_columns = tableColumns;
+            m_rows = new List<List<string>>();
+        }
 
+        public Table(string name, List<TableColumn> tableColumns,List<List<string>> rows)
+        {
+            m_name = name;
+            m_columns = tableColumns;
+            m_rows = rows;
         }
 
         public void AddColumn(TableColumn column)
@@ -39,7 +48,22 @@ namespace Database
                     m_columns.ElementAt(i).AddString(value);
                 }
             }
+            
+        }
 
+        public void AddRowsTrue(List<string> values)
+        {
+            m_rows.Add(values);
+        }
+
+        public List<List<string>> GetRows()
+        {
+            return m_rows;
+        }
+
+        public List<string> GetRowByIndex(int index)
+        {
+            return m_rows[index];
         }
 
         public List<int> SelectRowsPositions(Condition condition)
@@ -102,11 +126,23 @@ namespace Database
             return position;
         }
 
+        public void DeleteColumn(List<TableColumn> list, Condition condition)
+        {
+            List<int> index = SelectRowsPositions(condition);
 
-        public void DeleteRows(List<TableColumn> list, Condition condition)
+            for (int i = index.Count - 1; i >= 0; i--)
+            {
+                list.RemoveAt(i);
+            }
+        }
+
+        public void DeleteRows(Condition condition)
         {
           
             List<int> index = SelectRowsPositions(condition);
+
+            List<TableColumn> l = GetColumns();
+            List<String> list = l[0].GetColumns();
             
             for(int i = index.Count-1; i>=0; i--)
             {
@@ -115,7 +151,7 @@ namespace Database
 
         }
         
-        public String GetName() 
+        public string GetName() 
         {
             return m_name;
         }
@@ -123,6 +159,52 @@ namespace Database
         public List<TableColumn> GetColumns()
         {
             return m_columns;
+        }
+
+        public override string ToString()
+        {
+            string resultadoFinal = "[";
+            foreach (TableColumn column in m_columns)
+            {
+                if (column != m_columns.Last())
+                {
+                    string columnName = column.GetTableColumnName();
+                    resultadoFinal += "'" + columnName + "',";
+                }
+                else
+                {
+                    string ColumnName = column.GetTableColumnName();
+                    resultadoFinal += "'" + ColumnName + "'";
+                }
+            }
+            resultadoFinal += "]";
+                for (int i=0;i<m_columns.ElementAt(0).GetColumns().Count;i++)
+                {
+                    foreach (TableColumn tc in m_columns)
+                    {
+                        if (tc == m_columns.First())
+                        {
+                            if (tc == m_columns.Last())
+                            {
+                                resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "'}";
+                            }
+                                else
+                                {
+                                    resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "',";
+                                }
+                        }
+                        else if (tc != m_columns.Last())
+                        {
+                            resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "',";
+                        }
+
+                            else
+                            {
+                                resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "'}";
+                            }
+                    }
+                }
+          return resultadoFinal;
         }
     }
 }
