@@ -35,7 +35,7 @@ namespace UnitTests
 
             Table table = new Table("DatosAdmin", tableColumns);
 
-            table.AddRow(new List<string>() { "Gaizka", "22", "Boss&Drogo" });
+            table.AddRow(new List<string>() { "Gaizka", "22", "Boss&Drogo"});
             table.AddRow(new List<string>() {"Edurne", "22", "Zuri"});
             table.AddRow(new List<string>() { "Iker", "22", "Null" });
             table.AddRow(new List<string>() { "Xabi", "21", "Null" });

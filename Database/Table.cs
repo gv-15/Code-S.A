@@ -58,7 +58,6 @@ namespace Database
 
         public List<string> GetRowByIndex(int index)
         {
-
             return m_rows[index];
         }
 
