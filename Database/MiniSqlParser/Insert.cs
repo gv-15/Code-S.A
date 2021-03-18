@@ -19,7 +19,7 @@ namespace Database.MiniSqlParser
 
         public string Run(DB database)
         {
-            return database.Insert(Table, Columns, Values);
+            return database.InsertInto(Table, Columns, Values);
             
         }
     }

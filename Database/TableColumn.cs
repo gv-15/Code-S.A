@@ -10,6 +10,8 @@ namespace Database
     {
         private List<string> m_columns;
         private string m_name;
+       
+
         public TableColumn(string name)
         {
             m_name = name;

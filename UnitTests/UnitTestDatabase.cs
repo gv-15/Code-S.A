@@ -46,6 +46,16 @@ namespace UnitTests
 
         }
 
+        [TestMethod]
+        public void TestLoad()
+        {
+            DB dbLoad = new DB("LoadedDatabase");
+
+            dbLoad.Load(System.AppDomain.CurrentDomain.BaseDirectory.ToString(), "MyDB","DBtoLoad").Save();
+            
+
+        }
+
 
 
 
