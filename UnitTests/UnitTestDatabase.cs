@@ -46,11 +46,14 @@ namespace UnitTests
 
         }
 
+        [TestMethod]
         public void TestLoad()
         {
-            DB dbLoad = new DB("Loaded Database");
+            DB dbLoad = new DB("LoadedDatabase");
 
             // Guardar la DB con Save()
+
+            /*
             DB db = new DB("MyDB", "Admin", "SoyAdmin");
 
             TableColumn tc1 = new TableColumn("NombreAdmin");
@@ -71,9 +74,11 @@ namespace UnitTests
             db.AddTable(table);
 
             db.Save();
+            */
             //Cargar la DB con Load()
             dbLoad.Load(System.AppDomain.CurrentDomain.BaseDirectory.ToString(), "MyDB");
             //Comprobar que se ha cargado correctamente
+            dbLoad.Save();
 
         }
 

@@ -187,35 +187,36 @@ namespace Database
         }
 
 
-        public void Load(string filename, string name)
+        public void Load(string directory, string name)
         {
-            string text = File.ReadAllText(filename);
-            
+           
             int j = 0;
-            if (Directory.Exists(text))
+            string nombre = "";
+            if (Directory.Exists(directory))
             {
-                String[] nombresDB = Directory.GetFiles(text);
+                string[] nombresDB = Directory.GetFiles(directory);
                 for(int i=0; i< nombresDB.Length ;i++)
                 {
-                    if (nombresDB[i].Equals(name))
+                    nombre = nombresDB[i];
+                    if (nombre.Equals(directory + "\\" +name))
                     {
                         j = i;
                     }      
                 }
 
-                String[] dirDBs = Directory.GetDirectories(text);
-                String dirDB = dirDBs[j];
+                string[] dirDBs = Directory.GetDirectories(directory);
+                string dirDB = dirDBs[j];
 
-                String[] tablas = Directory.GetDirectories(dirDB);
-                foreach(String tabla in tablas)
+                string[] tablas = Directory.GetDirectories(dirDB);
+                foreach(string tabla in tablas)
                 {
                     Table newTable = new Table(tabla);                    
-                    String[] columnas = Directory.GetDirectories(tabla);
-                    foreach(String columna in columnas)
+                    string[] columnas = Directory.GetDirectories(tabla);
+                    foreach(string columna in columnas)
                     {
                         TableColumn newColumn = new TableColumn(columna);
-                        String[] valores=Directory.GetFiles(columna);
-                        foreach(String valor in valores)
+                        string[] valores=Directory.GetFiles(columna);
+                        foreach(string valor in valores)
                         {
                             newColumn.AddString(valor);
                         }
