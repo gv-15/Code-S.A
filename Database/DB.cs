@@ -56,7 +56,7 @@ namespace Database
 
         }
 
-        public string dropTable(string tableName)
+        public string DropTable(string tableName)
         {
             string respuesta = "Tabla borrada correctamente";
             m_db.RemoveAt(FindTableWithName(tableName));
@@ -82,7 +82,7 @@ namespace Database
         }
 
 
-        public string Insert(string table, List<TableColumn> columns, List<string> values)
+        public string InsertInto(string table, List<TableColumn> columns, List<string> values)
         {
             string st = "";
             int i = FindTableWithName(table);
@@ -187,48 +187,57 @@ namespace Database
         }
 
 
-        public void Load(string directory, string name)
+        public DB Load(string directory, string name, string newName)
         {
-           
-            int j = 0;
-            string nombre = "";
+            Table t;
+            TableColumn tc;
+            DB db = new DB(newName, "Admin2", "Admin2");
+          
+            //La base de datos que se va a generar es la de arriba con el nombre que le hayas dado.
+
             if (Directory.Exists(directory))
             {
-                string[] nombresDB = Directory.GetFiles(directory);
-                for(int i=0; i< nombresDB.Length ;i++)
+                foreach (string directorie in Directory.GetDirectories(name))
                 {
-                    nombre = nombresDB[i];
-                    if (nombre.Equals(directory + "\\" +name))
-                    {
-                        j = i;
-                    }      
-                }
 
-                string[] dirDBs = Directory.GetDirectories(directory);
-                string dirDB = dirDBs[j];
+                    string[] directories = directorie.Split(new char[] { '\\' });
+                    t = new Table(directories[1], new List<TableColumn>());
+                    string[] directorieFiles = Directory.GetFiles(directorie);
 
-                string[] tablas = Directory.GetDirectories(dirDB);
-                foreach(string tabla in tablas)
-                {
-                    Table newTable = new Table(tabla);                    
-                    string[] columnas = Directory.GetDirectories(tabla);
-                    foreach(string columna in columnas)
+                    foreach (string file in directorieFiles)
                     {
-                        TableColumn newColumn = new TableColumn(columna);
-                        string[] valores=Directory.GetFiles(columna);
-                        foreach(string valor in valores)
+
+                            string fileText = File.ReadAllText(file);
+                            string[] fileValues = fileText.Split(new char[] { ',' });
+                            string concatenatedValues = "";
+                            string[] valuesSplitCommas;
+
+                        for (int i = 0; i <= fileValues.Length - 1; i++)
                         {
-                            newColumn.AddString(valor);
-                        }
-                        newTable.AddColumn(newColumn);
-                 
-                    }
-                    AddTable(newTable);
-                }
-                
-            }
 
-            
+                            fileValues[i] = fileValues[i].Replace("[[delimiter]]", ",");
+                            concatenatedValues += fileValues[i] + ",";
+                        }
+
+                        valuesSplitCommas = concatenatedValues.Split(new char[] { ',' });
+                        string[] files = file.Split(new char[] { '\\' });
+                        tc = new TableColumn(files[2]);
+
+                        for (int i = 0; i < valuesSplitCommas.Length; i++)
+                        {
+
+                            if (i != 0 && i % 2 == 0)
+                            {
+
+                                tc.AddString(valuesSplitCommas[i]);
+                            }
+                        }
+                        t.AddColumn(tc);
+                    }
+                    db.AddTable(t);
+                }
+            }
+            return db;
         }
 
         public void Save()

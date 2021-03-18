@@ -15,7 +15,7 @@ namespace Database.MiniSqlParser
 
         public string Run(DB database)
         {
-            return database.dropTable(tableName);
+            return database.DropTable(tableName);
            
         }
     }
