@@ -86,14 +86,17 @@ namespace UnitTests
             table.AddColumn(name);
             table.AddColumn(age);
 
+            name.AddString("Aitor");
+            name.AddString("Laia");
+
             List<TableColumn> tc = table.GetColumns();
-            Condition c = new Condition(Condition.Operations.equals, "Alba", name);
+            Condition c = new Condition(Condition.Operations.equals, "Laia", name);
 
             table.DeleteColumn(tc,c);
             int h = table.GetColumns().Count;
 
-            Assert.AreEqual(2, h);
-           // Assert.AreEqual(age, tc[0]);  Esta linea da error de compilacion asi que esta entre comentariios hasta que se arregle
+            Assert.AreEqual(1, h);
+            Assert.AreEqual(age, tc[0]); 
 
 
         }
