@@ -75,6 +75,15 @@ namespace UnitTests
 
             m_db.Insert("people", people.GetColumns(), values);
 
+            Assert.AreEqual(values,people.GetRowByIndex(0));
+            Assert.AreEqual("Adolfo", people.GetColumns()[0].GetColumns()[0]);
+            Assert.AreEqual("García", people.GetColumns()[1].GetColumns()[0]);
+            int i = people.GetColumns()[0].GetColumns().Count;
+            Assert.AreEqual(1, i);
+            int i2 = people.GetColumns()[1].GetColumns().Count;
+            Assert.AreEqual(1, i2);
+
+
 
         }
 
