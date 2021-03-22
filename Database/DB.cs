@@ -82,16 +82,15 @@ namespace Database
         }
 
 
-        public string InsertInto(string table, List<TableColumn> columns, List<string> values)
-        {  //ESTE METODO NOS FALTA POR SABER SI HACE TODO LO QUE DEBERIA DESPUES DE LOS CAMBIAOS
-            string st = "";
-
+        public string Insert(string table, List<TableColumn> columns, List<string> values)
+        {
+            
             int i = FindTableWithName(table);
             Table t = GetTable(i);
-
-            List<string> columnNames = null;
-
             t.AddRowsTrue(values);
+
+            string st = "";
+            List<string> columnNames = new List<string>();
             foreach (TableColumn tc in columns)
             {
                 columnNames.Add(tc.GetTableColumnName());
@@ -106,7 +105,7 @@ namespace Database
                 st += values[c];
             }
             
-           
+
             return t.ToString();
         }
 
