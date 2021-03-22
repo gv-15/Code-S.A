@@ -16,7 +16,7 @@ namespace UnitTests
             Table table = new Table("m_nombre2");
             m_db.AddTable(table);
             int size = m_db.GetDBTableList().Count;
-            Assert.AreEqual(1,size);
+            Assert.AreEqual(1, size);
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace UnitTests
         public void TestSave()
         {
 
-            DB db = new DB("MyDB","Admin","SoyAdmin");
+            DB db = new DB("MyDB", "Admin", "SoyAdmin");
 
             TableColumn tc1 = new TableColumn("NombreAdmin");
 
@@ -99,12 +99,12 @@ namespace UnitTests
 
             TableColumn tc3 = new TableColumn("PerrosAdmin");
 
-            List<TableColumn> tableColumns = new List<TableColumn>() {tc1,tc2,tc3};
+            List<TableColumn> tableColumns = new List<TableColumn>() { tc1, tc2, tc3 };
 
             Table table = new Table("DatosAdmin", tableColumns);
 
-            table.AddRow(new List<string>() { "Gaizka", "22", "Boss&Drogo"});
-            table.AddRow(new List<string>() {"Edurne", "22", "Zuri"});
+            table.AddRow(new List<string>() { "Gaizka", "22", "Boss&Drogo" });
+            table.AddRow(new List<string>() { "Edurne", "22", "Zuri" });
             table.AddRow(new List<string>() { "Iker", "22", "Null" });
             table.AddRow(new List<string>() { "Xabi", "21", "Null" });
 
@@ -119,13 +119,20 @@ namespace UnitTests
         {
             DB dbLoad = new DB("LoadedDatabase");
 
-            dbLoad.Load(System.AppDomain.CurrentDomain.BaseDirectory.ToString(), "MyDB","DBtoLoad").Save();
-            
+            dbLoad.Load(System.AppDomain.CurrentDomain.BaseDirectory.ToString(), "MyDB", "DBtoLoad").Save();
+
 
         }
 
 
+        [TestMethod]
+        public void TestDeleteFrom()
+        {
 
 
+
+
+        }
     }
+
 }

@@ -66,6 +66,7 @@ namespace Database
             return m_rows[index];
         }
 
+
         public List<int> SelectRowsPositions(Condition condition)
         {
           
