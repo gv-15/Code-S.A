@@ -20,6 +20,34 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TestSelectWhere()
+        {
+            m_db = new DB("db");
+            Table t = new Table("Tabla");
+            TableColumn columna1=new TableColumn("Coches");
+            columna1.AddString("Renault");
+            columna1.AddString("Nissan");
+            columna1.AddString("Audi");
+            t.AddColumn(columna1);
+            TableColumn columna2 = new TableColumn("Propietarios");
+            columna2.AddString("Miren");
+            columna2.AddString("Claudia");
+            columna2.AddString("Pedro");
+            TableColumn columna3 = new TableColumn("Precio");
+            columna3.AddString("2000");
+            columna3.AddString("8520");
+            columna3.AddString("10000");
+            t.AddColumn(columna1);
+            t.AddColumn(columna2);
+            t.AddColumn(columna3);
+            m_db.AddTable(t);
+            Condition c = new Condition()
+
+
+            
+        }
+
+        [TestMethod]
         public void TestSave()
         {
 
