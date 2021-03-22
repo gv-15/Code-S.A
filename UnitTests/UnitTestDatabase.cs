@@ -28,7 +28,7 @@ namespace UnitTests
             m_db.AddTable(table1);
             m_db.AddTable(table2);
 
-            m_db.dropTable("table2");
+            m_db.DropTable("table2");
 
             int i = m_db.GetDBTableList().Count;
 
@@ -131,23 +131,24 @@ namespace UnitTests
                 
             newTable2=  db.SelectColumns(table, colName);
 
-        [TestMethod]
-        public void TestLoad()
-        {
-            DB dbLoad = new DB("LoadedDatabase");
-
-            dbLoad.Load(System.AppDomain.CurrentDomain.BaseDirectory.ToString(), "MyDB","DBtoLoad").Save();
-            
-
-        }
+       
 
 
             Assert.AreEqual("['a']{'name'}{'surname'}",newTable2.ToString());
 
         }
 
+        [TestMethod]
+        public void TestLoad()
+        {
+            DB dbLoad = new DB("LoadedDatabase");
 
-            [TestMethod]
+            dbLoad.Load(System.AppDomain.CurrentDomain.BaseDirectory.ToString(), "MyDB", "DBtoLoad").Save();
+
+
+        }
+
+        [TestMethod]
         public void TestDeleteFrom()
         {
           /*  DB db = new DB("MyDB", "Admin", "SoyAdmin");
