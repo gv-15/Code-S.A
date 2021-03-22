@@ -82,7 +82,7 @@ namespace Database
         }
 
 
-        public string Insert(string table, List<TableColumn> columns, List<string> values)
+        public string InsertInto(string table, List<TableColumn> columns, List<string> values)
         {
             
             int i = FindTableWithName(table);
