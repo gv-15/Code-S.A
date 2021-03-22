@@ -122,8 +122,10 @@ namespace Database
 
             int p = FindTableWithName(table);
 
-            Table t = this.GetTable(p);
-            List<TableColumn> list = t.GetColumns();
+            Table t = new Table("t"); 
+            t=this.GetTable(p);
+            List<TableColumn> list = new List<TableColumn>();
+                list = t.GetColumns();
 
             for (int i = 0; i < columnNames.Count; i++)
             {

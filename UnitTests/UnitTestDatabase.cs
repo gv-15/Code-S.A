@@ -113,6 +113,23 @@ namespace UnitTests
             db.Save();
 
         }
+        [TestMethod]
+        public void TestSelectColumns()
+        {
+            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            Table newTable = new Table("newTable");
+            TableColumn column = new TableColumn("a");
+            column.AddString("name");
+            column.AddString("surname");
+            string table = newTable.GetName();
+            newTable.AddColumn(column);
+            db.AddTable(newTable);
+
+            List<string> colName = new List<string>();
+            colName.Add("a");
+            Table newTable2 = new Table("b"); 
+                
+            newTable2=  db.SelectColumns(table, colName);
 
         [TestMethod]
         public void TestLoad()
@@ -125,7 +142,26 @@ namespace UnitTests
         }
 
 
+            Assert.AreEqual("['a']{'name'}{'surname'}",newTable2.ToString());
 
+        }
+
+
+            [TestMethod]
+        public void TestDeleteFrom()
+        {
+          /*  DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            Table table = new Table("People");
+            TableColumn column = new TableColumn("name");
+            TableColumn column2 = new TableColumn("age");
+            column.AddString("Ane");
+            column.AddString("Lara");
+            column2.AddString("18");
+            column2.AddString("17");
+            Condition condition = new Condition(Condition.Operations.equals, "Ane", column);
+            int p = db.FindTableWithName(table.GetName());
+           */
+        }
 
     }
 }
