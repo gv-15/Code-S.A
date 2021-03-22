@@ -82,7 +82,7 @@ namespace Database
         }
 
 
-        public string Insert(string table, List<TableColumn> columns, List<string> values)
+        public string InsertInto(string table, List<TableColumn> columns, List<string> values)
         {
             
             int i = FindTableWithName(table);
@@ -164,8 +164,7 @@ namespace Database
 
 
         public void DeleteFrom(string table, List<string> columnNames, Condition condition)
-        {//Aqui borramos columnas y lo que hay que borrar son filas???
-
+        {
             int p = FindTableWithName(table);
             Table t = this.GetTable(p);
             List<TableColumn> list = t.GetColumns();
@@ -177,10 +176,29 @@ namespace Database
                 {
                     if (col.GetTableColumnName().Equals(name))
                     {
-                       t.DeleteColumn(list, condition);
+                       t.DeleteColumn(list, condition);//Con esto borramos de las columnas
                     }
                 }
 
+            }
+
+            List<List<string>> rows = t.GetRows();//Ahora vamos a borrar filas
+            int counter = 0;
+            foreach (List<string> row in rows)
+            {
+                Boolean find = false;
+                foreach (string value in row)
+                {
+                    if (value.Equals(condition.GetValue()))
+                    {
+                        find = true;
+                    }
+                }
+                if (find == true)
+                {
+                    rows.RemoveAt(counter);
+                }
+                counter++;
             }
         }
 
