@@ -161,8 +161,9 @@ namespace Database
         }
 
 
-        public void DeleteFrom(string table, List<string> columnNames, Condition condition)
+        public string DeleteFrom(string table, List<string> columnNames, Condition condition)
         {
+            string resultado = "Se ha borrado correctamente";
             int p = FindTableWithName(table);
             Table t = this.GetTable(p);
             List<TableColumn> list = t.GetColumns();
@@ -190,6 +191,7 @@ namespace Database
                 }
                 counter++;
             }
+            return resultado;
         }
 
         public string RunMiniSqlQuery(string query)
