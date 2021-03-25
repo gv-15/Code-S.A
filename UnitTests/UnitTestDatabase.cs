@@ -131,10 +131,37 @@ namespace UnitTests
                 
             newTable2=  db.SelectColumns(table, colName);
 
-       
+            Assert.AreEqual("['a']{'name'}{'surname'}", newTable2.ToString());
+
+            
+            TableColumn name = new TableColumn("name");
+            TableColumn surname = new TableColumn("surname");
+            List<TableColumn> tableColumns = new List<TableColumn>() { name, surname };
+            
+            Table t = new Table("t", tableColumns);
+
+            db.AddTable(t);
+            
+            t.AddRowsTrue(new List<string>() { "Gaizka", "Gonzalez" });
+            t.AddRowsTrue(new List<string>() { "Edurne", " Sanchez" });
+            t.AddRowsTrue(new List<string>() { "Iker", " Garcia" });
+
+            Table newT = new Table("newT");
+            List<string> colNames = new List<string>();
+            colNames.Add("name");
+
+            newT = db.SelectColumns(t.GetName(), colNames);
+
+            List<List<string>> row1 = new List<List<string>>();
+            row1 = t.GetRows();
+
+            Assert.AreEqual("Gaizka", row1[0]);
+            Assert.AreEqual("Edurne", row1[1]);
+            Assert.AreEqual("Iker", row1[2]);
 
 
-            Assert.AreEqual("['a']{'name'}{'surname'}",newTable2.ToString());
+
+
 
         }
 

@@ -127,6 +127,8 @@ namespace Database
             List<TableColumn> list = new List<TableColumn>();
                 list = t.GetColumns();
 
+            List<List<string>> rows2 = new List<List<string>>();
+           
             for (int i = 0; i < columnNames.Count; i++)
             {
                 string name = columnNames[i];
@@ -136,8 +138,41 @@ namespace Database
                     if (col.GetTableColumnName().Equals(name))
                     {
                         newTable.AddColumn(col);
+
                     }
                 }
+            }
+
+            //List part
+            List<TableColumn> columns = new List<TableColumn>();
+            columns = newTable.GetColumns();
+            int n = columns.Count;
+                      
+            List<String> li = new List<string>();
+            List<List<string>> li2;
+
+            for (int j = 0; j < n; j++)
+            {
+                li2 = new List<List<string>>();
+
+                for (int k = 0; k < n; k++) 
+                { 
+                 string s = columns[k].GetColumns()[j];
+                 li.Add(s);
+                }
+
+                li2.Add(li);
+                
+            }
+
+            List<List<string>> rows = new List<List<string>>();
+            rows = t.GetRows();
+
+
+            //Replace the values
+            for (int i = 0; i < t.GetRows().Count; i++)
+            {
+                rows[i] = rows2[i];
             }
 
             return newTable;
