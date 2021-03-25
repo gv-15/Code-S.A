@@ -7,13 +7,11 @@ namespace Database.MiniSqlParser
     public class Insert : IQuery
     {
         public string Table;
-        public List<TableColumn> Columns = new List<TableColumn>();
         public List<string> Values = new List<string>();
 
-        public Insert(string table, List<TableColumn> columns, List<string> values)
+        public Insert(string table, List<string> values)
         {
             Table = table;
-            Columns = columns;
             Values = values;
         }
 
@@ -21,7 +19,7 @@ namespace Database.MiniSqlParser
 
         public string Run(DB database)
         {
-            return database.InsertInto(Table, Columns, Values);
+            return database.InsertInto(Table,Values);
             
         }
     }

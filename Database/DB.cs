@@ -82,17 +82,16 @@ namespace Database
         }
 
 
-        public string InsertInto(string table, List<TableColumn> columns, List<string> values)
+        public string InsertInto(string table, List<string> values)
         {
             
             int i = FindTableWithName(table);
             Table t = new Table(m_db[i].GetName());
             t = m_db[i];
             t.AddRowsTrue(values);
-
             string st = "";
             List<string> columnNames = new List<string>();
-            foreach (TableColumn tc in columns)
+            foreach (TableColumn tc in t.GetColumns())
             {
                 columnNames.Add(tc.GetTableColumnName());
             }

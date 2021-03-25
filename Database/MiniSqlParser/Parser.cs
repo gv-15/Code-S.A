@@ -46,9 +46,9 @@ namespace Database.MiniSqlParser
             if (match.Success)
             { 
                 string[] columnNames = match.Groups[1].Value.Split(',');
-                List<TableColumn> tcs = new List<TableColumn>();
-                List<string> list = new List<string>();
-                Insert insert= new Insert(match.Groups[1].Value, tcs, list);
+                
+                string[] list = match.Groups[2].Value.Split(',');
+                Insert insert= new Insert(match.Groups[1].Value, Utils.ToList(list));
                 return insert;
             }
 

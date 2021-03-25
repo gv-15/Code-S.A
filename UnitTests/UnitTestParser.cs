@@ -53,7 +53,7 @@ namespace UnitTests
             Assert.IsTrue(query2 is Insert);
             db.RunMiniSqlQuery("INSERT INTO DatosAdmin VALUES (Tamara,23,Xia);");
             string resultadoInsert = "['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}{'Xabi','21','Null'}{'Tamara','23','Xia'}";
-            //Assert.AreEqual(resultadoInsert, table.ToString());
+            Assert.AreEqual(resultadoInsert, table.ToString());
 
             IQuery query3 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin;");
             Assert.IsTrue(query3 is SelectColumns);
