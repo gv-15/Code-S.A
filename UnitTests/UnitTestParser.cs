@@ -61,10 +61,12 @@ namespace UnitTests
             IQuery query4 = Parser.Parse("SELECT Edad FROM Table1 WHERE Edad = 18;");
             Assert.IsTrue(query4 is SelectWhere);
 
-            IQuery query5 = Parser.Parse("DROP TABLE Table1;");
+            IQuery query5 = Parser.Parse("DROP TABLE DatosAdmin;");
             Assert.IsTrue(query5 is DropTable);
-          
-
+            Assert.IsNotNull(db.FindTableWithName("AdminRules"));
+            db.RunMiniSqlQuery("DROP TABLE AdminRules;");
+            Assert.AreEqual(-1,db.FindTableWithName("AdminRules")); //Compruebas que ese nombre ya no esta en la database
+            
 
             IQuery query6 = Parser.Parse("CREATE TABLE Table2 (Nombre,Edad);");
             Assert.IsTrue(query6 is CreateTable);

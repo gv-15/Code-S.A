@@ -64,10 +64,8 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, dropTablePattern);
             if (match.Success)
             { 
-                string[] columnNames = match.Groups[6].Value.Split(',');
-                Table table = new Table("prueba2");
-                string name = table.GetName();
-                DropTable dropTable = new DropTable(name);
+                string[] columnNames = match.Groups[1].Value.Split(',');
+                DropTable dropTable = new DropTable(match.Groups[1].Value);
                 return dropTable;
             }
 
