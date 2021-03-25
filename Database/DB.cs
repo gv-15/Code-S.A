@@ -86,7 +86,8 @@ namespace Database
         {
             
             int i = FindTableWithName(table);
-            Table t = GetTable(i);
+            Table t = new Table(m_db[i].GetName());
+            t = m_db[i];
             t.AddRowsTrue(values);
 
             string st = "";

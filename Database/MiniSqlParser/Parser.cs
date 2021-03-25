@@ -45,10 +45,10 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, insertIntoPattern);
             if (match.Success)
             { 
-                string[] columnNames = match.Groups[3].Value.Split(',');
+                string[] columnNames = match.Groups[1].Value.Split(',');
                 List<TableColumn> tcs = new List<TableColumn>();
                 List<string> list = new List<string>();
-                Insert insert= new Insert(match.Groups[3].Value, tcs, list);
+                Insert insert= new Insert(match.Groups[1].Value, tcs, list);
                 return insert;
             }
 
