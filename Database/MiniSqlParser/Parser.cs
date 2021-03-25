@@ -28,10 +28,10 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, selectWherePattern);
             if (match.Success)
             { 
-                string[] columnNames = match.Groups[5].Value.Split(',');
+                string[] columnNames = match.Groups[1].Value.Split(',');
                 TableColumn tc = new TableColumn("prueba");
                 Condition condition = new Condition(Condition.Operations.equals, "prueba", tc);
-                SelectWhere selectWhere = new SelectWhere(match.Groups[5].Value, Utils.ToList(columnNames), condition);
+                SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition);
                 return selectWhere;
             }
 
@@ -56,9 +56,10 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, deleteFromPattern);
             if (match.Success)
             { 
-                string[] columnNames = match.Groups[4].Value.Split(',');
-                DeleteFrom deleteFrom = new DeleteFrom(match.Groups[4].Value, Utils.ToList(columnNames));
-                return deleteFrom;
+                string[] columnNames = match.Groups[1].Value.Split(',');
+                //Condition condition = new Condition();
+                //DeleteFrom deleteFrom = new DeleteFrom(match.Groups[1].Value, Utils.ToList(columnNames),condition);
+              //  return deleteFrom;
             }
 
             match = Regex.Match(miniSqlSentence, dropTablePattern);
@@ -82,7 +83,6 @@ namespace Database.MiniSqlParser
 
                 }
                
-
                 CreateTable createTable = new CreateTable(match.Groups[1].Value, tableColumn);
                 return createTable;
             }
