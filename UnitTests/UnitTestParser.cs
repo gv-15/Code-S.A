@@ -57,6 +57,9 @@ namespace UnitTests
 
             IQuery query3 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin;");
             Assert.IsTrue(query3 is SelectColumns);
+            string resultadoSelectColumns = "['EdadAdmin']{'22'}{'22'}{'22'}{'21'}{'23'}";
+            Assert.AreEqual(db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin;"),resultadoSelectColumns);
+
 
             IQuery query4 = Parser.Parse("SELECT Edad FROM Table1 WHERE Edad = 18;");
             Assert.IsTrue(query4 is SelectWhere);

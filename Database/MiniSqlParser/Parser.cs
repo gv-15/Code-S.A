@@ -38,7 +38,7 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, selectColumnsPattern);
             if (match.Success)
             {
-                string[] columnNames = match.Groups[2].Value.Split(',');
+                string[] columnNames = match.Groups[1].Value.Split(',');
                 SelectColumns selectColumns = new SelectColumns(match.Groups[2].Value, Utils.ToList(columnNames));
                 return selectColumns;
             }
