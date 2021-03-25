@@ -60,14 +60,14 @@ namespace UnitTests
             string resultadoSelectColumns = "['EdadAdmin']{'22'}{'22'}{'22'}{'21'}{'23'}";
             Assert.AreEqual(db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin;"),resultadoSelectColumns);
 
+            /*
+                       IQuery query4 = Parser.Parse("SELECT Edad FROM Table1 WHERE Edad = 18;");
+                       Assert.IsTrue(query4 is SelectWhere);
 
-            IQuery query4 = Parser.Parse("SELECT Edad FROM Table1 WHERE Edad = 18;");
-            Assert.IsTrue(query4 is SelectWhere);
-          /*
-            string resultadoSelectWhere = "";
-            Assert.AreEqual(resultadoSelectWhere, db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin = 18;"));
-           
-          */
+                       string resultadoSelectWhere = "";
+                       Assert.AreEqual(resultadoSelectWhere, db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin = 18;"));
+
+              */
             IQuery query5 = Parser.Parse("DROP TABLE DatosAdmin;");
             Assert.IsTrue(query5 is DropTable);
             Assert.IsNotNull(db.FindTableWithName("AdminRules"));

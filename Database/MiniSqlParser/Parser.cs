@@ -29,10 +29,10 @@ namespace Database.MiniSqlParser
             if (match.Success)
             { 
                 string[] columnNames = match.Groups[1].Value.Split(',');
-                TableColumn tc = new TableColumn("prueba");
-                Condition condition = new Condition(Condition.Operations.equals, "prueba", tc);
-                SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition);
-                return selectWhere;
+                
+          
+                //SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition);
+               // return selectWhere;
             }
 
             match = Regex.Match(miniSqlSentence, selectColumnsPattern);
