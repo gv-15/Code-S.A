@@ -73,7 +73,7 @@ namespace UnitTests
             values.Add("Adolfo");
             values.Add("García");
 
-            m_db.InsertInto("people", people.GetColumns(), values);
+            m_db.InsertInto("people", values);
 
             Assert.AreEqual(values,people.GetRowByIndex(0));
             Assert.AreEqual("Adolfo", people.GetColumns()[0].GetColumns()[0]);
