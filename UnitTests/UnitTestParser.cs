@@ -70,6 +70,11 @@ namespace UnitTests
 
             IQuery query6 = Parser.Parse("CREATE TABLE Table2 (Nombre,Edad);");
             Assert.IsTrue(query6 is CreateTable);
+            db.RunMiniSqlQuery("CREATE TABLE AdminRules (Nombre,Edad);");
+            Assert.IsNotNull(db.FindTableWithName("AdminRules"));
+            Assert.AreEqual(1, db.FindTableWithName("AdminRules"));
+            string resultadoCreateTable = "['Nombre','Edad']";
+            Assert.AreEqual(resultadoCreateTable , db.GetTableWithName("AdminRules").ToString());
 
             IQuery query7 = Parser.Parse("DELETE FROM Table1 WHERE Edad = 18;");
             Assert.IsTrue(query7 is DeleteFrom);

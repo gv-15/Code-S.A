@@ -71,19 +71,19 @@ namespace Database.MiniSqlParser
 
             match = Regex.Match(miniSqlSentence, createTablePattern);
             if (match.Success)
-            { 
-                string[] columnNames = match.Groups[7].Value.Split(',');
-                Table table1 = new Table("prueba3");
-                string name1 = table1.GetName();
-                TableColumn tc1 = new TableColumn("NombreAdmin");
+            {
+                List<TableColumn> tableColumn = new List<TableColumn>();
+                string[] columnNames = match.Groups[1].Value.Split(',');
+                string[] tableColumns = match.Groups[2].Value.Split(',');
+                foreach (string value in tableColumns)
+                {
+                    TableColumn tc = new TableColumn(value);
+                    tableColumn.Add(tc);
 
-                TableColumn tc2 = new TableColumn("EdadAdmin");
+                }
+               
 
-                TableColumn tc3 = new TableColumn("PerroAdmin");
-
-                List<TableColumn> tableColumns = new List<TableColumn>() { tc1, tc2, tc3 };
-
-                CreateTable createTable = new CreateTable(name1, tableColumns);
+                CreateTable createTable = new CreateTable(match.Groups[1].Value, tableColumn);
                 return createTable;
             }
 
