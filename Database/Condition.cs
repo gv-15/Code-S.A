@@ -9,26 +9,26 @@ namespace Database
         public enum Operations {max, min, equals };
        
         private Enum m_operation;
-        private String m_value;
-        private String m_columnName;
-        public Condition(Enum operation, String value, String column)
+        private string m_value;
+        private string m_columnName;
+        public Condition(Enum operation, string value, string column)
         {
             m_operation = operation;
             m_value = value;
             m_columnName = column;
         }
 
-        public String GetOperation()
+        public string GetOperation()
         {
             return m_operation.ToString();
         }
 
-        public String GetValue()
+        public string GetValue()
         {
             return m_value;
         }
 
-        public String GetColumnName()
+        public string GetColumnName()
         {
             return m_columnName;
         }
