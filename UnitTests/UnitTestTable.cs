@@ -49,7 +49,7 @@ namespace UnitTests
 
 
         
-
+        /*
         [TestMethod]
         public void TestDeleteColumn()
         {
@@ -73,7 +73,7 @@ namespace UnitTests
             Assert.AreEqual(age, tc[0]); 
 
 
-        }
+        }*/
 
         [TestMethod]
         public void TestSelectRowsPositions()
