@@ -149,6 +149,11 @@ namespace Database
             
             List<int> index= newTable.SelectRowsPositions(condition);
 
+            for (int i = index.Count; i<= 0 ; i--)
+            {
+                
+            }
+
             return newTable;
         }
 

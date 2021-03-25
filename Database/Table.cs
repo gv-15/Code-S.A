@@ -69,7 +69,7 @@ namespace Database
         public List<int> SelectRowsPositions(Condition condition)
         {
           
-            List<String> columnslist = new List<String>();
+            List<string> columnslist = new List<string>();
             List<int> position = new List<int>();
 
             foreach (TableColumn element in m_columns)
@@ -78,7 +78,7 @@ namespace Database
 
                 columnslist = element.GetColumns();
 
-                foreach (String element2 in columnslist)
+                foreach (string element2 in columnslist)
                 {
                     if (condition.GetOperation().Equals("equals"))
                     {
@@ -129,10 +129,12 @@ namespace Database
         public void DeleteColumn(List<TableColumn> list, Condition condition)
         {
             List<int> index = SelectRowsPositions(condition);
-
-            for (int i = index.Count - 1; i >= 0; i--)
+            foreach(TableColumn column in list)
             {
-                list.RemoveAt(i);
+                for (int i = index.Count - 1; i >= 0; i--)
+                {
+                    column.GetColumns().RemoveAt(index[i]);
+                }
             }
         }
 
