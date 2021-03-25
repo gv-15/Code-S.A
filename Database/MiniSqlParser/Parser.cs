@@ -30,7 +30,7 @@ namespace Database.MiniSqlParser
             { 
                 string[] columnNames = match.Groups[5].Value.Split(',');
                 TableColumn tc = new TableColumn("prueba");
-                Condition condition = new Condition(Condition.Operations.equals, "prueba", tc);
+                Condition condition = new Condition(Condition.Operations.equals, "prueba", tc.GetTableColumnName());
                 SelectWhere selectWhere = new SelectWhere(match.Groups[5].Value, Utils.ToList(columnNames), condition);
                 return selectWhere;
             }

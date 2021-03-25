@@ -54,7 +54,7 @@ namespace UnitTests
             TableColumn column = new TableColumn("name");
             column.AddString("Ane");
             column.AddString("Lara");
-            Condition condition = new Condition(Condition.Operations.equals, "Ane", column);
+            Condition condition = new Condition(Condition.Operations.equals, "Ane", column.GetTableColumnName());
 
             List<String> names = column.GetColumns();
             column.DeleteCondition(names, condition);
@@ -76,7 +76,7 @@ namespace UnitTests
             TableColumn column2 = new TableColumn("numbers");
             column2.AddString("7");
             column2.AddString("10");
-            Condition condition1 = new Condition(Condition.Operations.min, "8", column2);
+            Condition condition1 = new Condition(Condition.Operations.min, "8", column2.GetTableColumnName());
 
             List<String> numbers = column2.GetColumns();
             column2.DeleteCondition(numbers, condition1);
@@ -96,7 +96,7 @@ namespace UnitTests
             TableColumn column = new TableColumn("name");
             column.AddString("adolfo");
             column.AddString("eider");
-            Condition condition = new Condition(Condition.Operations.equals, "adolfo", column);
+            Condition condition = new Condition(Condition.Operations.equals, "adolfo", column.GetTableColumnName());
 
             List<String> col = column.GetColumns();
 
@@ -112,7 +112,7 @@ namespace UnitTests
             TableColumn column2 = new TableColumn("numbers");
             column2.AddString("6");
             column2.AddString("9");
-            Condition condition2 = new Condition(Condition.Operations.min, "7", column2);
+            Condition condition2 = new Condition(Condition.Operations.min, "7", column2.GetTableColumnName());
 
             List<String> numbers = column2.GetColumns();
             List <String> list = column2.Select(numbers, condition2);
@@ -134,7 +134,7 @@ namespace UnitTests
             column.AddString("adolfo");
             column.AddString("eider");
             column.AddString("pepe");
-            Condition condition = new Condition(Condition.Operations.equals, "pepe", column);
+            Condition condition = new Condition(Condition.Operations.equals, "pepe", column.GetTableColumnName());
 
             
             List<int> positions = column.GetPositions(condition);

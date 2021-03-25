@@ -146,16 +146,18 @@ namespace Database
         public Table SelectWhere(string table, List<string> columnNames,Condition condition)
         {// Aqui Seleccionamos columnas y lo que hay que seleccionar son filas???
             Table FilteredColumnTable = SelectColumns(table,columnNames);
-            Table newTable = new Table("SelectedTable");
             
-            List<int> index= newTable.SelectRowsPositions(condition);
 
-            for (int i = index.Count; i<= 0 ; i--)
-            {
+            FilteredColumnTable.DeleteColumn(condition);
+            
+            //List<int> index= newTable.SelectRowsPositions(condition);
+
+            //for (int i = index.Count; i<= 0 ; i--)
+            //{
                 
-            }
+            //}
 
-            return newTable;
+            return FilteredColumnTable;
         }
 
 
@@ -165,18 +167,10 @@ namespace Database
             Table t = this.GetTable(p);
             List<TableColumn> list = t.GetColumns();
 
-            for (int i = 0; i < columnNames.Count; i++)
-            {
-                string name = columnNames[i];
-                foreach (TableColumn col in list)
-                {
-                    if (col.GetTableColumnName().Equals(name))
-                    {
-                       t.DeleteColumn(list, condition);//Con esto borramos de las columnas
-                    }
-                }
-
-            }
+           
+            t.DeleteColumn(condition);//Con esto borramos de las columnas
+                    
+             
 
             List<List<string>> rows = t.GetRows();//Ahora vamos a borrar filas
             int counter = 0;

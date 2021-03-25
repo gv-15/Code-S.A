@@ -76,26 +76,15 @@ namespace Database
             foreach (TableColumn element in m_columns)
             {
                 int counter = 0;
+                if (element.GetTableColumnName().Equals(condition.GetColumnName())) 
+                { 
+                    columnslist = element.GetColumns();
 
-                columnslist = element.GetColumns();
-
-                foreach (string element2 in columnslist)
-                {
-                    if (condition.GetOperation().Equals("equals"))
+                    foreach (string element2 in columnslist)
                     {
-                        if (element2.Equals(condition.GetValue()))
+                        if (condition.GetOperation().Equals("equals"))
                         {
-                            if (!position.Contains(counter))
-                            {
-                                position.Add(counter);
-                            }
-                        }
-                    }
-                    else if (condition.GetOperation().Equals("max"))
-                    {
-                        if (int.TryParse(element2, out int n))
-                        { 
-                            if (int.Parse(element2) > int.Parse(condition.GetValue()))
+                            if (element2.Equals(condition.GetValue()))
                             {
                                 if (!position.Contains(counter))
                                 {
@@ -103,34 +92,46 @@ namespace Database
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        if (int.TryParse(element2, out int n))
+                        else if (condition.GetOperation().Equals("max"))
                         {
-                            if (int.Parse(element2) < int.Parse(condition.GetValue()))
-                            {
-                                if (!position.Contains(counter))
+                            if (int.TryParse(element2, out int n))
+                            { 
+                                if (int.Parse(element2) > int.Parse(condition.GetValue()))
                                 {
-                                    position.Add(counter);
+                                    if (!position.Contains(counter))
+                                    {
+                                        position.Add(counter);
+                                    }
                                 }
                             }
                         }
+                        else
+                        {
+                            if (int.TryParse(element2, out int n))
+                            {
+                                if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                                {
+                                    if (!position.Contains(counter))
+                                    {
+                                        position.Add(counter);
+                                    }
+                                }
+                            }
+                        }
+                        counter++;
                     }
-                    counter++;
                 }
 
-                
             }
             //Ordenamos la lista de menor a mayor. A la hora de usar Delete hay que recorrer la lista de mayor a menor.
             position.Sort();
             return position;
         }
 
-        public void DeleteColumn(List<TableColumn> list, Condition condition)
+        public void DeleteColumn(Condition condition)
         {
             List<int> index = SelectRowsPositions(condition);
-            foreach(TableColumn column in list)
+            foreach(TableColumn column in GetColumns())
             {
                 for (int i = index.Count - 1; i >= 0; i--)
                 {
@@ -139,20 +140,7 @@ namespace Database
             }
         }
 
-        public void DeleteRows(Condition condition)
-        {
-          
-            List<int> index = SelectRowsPositions(condition);
-
-            List<TableColumn> l = GetColumns();
-            List<String> list = l[0].GetColumns();
-            
-            for(int i = index.Count-1; i>=0; i--)
-            {
-                list.RemoveAt(i);
-            }
-
-        }
+        
         
         public string GetName() 
         {

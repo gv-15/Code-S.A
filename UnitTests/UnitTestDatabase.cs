@@ -109,7 +109,7 @@ namespace UnitTests
             t.AddColumn(columna2);
             t.AddColumn(columna3);
             m_db.AddTable(t);
-            Condition c = new Condition()
+            //Condition c = new Condition();
 
 
             

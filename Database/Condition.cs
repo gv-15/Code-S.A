@@ -10,8 +10,8 @@ namespace Database
        
         private Enum m_operation;
         private String m_value;
-        private TableColumn m_columnName;
-        public Condition(Enum operation, String value, TableColumn column)
+        private String m_columnName;
+        public Condition(Enum operation, String value, String column)
         {
             m_operation = operation;
             m_value = value;
@@ -28,7 +28,7 @@ namespace Database
             return m_value;
         }
 
-        public TableColumn GetColumnName()
+        public String GetColumnName()
         {
             return m_columnName;
         }
