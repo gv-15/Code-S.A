@@ -83,15 +83,14 @@ namespace Database
 
 
         public string InsertInto(string table, List<TableColumn> columns, List<string> values)
-        {  //ESTE METODO NOS FALTA POR SABER SI HACE TODO LO QUE DEBERIA DESPUES DE LOS CAMBIAOS
-            string st = "";
-
+        {
+            
             int i = FindTableWithName(table);
             Table t = GetTable(i);
-
-            List<string> columnNames = null;
-
             t.AddRowsTrue(values);
+
+            string st = "";
+            List<string> columnNames = new List<string>();
             foreach (TableColumn tc in columns)
             {
                 columnNames.Add(tc.GetTableColumnName());
@@ -106,7 +105,7 @@ namespace Database
                 st += values[c];
             }
             
-           
+
             return t.ToString();
         }
 
@@ -123,8 +122,10 @@ namespace Database
 
             int p = FindTableWithName(table);
 
-            Table t = this.GetTable(p);
-            List<TableColumn> list = t.GetColumns();
+            Table t = new Table("t"); 
+            t=this.GetTable(p);
+            List<TableColumn> list = new List<TableColumn>();
+                list = t.GetColumns();
 
             for (int i = 0; i < columnNames.Count; i++)
             {
@@ -159,8 +160,7 @@ namespace Database
 
 
         public void DeleteFrom(string table, List<string> columnNames, Condition condition)
-        {//Aqui borramos columnas y lo que hay que borrar son filas???
-
+        {
             int p = FindTableWithName(table);
             Table t = this.GetTable(p);
             List<TableColumn> list = t.GetColumns();
@@ -172,10 +172,29 @@ namespace Database
                 {
                     if (col.GetTableColumnName().Equals(name))
                     {
-                       t.DeleteColumn(list, condition);
+                       t.DeleteColumn(list, condition);//Con esto borramos de las columnas
                     }
                 }
 
+            }
+
+            List<List<string>> rows = t.GetRows();//Ahora vamos a borrar filas
+            int counter = 0;
+            foreach (List<string> row in rows)
+            {
+                Boolean find = false;
+                foreach (string value in row)
+                {
+                    if (value.Equals(condition.GetValue()))
+                    {
+                        find = true;
+                    }
+                }
+                if (find == true)
+                {
+                    rows.RemoveAt(counter);
+                }
+                counter++;
             }
         }
 
