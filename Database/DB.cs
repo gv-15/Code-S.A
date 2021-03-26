@@ -82,16 +82,16 @@ namespace Database
         }
 
 
-        public string InsertInto(string table, List<TableColumn> columns, List<string> values)
+        public string InsertInto(string table, List<string> values)
         {
             
             int i = FindTableWithName(table);
-            Table t = GetTable(i);
+            Table t = new Table(m_db[i].GetName());
+            t = m_db[i];
             t.AddRowsTrue(values);
-
             string st = "";
             List<string> columnNames = new List<string>();
-            foreach (TableColumn tc in columns)
+            foreach (TableColumn tc in t.GetColumns())
             {
                 columnNames.Add(tc.GetTableColumnName());
             }
@@ -181,42 +181,33 @@ namespace Database
 
         public Table SelectWhere(string table, List<string> columnNames,Condition condition)
         {// Aqui Seleccionamos columnas y lo que hay que seleccionar son filas???
-             Table FilteredColumnTable = SelectColumns(table, columnNames);
-            Table newTable = new Table("SelectedTable");
-            List<string> rows;
-            foreach (string name in columnNames)
-            {
-                newTable.AddColumn(new TableColumn(name));
-            }
+            Table FilteredColumnTable = SelectColumns(table,columnNames);
+            
 
-            foreach(TableColumn column in FilteredColumnTable.GetColumns())
-            {
-                rows=column.Select(column.GetColumns(), condition);
-                newTable.AddRow(rows);
-            }
+            FilteredColumnTable.DeleteColumn(condition);
+            
+            //List<int> index= newTable.SelectRowsPositions(condition);
 
-            return newTable;
+            //for (int i = index.Count; i<= 0 ; i--)
+            //{
+                
+            //}
+
+            return FilteredColumnTable;
         }
 
 
-        public void DeleteFrom(string table, List<string> columnNames, Condition condition)
+        public string DeleteFrom(string table, List<string> columnNames, Condition condition)
         {
+            string resultado = "Se ha borrado correctamente";
             int p = FindTableWithName(table);
             Table t = this.GetTable(p);
             List<TableColumn> list = t.GetColumns();
 
-            for (int i = 0; i < columnNames.Count; i++)
-            {
-                string name = columnNames[i];
-                foreach (TableColumn col in list)
-                {
-                    if (col.GetTableColumnName().Equals(name))
-                    {
-                       t.DeleteColumn(list, condition);//Con esto borramos de las columnas
-                    }
-                }
-
-            }
+           
+            t.DeleteColumn(condition);//Con esto borramos de las columnas
+                    
+             
 
             List<List<string>> rows = t.GetRows();//Ahora vamos a borrar filas
             int counter = 0;
@@ -236,6 +227,7 @@ namespace Database
                 }
                 counter++;
             }
+            return resultado;
         }
 
         public string RunMiniSqlQuery(string query)
