@@ -38,23 +38,23 @@ namespace Database.MiniSqlParser
                 TableColumn tc = new TableColumn(match.Groups[3].Value);
                 if (match.Groups[4].Value.Equals("="))
                 {
-                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[5].Value, tc);
-                    SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition);
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[5].Value, match.Groups[3].Value);
+                    SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(atributo), condition);
                     return selectWhere;
                 }
                 if (match.Groups[4].Value.Equals(">"))
                 {
-                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[5].Value, tc);
+                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[5].Value, match.Groups[3].Value);
                     SelectWhere selectWhere2 = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition2);
                     return selectWhere2;
                 }
                 if (match.Groups[4].Value.Equals("<"))
                 {
-                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[5].Value, tc);
+                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[5].Value, match.Groups[3].Value);
                     SelectWhere selectWhere3 = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition3);
                     return selectWhere3;
                 }
-               
+
             }
 
             match = Regex.Match(miniSqlSentence, selectColumnsPattern);
@@ -66,47 +66,47 @@ namespace Database.MiniSqlParser
             }
             match = Regex.Match(miniSqlSentence, insertIntoPattern);
             if (match.Success)
-            { 
+            {
                 string[] columnNames = match.Groups[1].Value.Split(',');
-                
+
                 string[] list = match.Groups[2].Value.Split(',');
-                Insert insert= new Insert(match.Groups[1].Value, Utils.ToList(list));
+                Insert insert = new Insert(match.Groups[1].Value, Utils.ToList(list));
                 return insert;
             }
 
 
             match = Regex.Match(miniSqlSentence, deleteFromPattern);
             if (match.Success)
-            { 
+            {
                 string[] columnNames = match.Groups[1].Value.Split(','); //Nombre de la tabla
                 string[] atributo = match.Groups[2].Value.Split(','); //Condicion despues del where
                 string[] operationCondition = match.Groups[3].Value.Split(','); //El igual, > o <
                 string[] parteDerechaCondition = match.Groups[4].Value.Split(','); //La parte de la derecha de la condicion
                 TableColumn tc = new TableColumn(match.Groups[2].Value);
                 if (match.Groups[3].Value.Equals("="))
-                { 
-                Condition condition = new Condition(Condition.Operations.equals, match.Groups[4].Value, tc);
-                DeleteFrom deleteFrom = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition);
+                {
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[4].Value, match.Groups[2].Value);
+                    DeleteFrom deleteFrom = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition);
                     return deleteFrom;
                 }
                 if (match.Groups[3].Value.Equals(">"))
                 {
-                Condition condition2 = new Condition(Condition.Operations.max, match.Groups[4].Value, tc);
-                DeleteFrom deleteFrom2 = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition2);
-                return deleteFrom2;
+                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[4].Value, match.Groups[2].Value);
+                    DeleteFrom deleteFrom2 = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition2);
+                    return deleteFrom2;
                 }
-                if(match.Groups[3].Value.Equals("<"))
-                { 
-                Condition condition3 = new Condition(Condition.Operations.min, match.Groups[4].Value, tc);
-                DeleteFrom deleteFrom3 = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition3);
-                return deleteFrom3;
+                if (match.Groups[3].Value.Equals("<"))
+                {
+                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[4].Value, match.Groups[2].Value);
+                    DeleteFrom deleteFrom3 = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition3);
+                    return deleteFrom3;
                 }
-                
+
             }
 
             match = Regex.Match(miniSqlSentence, dropTablePattern);
             if (match.Success)
-            { 
+            {
                 string[] columnNames = match.Groups[1].Value.Split(',');
                 DropTable dropTable = new DropTable(match.Groups[1].Value);
                 return dropTable;
@@ -124,7 +124,7 @@ namespace Database.MiniSqlParser
                     tableColumn.Add(tc);
 
                 }
-               
+
                 CreateTable createTable = new CreateTable(match.Groups[1].Value, tableColumn);
                 return createTable;
             }

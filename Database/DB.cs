@@ -162,49 +162,40 @@ namespace Database
             return newTable;
         }
 
-
-        public string DeleteFrom(string table, List<string> columnNames, Condition condition)
-        {
-            string resultado = "Se ha borrado correctamente";
-            int p = FindTableWithName(table);
-            Table t = this.GetTable(p);
-            List<TableColumn> list = t.GetColumns();
-
-            for (int i = 0; i < columnNames.Count; i++)
+            public string DeleteFrom(string table, List<string> columnNames, Condition condition)
             {
-                string name = columnNames[i];
-                foreach (TableColumn col in list) //Aqui da error, se esta modificando la misma tabla
-                {
-                    if (col.GetTableColumnName().Equals(name))
-                    {
-                       t.DeleteColumn(list, condition);//Con esto borramos de las columnas
-                    }
-                }
+                string resultado = "Se ha borrado correctamente";
+                int p = FindTableWithName(table);
+                Table t = this.GetTable(p);
+                List<TableColumn> list = t.GetColumns();
 
+
+                t.DeleteColumn(condition);//Con esto borramos de las columnas
+
+
+
+                List<List<string>> rows = t.GetRows();//Ahora vamos a borrar filas
+                int counter = 0;
+                foreach (List<string> row in rows)
+                {
+                    Boolean find = false;
+                    foreach (string value in row)
+                    {
+                        if (value.Equals(condition.GetValue()))
+                        {
+                            find = true;
+                        }
+                    }
+                    if (find == true)
+                    {
+                        rows.RemoveAt(counter);
+                    }
+                    counter++;
+                }
+                return resultado;
             }
 
-            List<List<string>> rows = t.GetRows();//Ahora vamos a borrar filas
-            int counter = 0;
-            foreach (List<string> row in rows)
-            {
-                Boolean find = false;
-                foreach (string value in row)
-                {
-                    if (value.Equals(condition.GetValue()))
-                    {
-                        find = true;
-                    }
-                }
-                if (find == true)
-                {
-                    rows.RemoveAt(counter);
-                }
-                counter++;
-            }
-            return resultado;
-        }
-
-        public string RunMiniSqlQuery(string query)
+            public string RunMiniSqlQuery(string query)
         {
             IQuery queryObject = MiniSqlParser.Parser.Parse(query);
 
