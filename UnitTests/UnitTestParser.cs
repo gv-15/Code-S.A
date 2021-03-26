@@ -63,9 +63,8 @@ namespace UnitTests
 
             IQuery query4 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin = 21;");
             Assert.IsTrue(query4 is SelectWhere);
+        
             /*
-                Este metodo creo que no funciona 
-
             string resultadoSelectWhere = "['DatosAdmin']{'Tamara','23','Xia'}";
             Assert.AreEqual(resultadoSelectWhere, db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin = 23;"));
            
@@ -87,18 +86,11 @@ namespace UnitTests
 
             
             IQuery query7 = Parser.Parse("DELETE FROM Table1 WHERE Edad = 21;");
-
-
-            /* Da error porque no funciona bien el metodo
-             
-              Assert.IsTrue(query7 is DeleteFrom);
+            Assert.IsTrue(query7 is DeleteFrom);
             db.RunMiniSqlQuery("DELETE FROM DatosAdmin WHERE EdadAdmin = 21;");
             string resultadoDeleteFrom = "['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}{'Tamara','23','Xia'}";
-            
-            
-              
             Assert.AreEqual(resultadoDeleteFrom, db.GetTableWithName("DatosAdmin").ToString());
-            */
+         
         }
 
 
