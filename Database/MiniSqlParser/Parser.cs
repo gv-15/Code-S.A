@@ -45,13 +45,13 @@ namespace Database.MiniSqlParser
                 if (match.Groups[4].Value.Equals(">"))
                 {
                     Condition condition2 = new Condition(Condition.Operations.max, match.Groups[5].Value, match.Groups[3].Value);
-                    SelectWhere selectWhere2 = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition2);
+                    SelectWhere selectWhere2 = new SelectWhere(match.Groups[2].Value, Utils.ToList(atributo), condition2);
                     return selectWhere2;
                 }
                 if (match.Groups[4].Value.Equals("<"))
                 {
                     Condition condition3 = new Condition(Condition.Operations.min, match.Groups[5].Value, match.Groups[3].Value);
-                    SelectWhere selectWhere3 = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition3);
+                    SelectWhere selectWhere3 = new SelectWhere(match.Groups[2].Value, Utils.ToList(atributo), condition3);
                     return selectWhere3;
                 }
 
@@ -101,7 +101,6 @@ namespace Database.MiniSqlParser
                     DeleteFrom deleteFrom3 = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition3);
                     return deleteFrom3;
                 }
-
             }
 
             match = Regex.Match(miniSqlSentence, dropTablePattern);

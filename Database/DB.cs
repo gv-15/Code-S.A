@@ -190,8 +190,9 @@ namespace Database
                 t.DeleteColumn(condition);//Con esto borramos de las columnas
 
 
-
-                List<List<string>> rows = t.GetRows();//Ahora vamos a borrar filas
+            /*
+                List<List<string>> rows = new List<List<string>>();
+           rows =  t.GetRows();//Ahora vamos a borrar filas
                 int counter = 0;
                 foreach (List<string> row in rows)
                 {
@@ -209,7 +210,8 @@ namespace Database
                     }
                     counter++;
                 }
-                return resultado;
+            */
+            return resultado;
             }
 
             public string RunMiniSqlQuery(string query)
