@@ -26,7 +26,7 @@ namespace Database
             m_rows = new List<List<string>>();
         }
 
-        public Table(string name, List<TableColumn> tableColumns,List<List<string>> rows)
+        public Table(string name, List<TableColumn> tableColumns, List<List<string>> rows)
         {
             m_name = name;
             m_columns = tableColumns;
@@ -48,7 +48,7 @@ namespace Database
                     m_columns.ElementAt(i).AddString(value);
                 }
             }
-            
+
         }
 
         public void AddRowsTrue(List<string> values)
@@ -66,35 +66,25 @@ namespace Database
             return m_rows[index];
         }
 
+
         public List<int> SelectRowsPositions(Condition condition)
         {
-          
-            List<String> columnslist = new List<String>();
+
+            List<string> columnslist = new List<string>();
             List<int> position = new List<int>();
 
             foreach (TableColumn element in m_columns)
             {
                 int counter = 0;
-
-                columnslist = element.GetColumns();
-
-                foreach (String element2 in columnslist)
+                if (element.GetTableColumnName().Equals(condition.GetColumnName()))
                 {
-                    if (condition.GetOperation().Equals("equals"))
+                    columnslist = element.GetColumns();
+
+                    foreach (string element2 in columnslist)
                     {
-                        if (element2.Equals(condition.GetValue()))
+                        if (condition.GetOperation().Equals("equals"))
                         {
-                            if (!position.Contains(counter))
-                            {
-                                position.Add(counter);
-                            }
-                        }
-                    }
-                    else if (condition.GetOperation().Equals("max"))
-                    {
-                        if (int.TryParse(element2, out int n))
-                        { 
-                            if (int.Parse(element2) > int.Parse(condition.GetValue()))
+                            if (element2.Equals(condition.GetValue()))
                             {
                                 if (!position.Contains(counter))
                                 {
@@ -102,56 +92,57 @@ namespace Database
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        if (int.TryParse(element2, out int n))
+                        else if (condition.GetOperation().Equals("max"))
                         {
-                            if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                            if (int.TryParse(element2, out int n))
                             {
-                                if (!position.Contains(counter))
+                                if (int.Parse(element2) > int.Parse(condition.GetValue()))
                                 {
-                                    position.Add(counter);
+                                    if (!position.Contains(counter))
+                                    {
+                                        position.Add(counter);
+                                    }
                                 }
                             }
                         }
+                        else
+                        {
+                            if (int.TryParse(element2, out int n))
+                            {
+                                if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                                {
+                                    if (!position.Contains(counter))
+                                    {
+                                        position.Add(counter);
+                                    }
+                                }
+                            }
+                        }
+                        counter++;
                     }
-                    counter++;
                 }
 
-                
             }
             //Ordenamos la lista de menor a mayor. A la hora de usar Delete hay que recorrer la lista de mayor a menor.
             position.Sort();
             return position;
         }
 
-        public void DeleteColumn(List<TableColumn> list, Condition condition)
+        public void DeleteColumn(Condition condition)
         {
             List<int> index = SelectRowsPositions(condition);
-
-            for (int i = index.Count - 1; i >= 0; i--)
+            foreach (TableColumn column in GetColumns())
             {
-                list.RemoveAt(i);
+                for (int i = index.Count - 1; i >= 0; i--)
+                {
+                    column.GetColumns().RemoveAt(index[i]);
+                }
             }
         }
 
-        public void DeleteRows(Condition condition)
-        {
-          
-            List<int> index = SelectRowsPositions(condition);
 
-            List<TableColumn> l = GetColumns();
-            List<String> list = l[0].GetColumns();
-            
-            for(int i = index.Count-1; i>=0; i--)
-            {
-                list.RemoveAt(i);
-            }
 
-        }
-        
-        public string GetName() 
+        public string GetName()
         {
             return m_name;
         }
@@ -178,33 +169,33 @@ namespace Database
                 }
             }
             resultadoFinal += "]";
-                for (int i=0;i<m_columns.ElementAt(0).GetColumns().Count;i++)
+            for (int i = 0; i < m_columns.ElementAt(0).GetColumns().Count; i++)
+            {
+                foreach (TableColumn tc in m_columns)
                 {
-                    foreach (TableColumn tc in m_columns)
+                    if (tc == m_columns.First())
                     {
-                        if (tc == m_columns.First())
+                        if (tc == m_columns.Last())
                         {
-                            if (tc == m_columns.Last())
-                            {
-                                resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "'}";
-                            }
-                                else
-                                {
-                                    resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "',";
-                                }
+                            resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "'}";
                         }
-                        else if (tc != m_columns.Last())
+                        else
                         {
-                            resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "',";
+                            resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "',";
                         }
+                    }
+                    else if (tc != m_columns.Last())
+                    {
+                        resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "',";
+                    }
 
-                            else
-                            {
-                                resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "'}";
-                            }
+                    else
+                    {
+                        resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "'}";
                     }
                 }
-          return resultadoFinal;
+            }
+            return resultadoFinal;
         }
     }
 }

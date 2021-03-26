@@ -82,17 +82,16 @@ namespace Database
         }
 
 
-        public string InsertInto(string table, List<TableColumn> columns, List<string> values)
-        {  //ESTE METODO NOS FALTA POR SABER SI HACE TODO LO QUE DEBERIA DESPUES DE LOS CAMBIAOS
-            string st = "";
-
+        public string InsertInto(string table, List<string> values)
+        {
+            
             int i = FindTableWithName(table);
-            Table t = GetTable(i);
-
-            List<string> columnNames = null;
-
+            Table t = new Table(m_db[i].GetName());
+            t = m_db[i];
             t.AddRowsTrue(values);
-            foreach (TableColumn tc in columns)
+            string st = "";
+            List<string> columnNames = new List<string>();
+            foreach (TableColumn tc in t.GetColumns())
             {
                 columnNames.Add(tc.GetTableColumnName());
             }
@@ -106,7 +105,7 @@ namespace Database
                 st += values[c];
             }
             
-           
+
             return t.ToString();
         }
 
@@ -123,9 +122,13 @@ namespace Database
 
             int p = FindTableWithName(table);
 
-            Table t = this.GetTable(p);
-            List<TableColumn> list = t.GetColumns();
+            Table t = new Table("t"); 
+            t=this.GetTable(p);
+            List<TableColumn> list = new List<TableColumn>();
+            list = t.GetColumns();
 
+            //List<List<string>> rows2 = new List<List<string>>();
+           
             for (int i = 0; i < columnNames.Count; i++)
             {
                 string name = columnNames[i];
@@ -135,16 +138,91 @@ namespace Database
                     if (col.GetTableColumnName().Equals(name))
                     {
                         newTable.AddColumn(col);
+
                     }
                 }
+            }
+
+            //List part
+            List<TableColumn> columns = new List<TableColumn>();
+            columns = newTable.GetColumns();
+            int n = columns.Count;
+            int b = columns[0].GetColumns().Count;
+                      
+            List<String> li = new List<string>();
+            List<List<string>> li2 = new List<List<string>>();
+
+            for (int j = 0; j < b; j++)
+            {
+
+                for (int k = 0; k < n; k++) 
+                { 
+                 string s = columns[k].GetColumns()[j];
+                 li.Add(s);
+                }
+
+                li2.Add(li);
+                
+            }
+
+            List<List<string>> rows = new List<List<string>>();
+            rows = t.GetRows();
+            int c = t.GetRows().Count;
+
+
+            //Replace the values
+            for (int i = 0; i < c; i++)
+            {
+                rows[i] = li2[i];
             }
 
             return newTable;
         }
 
-        public Table SelectWhere(string table, List<string> columnNames,Condition condition)
+            public string DeleteFrom(string table, List<string> columnNames, Condition condition)
+            {
+                string resultado = "Se ha borrado correctamente";
+                int p = FindTableWithName(table);
+                Table t = this.GetTable(p);
+                List<TableColumn> list = t.GetColumns();
+
+
+                t.DeleteColumn(condition);//Con esto borramos de las columnas
+
+
+            /*
+                List<List<string>> rows = new List<List<string>>();
+           rows =  t.GetRows();//Ahora vamos a borrar filas
+                int counter = 0;
+                foreach (List<string> row in rows)
+                {
+                    Boolean find = false;
+                    foreach (string value in row)
+                    {
+                        if (value.Equals(condition.GetValue()))
+                        {
+                            find = true;
+                        }
+                    }
+                    if (find == true)
+                    {
+                        rows.RemoveAt(counter);
+                    }
+                    counter++;
+                }
+            */
+            return resultado;
+            }
+
+            public string RunMiniSqlQuery(string query)
+        {
+            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
+
+            return queryObject.Run(this);
+        }
+        public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {// Aqui Seleccionamos columnas y lo que hay que seleccionar son filas???
-             Table FilteredColumnTable = SelectColumns(table, columnNames);
+            Table FilteredColumnTable = SelectColumns(table, columnNames);
             Table newTable = new Table("SelectedTable");
             List<string> rows;
             foreach (string name in columnNames)
@@ -152,44 +230,14 @@ namespace Database
                 newTable.AddColumn(new TableColumn(name));
             }
 
-            foreach(TableColumn column in FilteredColumnTable.GetColumns())
+            foreach (TableColumn column in FilteredColumnTable.GetColumns())
             {
-                rows=column.Select(column.GetColumns(), condition);
+                rows = column.Select(column.GetColumns(), condition);
                 newTable.AddRow(rows);
             }
 
             return newTable;
         }
-
-
-        public void DeleteFrom(string table, List<string> columnNames, Condition condition)
-        {//Aqui borramos columnas y lo que hay que borrar son filas???
-
-            int p = FindTableWithName(table);
-            Table t = this.GetTable(p);
-            List<TableColumn> list = t.GetColumns();
-
-            for (int i = 0; i < columnNames.Count; i++)
-            {
-                string name = columnNames[i];
-                foreach (TableColumn col in list)
-                {
-                    if (col.GetTableColumnName().Equals(name))
-                    {
-                       t.DeleteColumn(list, condition);
-                    }
-                }
-
-            }
-        }
-
-        public string RunMiniSqlQuery(string query)
-        {
-            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
-
-            return queryObject.Run(this);
-        }
-
 
         public DB Load(string directory, string name, string newName)
         {
