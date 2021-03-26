@@ -54,7 +54,7 @@ namespace UnitTests
             Assert.AreEqual(1, num);
             Assert.AreEqual("table3", m_db.GetDBTableList()[0].GetName());
         }
-
+        /*
         [TestMethod]
         public void TestInsert()
         {
@@ -85,7 +85,7 @@ namespace UnitTests
 
 
 
-        }
+        }*/
 
         [TestMethod]
         public void TestSelectWhere()

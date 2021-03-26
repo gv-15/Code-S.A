@@ -218,7 +218,24 @@ namespace Database
 
             return queryObject.Run(this);
         }
+        public Table SelectWhere(string table, List<string> columnNames, Condition condition)
+        {// Aqui Seleccionamos columnas y lo que hay que seleccionar son filas???
+            Table FilteredColumnTable = SelectColumns(table, columnNames);
+            Table newTable = new Table("SelectedTable");
+            List<string> rows;
+            foreach (string name in columnNames)
+            {
+                newTable.AddColumn(new TableColumn(name));
+            }
 
+            foreach (TableColumn column in FilteredColumnTable.GetColumns())
+            {
+                rows = column.Select(column.GetColumns(), condition);
+                newTable.AddRow(rows);
+            }
+
+            return newTable;
+        }
 
         public DB Load(string directory, string name, string newName)
         {
