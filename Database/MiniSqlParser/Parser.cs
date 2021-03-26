@@ -27,12 +27,34 @@ namespace Database.MiniSqlParser
 
             match = Regex.Match(miniSqlSentence, selectWherePattern);
             if (match.Success)
-            { 
-                string[] columnNames = match.Groups[1].Value.Split(',');
-                
-          
-                //SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition);
-               // return selectWhere;
+            {
+
+                string[] atributo = match.Groups[1].Value.Split(','); //Atributo que quieres mirar
+                string[] columnNames = match.Groups[2].Value.Split(','); //Nombre de la tabla
+                string[] izquierdaWhere = match.Groups[3].Value.Split(','); //Atributo despues del Where
+                string[] operationCondition = match.Groups[4].Value.Split(','); //El igual, > o <
+                string[] derechaWhere = match.Groups[5].Value.Split(','); //Parte derecha del where
+
+                TableColumn tc = new TableColumn(match.Groups[3].Value);
+                if (match.Groups[4].Value.Equals("="))
+                {
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[5].Value, tc);
+                    SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition);
+                    return selectWhere;
+                }
+                if (match.Groups[4].Value.Equals(">"))
+                {
+                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[5].Value, tc);
+                    SelectWhere selectWhere2 = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition2);
+                    return selectWhere2;
+                }
+                if (match.Groups[4].Value.Equals("<"))
+                {
+                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[5].Value, tc);
+                    SelectWhere selectWhere3 = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition3);
+                    return selectWhere3;
+                }
+               
             }
 
             match = Regex.Match(miniSqlSentence, selectColumnsPattern);
@@ -56,10 +78,30 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, deleteFromPattern);
             if (match.Success)
             { 
-                string[] columnNames = match.Groups[1].Value.Split(',');
-                //Condition condition = new Condition();
-                //DeleteFrom deleteFrom = new DeleteFrom(match.Groups[1].Value, Utils.ToList(columnNames),condition);
-              //  return deleteFrom;
+                string[] columnNames = match.Groups[1].Value.Split(','); //Nombre de la tabla
+                string[] atributo = match.Groups[2].Value.Split(','); //Condicion despues del where
+                string[] operationCondition = match.Groups[3].Value.Split(','); //El igual, > o <
+                string[] parteDerechaCondition = match.Groups[4].Value.Split(','); //La parte de la derecha de la condicion
+                TableColumn tc = new TableColumn(match.Groups[2].Value);
+                if (match.Groups[3].Value.Equals("="))
+                { 
+                Condition condition = new Condition(Condition.Operations.equals, match.Groups[4].Value, tc);
+                DeleteFrom deleteFrom = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition);
+                    return deleteFrom;
+                }
+                if (match.Groups[3].Value.Equals(">"))
+                {
+                Condition condition2 = new Condition(Condition.Operations.max, match.Groups[4].Value, tc);
+                DeleteFrom deleteFrom2 = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition2);
+                return deleteFrom2;
+                }
+                if(match.Groups[3].Value.Equals("<"))
+                { 
+                Condition condition3 = new Condition(Condition.Operations.min, match.Groups[4].Value, tc);
+                DeleteFrom deleteFrom3 = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition3);
+                return deleteFrom3;
+                }
+                
             }
 
             match = Regex.Match(miniSqlSentence, dropTablePattern);
