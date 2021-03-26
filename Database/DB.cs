@@ -173,7 +173,7 @@ namespace Database
             for (int i = 0; i < columnNames.Count; i++)
             {
                 string name = columnNames[i];
-                foreach (TableColumn col in list)
+                foreach (TableColumn col in list) //Aqui da error, se esta modificando la misma tabla
                 {
                     if (col.GetTableColumnName().Equals(name))
                     {
