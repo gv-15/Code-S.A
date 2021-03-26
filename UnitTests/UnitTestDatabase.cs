@@ -141,7 +141,14 @@ namespace UnitTests
             Table t = new Table("t", tableColumns);
 
             db.AddTable(t);
-            
+
+            name.AddString("Gaizka");
+            name.AddString("Edurne");
+            name.AddString("Iker");
+            surname.AddString("Gonzalez");
+            surname.AddString("Sanchez");
+            surname.AddString("Garcia");
+
             t.AddRowsTrue(new List<string>() { "Gaizka", "Gonzalez" });
             t.AddRowsTrue(new List<string>() { "Edurne", " Sanchez" });
             t.AddRowsTrue(new List<string>() { "Iker", " Garcia" });
@@ -154,10 +161,13 @@ namespace UnitTests
 
             List<List<string>> row1 = new List<List<string>>();
             row1 = t.GetRows();
+            List<string> rowOne = row1[0];
+            List<string> rowtwo = row1[1];
+            List<string> rowthree = row1[2];
 
-            Assert.AreEqual("Gaizka", row1[0]);
-            Assert.AreEqual("Edurne", row1[1]);
-            Assert.AreEqual("Iker", row1[2]);
+            Assert.AreEqual("Gaizka", rowOne[0]);
+            Assert.AreEqual("Edurne", rowtwo[1]);
+            Assert.AreEqual("Iker", rowthree[2]);
 
 
 

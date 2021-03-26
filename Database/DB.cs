@@ -125,9 +125,9 @@ namespace Database
             Table t = new Table("t"); 
             t=this.GetTable(p);
             List<TableColumn> list = new List<TableColumn>();
-                list = t.GetColumns();
+            list = t.GetColumns();
 
-            List<List<string>> rows2 = new List<List<string>>();
+            //List<List<string>> rows2 = new List<List<string>>();
            
             for (int i = 0; i < columnNames.Count; i++)
             {
@@ -147,13 +147,13 @@ namespace Database
             List<TableColumn> columns = new List<TableColumn>();
             columns = newTable.GetColumns();
             int n = columns.Count;
+            int b = columns[0].GetColumns().Count;
                       
             List<String> li = new List<string>();
-            List<List<string>> li2;
+            List<List<string>> li2 = new List<List<string>>();
 
-            for (int j = 0; j < n; j++)
+            for (int j = 0; j < b; j++)
             {
-                li2 = new List<List<string>>();
 
                 for (int k = 0; k < n; k++) 
                 { 
@@ -167,12 +167,13 @@ namespace Database
 
             List<List<string>> rows = new List<List<string>>();
             rows = t.GetRows();
+            int c = t.GetRows().Count;
 
 
             //Replace the values
-            for (int i = 0; i < t.GetRows().Count; i++)
+            for (int i = 0; i < c; i++)
             {
-                rows[i] = rows2[i];
+                rows[i] = li2[i];
             }
 
             return newTable;
