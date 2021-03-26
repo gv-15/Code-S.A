@@ -39,7 +39,7 @@ namespace Database.MiniSqlParser
                 if (match.Groups[4].Value.Equals("="))
                 {
                     Condition condition = new Condition(Condition.Operations.equals, match.Groups[5].Value, match.Groups[3].Value);
-                    SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(columnNames), condition);
+                    SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(atributo), condition);
                     return selectWhere;
                 }
                 if (match.Groups[4].Value.Equals(">"))
