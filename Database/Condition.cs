@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Database
 {
-   public class Condition
+    public class Condition
     {
-        public enum Operations {max, min, equals };
-       
+        public enum Operations { max, min, equals };
+
         private Enum m_operation;
         private string m_value;
         private string m_columnName;

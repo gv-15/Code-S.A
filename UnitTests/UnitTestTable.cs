@@ -48,7 +48,7 @@ namespace UnitTests
         }
 
 
-        
+
         /*
         [TestMethod]
         public void TestDeleteColumn()
@@ -56,23 +56,16 @@ namespace UnitTests
             Table table = new Table("table");
             TableColumn name = new TableColumn("namea");
             TableColumn age = new TableColumn("age");
-
             table.AddColumn(name);
             table.AddColumn(age);
-
             name.AddString("Aitor");
             name.AddString("Laia");
-
             List<TableColumn> tc = table.GetColumns();
             Condition c = new Condition(Condition.Operations.equals, "Laia", name.GetTableColumnName());
-
             table.DeleteColumn(c);
             int h = table.GetColumns().Count;
-
             Assert.AreEqual(1, h);
             Assert.AreEqual(age, tc[0]); 
-
-
         }*/
 
         [TestMethod]
@@ -93,8 +86,8 @@ namespace UnitTests
             lista2.Add("Suarez");
             t2.AddRow(lista2);
 
-            Condition c = new Condition(Condition.Operations.equals, "Ana", nombre.GetTableColumnName());
-           
+            Condition c = new Condition(Condition.Operations.equals, "Ana", "nombre");
+
             List<int> positions = t2.SelectRowsPositions(c);
             int p = positions.Count;
             Assert.AreEqual(1, p);
@@ -106,5 +99,3 @@ namespace UnitTests
 
 
 }
-
-
