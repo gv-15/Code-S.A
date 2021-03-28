@@ -65,10 +65,10 @@ namespace UnitTests
             Assert.IsTrue(query4 is SelectWhere);
 
             /*
-            string resultadoSelectWhere = ""['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}";
+            string resultadoSelectWhere = "['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}";
             Assert.AreEqual(resultadoSelectWhere, db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin = 22;"));
-           
-            */
+           */
+            
             IQuery query5 = Parser.Parse("DROP TABLE DatosAdmin;");
             Assert.IsTrue(query5 is DropTable);
             Assert.IsNotNull(db.FindTableWithName("AdminRules"));
