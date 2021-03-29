@@ -58,14 +58,14 @@ namespace Database
 
         public string DropTable(string tableName)
         {
-            string respuesta = "Tabla borrada correctamente";
+            string respuesta = "Table erased";
             m_db.RemoveAt(FindTableWithName(tableName));
             return respuesta;
         }
 
         public string CreateTable(string nameOfTable, List<TableColumn> tableColumns)
         {
-            string respuesta = "Tabla creada correctamente";
+            string respuesta = "Table created";
             Table table = new Table(nameOfTable, tableColumns);
             m_db.Add(table);
             return respuesta;
@@ -84,7 +84,7 @@ namespace Database
 
         public string InsertInto(string table, List<string> values)
         {
-            
+            string resultado = "Tuple added";
             int i = FindTableWithName(table);
             Table t = new Table(m_db[i].GetName());
             t = m_db[i];
@@ -106,7 +106,7 @@ namespace Database
             }
             
 
-            return t.ToString();
+            return resultado;
         }
 
         public Table SelectAll(string table)
@@ -181,7 +181,7 @@ namespace Database
 
             public string DeleteFrom(string table, List<string> columnNames, Condition condition)
             {
-                string resultado = "Se ha borrado correctamente";
+                string resultado = "Tuple(s) deleted";
                 int p = FindTableWithName(table);
                 Table t = this.GetTable(p);
                 List<TableColumn> list = t.GetColumns();
