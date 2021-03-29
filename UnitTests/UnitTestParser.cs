@@ -96,9 +96,9 @@ namespace UnitTests
             Assert.IsTrue(query8 is SelectAllWhere);
             string resultadoSelectAllWhere = "['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}";
 
-            /*
+            
             Assert.AreEqual(resultadoSelectAllWhere, db.RunMiniSqlQuery("SELECT * FROM DatosAdmin WHERE EdadAdmin = 22;"));
-            */
+            
         }
 
 
