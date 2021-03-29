@@ -232,8 +232,12 @@ namespace Database
             List<string> values;
             foreach (TableColumn column in FilteredColumnTable.GetColumns())//Columnas de NewTable
             {
+                values = new List<string>();
                 newColumn = new TableColumn(column.GetTableColumnName());
-                values = column.Select(condition);
+                foreach (int row in index)
+                {
+                    values.Add(column.GetColumns()[row]);
+                }
                 foreach (string value in values)
                 {
                     newColumn.AddString(value);
@@ -252,15 +256,20 @@ namespace Database
             Table selectedTable = m_db[i];
             Table newTable = new Table("new");
 
-
+            List<int> index = selectedTable.SelectRowsPositions(condition);
 
 
             TableColumn newColumn;
             List<string> values;
             foreach (TableColumn column in selectedTable.GetColumns())//Columnas de NewTable
             {
+                values = new List<string>();
                 newColumn = new TableColumn(column.GetTableColumnName());
-                values = column.Select(condition);
+                foreach(int row in index)
+                {
+                    values.Add(column.GetColumns()[row]);
+                }
+                
                 foreach (string value in values)
                 {
                     newColumn.AddString(value);
