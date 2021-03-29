@@ -218,9 +218,22 @@ namespace UnitTests
         public void TestDeleteFrom()
         {
 
+            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            Table newTable = new Table("newTable");
+            TableColumn column = new TableColumn("a");
+            column.AddString("name");
+            column.AddString("surname");
+            string table = newTable.GetName();
+            newTable.AddColumn(column);
+            db.AddTable(newTable);
+            List<string> col = column.GetColumns();
+            Condition condition = new Condition(Condition.Operations.equals, "name", column.GetTableColumnName());
+            
+            db.DeleteFrom(table,col,condition);
 
+            Assert.AreEqual("surname",col[0]);
 
-
+            //falta por filas
         }
     }
 
