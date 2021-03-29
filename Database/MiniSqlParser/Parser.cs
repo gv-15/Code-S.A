@@ -16,6 +16,8 @@ namespace Database.MiniSqlParser
             const string insertIntoPattern = @"INSERT INTO ([a-zA-Z0-9.]+) VALUES \(([a-zA-Z0-9,)]+)\)";
             const string dropTablePattern = @"DROP TABLE ([a-zA-Z0-9.]+)";
             const string createTablePattern = @"CREATE TABLE ([a-zA-Z0-9]+) \(([a-zA-Z0-9,]+)\)";
+            const string selectAllWherePattern = @"SELECT \* FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+) ([\<+-\>-\=]) ([a-zA-Z0-9.]+)";
+
 
             Match match = Regex.Match(miniSqlSentence, selectAllPattern);
 
@@ -128,7 +130,38 @@ namespace Database.MiniSqlParser
                 return createTable;
             }
 
-            return null;
+            match = Regex.Match(miniSqlSentence, selectAllWherePattern);
+            if (match.Success)
+            {
+
+                string[] atributo = match.Groups[1].Value.Split(','); //Atributo que quieres mirar
+                string[] columnNames = match.Groups[2].Value.Split(','); //Nombre de la tabla
+                string[] izquierdaWhere = match.Groups[3].Value.Split(','); //Atributo despues del Where
+                string[] operationCondition = match.Groups[4].Value.Split(','); //El igual, > o <
+                string[] derechaWhere = match.Groups[5].Value.Split(','); //Parte derecha del where
+
+                TableColumn tc = new TableColumn(match.Groups[3].Value);
+                if (match.Groups[4].Value.Equals("="))
+                {
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[5].Value, match.Groups[3].Value);
+                    SelectAllWhere selectAllWhere = new SelectAllWhere(match.Groups[2].Value, condition);
+                    return selectAllWhere;
+                }
+                if (match.Groups[4].Value.Equals(">"))
+                {
+                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[5].Value, match.Groups[3].Value);
+                    SelectAllWhere selectAllWhere2 = new SelectAllWhere(match.Groups[2].Value, condition2);
+                    return selectAllWhere2;
+                }
+                if (match.Groups[4].Value.Equals("<"))
+                {
+                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[5].Value, match.Groups[3].Value);
+                    SelectAllWhere selectAllWhere3 = new SelectAllWhere(match.Groups[2].Value, condition3);
+                    return selectAllWhere3;
+                }
+            }
+
+                return null;
         }
     }
 }
