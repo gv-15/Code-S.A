@@ -64,10 +64,10 @@ namespace UnitTests
             IQuery query4 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin = 21;");
             Assert.IsTrue(query4 is SelectWhere);
 
-            /*
-            string resultadoSelectWhere = "['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}";
+            
+            string resultadoSelectWhere = "['EdadAdmin']{'22'}{'22'}{'22'}";
             Assert.AreEqual(resultadoSelectWhere, db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin = 22;"));
-           */
+           
             
             IQuery query5 = Parser.Parse("DROP TABLE DatosAdmin;");
             Assert.IsTrue(query5 is DropTable);
@@ -90,7 +90,14 @@ namespace UnitTests
             db.RunMiniSqlQuery("DELETE FROM DatosAdmin WHERE EdadAdmin = 21;");
             string resultadoDeleteFrom = "['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}{'Tamara','23','Xia'}";
             Assert.AreEqual(resultadoDeleteFrom, db.GetTableWithName("DatosAdmin").ToString());
-         
+
+
+            /*
+            IQuery query8 = Parser.Parse("SELECT * FROM DatosAdmin WHERE EdadAdmin = 22;");
+            Assert.IsTrue(query8 is SelectAllWhere);
+            string resultadoSelectAllWhere = "['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}";
+            Assert.AreEqual(resultadoSelectAllWhere, db.RunMiniSqlQuery("SELECT * FROM DatosAdmin WHERE EdadAdmin = 22;"));
+            */
         }
 
 
