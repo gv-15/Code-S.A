@@ -98,9 +98,9 @@ namespace UnitTests
             column.AddString("eider");
             Condition condition = new Condition(Condition.Operations.equals, "adolfo", column.GetTableColumnName());
 
-            List<String> col = column.GetColumns();
+            
 
-            List<String> l = column.Select(col, condition);
+            List<String> l = column.Select(condition);
 
             foreach (String element in l)
             {
@@ -114,8 +114,7 @@ namespace UnitTests
             column2.AddString("9");
             Condition condition2 = new Condition(Condition.Operations.min, "7", column2.GetTableColumnName());
 
-            List<String> numbers = column2.GetColumns();
-            List <String> list = column2.Select(numbers, condition2);
+            List <String> list = column2.Select(condition2);
             foreach (String element in list)
             {
 
