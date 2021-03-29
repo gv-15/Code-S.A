@@ -239,6 +239,8 @@ namespace UnitTests
             columna2.AddString("Miren");
             columna2.AddString("Claudia");
             columna2.AddString("Pedro");
+            t.AddColumn(columna2);
+
 
             Condition c = new Condition(Condition.Operations.equals, "Audi", "Coches");
             Table table = m_db.SelectAllWhere("Tabla", c);
