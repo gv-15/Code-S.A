@@ -49,7 +49,7 @@ namespace UnitTests
 
 
 
-        /*
+        
         [TestMethod]
         public void TestDeleteColumn()
         {
@@ -69,12 +69,12 @@ namespace UnitTests
             table.AddRow(new List<string>() { "Xabi", "21", "Null" });
 
             List<TableColumn> tc = table.GetColumns();
-            Condition c = new Condition(Condition.Operations.equals, "Laia", name.GetTableColumnName());
+            Condition c = new Condition(Condition.Operations.equals, "Iker", "NombreAdmin");
             table.DeleteColumn(c);
             int h = table.GetColumns().Count;
-            Assert.AreEqual(1, h);
-            Assert.AreEqual(age, tc[0]); 
-        }*/
+            Assert.AreEqual(3, h);
+            Assert.AreEqual(3, tc[0].GetColumns().Count); 
+        }
 
         [TestMethod]
         public void TestSelectRowsPositions()

@@ -191,6 +191,27 @@ namespace UnitTests
 
 
         }
+
+       
+        [TestMethod]
+        public void TestFindTableWithName()
+        {
+            m_db = new DB("db");
+            Table table = new Table("table");
+            Table table2 = new Table("table2");
+            Table table3 = new Table("table3");
+            m_db.AddTable(table);
+            m_db.AddTable(table2);
+            m_db.AddTable(table3);
+
+            int i = m_db.FindTableWithName("table2");
+
+            Assert.AreEqual(1, i);
+
+
+        }
+
+        //selectAll falta
     }
 
 }
