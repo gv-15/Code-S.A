@@ -224,7 +224,25 @@ namespace UnitTests
 
         }
 
-        //selectAll falta
+        [TestMethod]
+        public void TestSelectAll()
+        {
+
+            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            Table newTable = new Table("newTable");
+            TableColumn column = new TableColumn("a");
+            column.AddString("name");
+            column.AddString("surname");
+            string table = newTable.GetName();
+            newTable.AddColumn(column);
+            db.AddTable(newTable);
+            Table newTable2 = new Table("newTable2");
+
+            newTable2 = db.SelectAll(table);
+
+            Assert.AreEqual("['a']{'name'}{'surname'}",newTable2.ToString());
+
+        }
     }
 
 }
