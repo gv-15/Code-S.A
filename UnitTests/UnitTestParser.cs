@@ -55,7 +55,7 @@ namespace UnitTests
             string resultadoInsert = "['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}{'Xabi','21','Null'}{'Tamara','23','Xia'}";
             Assert.AreEqual(resultadoInsert, table.ToString());
 
-            IQuery query3 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin;");
+            IQuery query3 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin;"); //Falta hacerlo para mas de una columna
             Assert.IsTrue(query3 is SelectColumns);
             string resultadoSelectColumns = "['EdadAdmin']{'22'}{'22'}{'22'}{'21'}{'23'}";
             Assert.AreEqual(db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin;"),resultadoSelectColumns);
