@@ -53,13 +53,21 @@ namespace UnitTests
         [TestMethod]
         public void TestDeleteColumn()
         {
-            Table table = new Table("table");
-            TableColumn name = new TableColumn("namea");
-            TableColumn age = new TableColumn("age");
-            table.AddColumn(name);
-            table.AddColumn(age);
-            name.AddString("Aitor");
-            name.AddString("Laia");
+            TableColumn tc1 = new TableColumn("NombreAdmin");
+
+            TableColumn tc2 = new TableColumn("EdadAdmin");
+
+            TableColumn tc3 = new TableColumn("PerrosAdmin");
+
+            List<TableColumn> tableColumns = new List<TableColumn>() { tc1, tc2, tc3 };
+
+            Table table = new Table("DatosAdmin", tableColumns);
+
+            table.AddRow(new List<string>() { "Gaizka", "22", "Boss&Drogo" });
+            table.AddRow(new List<string>() { "Edurne", "22", "Zuri" });
+            table.AddRow(new List<string>() { "Iker", "22", "Null" });
+            table.AddRow(new List<string>() { "Xabi", "21", "Null" });
+
             List<TableColumn> tc = table.GetColumns();
             Condition c = new Condition(Condition.Operations.equals, "Laia", name.GetTableColumnName());
             table.DeleteColumn(c);
