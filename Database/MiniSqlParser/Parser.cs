@@ -16,9 +16,42 @@ namespace Database.MiniSqlParser
             const string insertIntoPattern = @"INSERT INTO ([a-zA-Z0-9.]+) VALUES \(([a-zA-Z0-9,)]+)\)";
             const string dropTablePattern = @"DROP TABLE ([a-zA-Z0-9.]+)";
             const string createTablePattern = @"CREATE TABLE ([a-zA-Z0-9]+) \(([a-zA-Z0-9,]+)\)";
+            const string selectAllWherePattern = @"SELECT \* FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+) ([\<+-\>-\=]) ([a-zA-Z0-9.]+)";
 
-            Match match = Regex.Match(miniSqlSentence, selectAllPattern);
 
+
+            Match match = Regex.Match(miniSqlSentence, selectAllWherePattern);
+            if (match.Success)
+            {
+
+                string[] atributo = match.Groups[1].Value.Split(','); 
+                string[] columnNames = match.Groups[2].Value.Split(','); 
+                string[] izquierdaWhere = match.Groups[3].Value.Split(','); 
+                string[] operationCondition = match.Groups[4].Value.Split(','); 
+                string[] derechaWhere = match.Groups[5].Value.Split(','); 
+
+                TableColumn tc = new TableColumn(match.Groups[2].Value);
+                if (match.Groups[3].Value.Equals("="))
+                {
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[4].Value, match.Groups[2].Value);
+                    SelectAllWhere selectAllWhere = new SelectAllWhere(match.Groups[1].Value, condition);
+                    return selectAllWhere;
+                }
+                if (match.Groups[3].Value.Equals(">"))
+                {
+                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[4].Value, match.Groups[2].Value);
+                    SelectAllWhere selectAllWhere2 = new SelectAllWhere(match.Groups[1].Value, condition2);
+                    return selectAllWhere2;
+                }
+                if (match.Groups[3].Value.Equals("<"))
+                {
+                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[4].Value, match.Groups[2].Value);
+                    SelectAllWhere selectAllWhere3 = new SelectAllWhere(match.Groups[1].Value, condition3);
+                    return selectAllWhere3;
+                }
+            }
+
+           match = Regex.Match(miniSqlSentence, selectAllPattern);
             if (match.Success)
             {
                 SelectAll selectAll = new SelectAll(match.Groups[1].Value);
@@ -128,7 +161,9 @@ namespace Database.MiniSqlParser
                 return createTable;
             }
 
-            return null;
+           
+
+                return null;
         }
     }
 }

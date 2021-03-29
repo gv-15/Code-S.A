@@ -54,38 +54,7 @@ namespace UnitTests
             Assert.AreEqual(1, num);
             Assert.AreEqual("table3", m_db.GetDBTableList()[0].GetName());
         }
-        /*
-        [TestMethod]
-        public void TestInsert()
-        {
-            m_db = new DB("m_nombre");
-
-            Table people = new Table("people");
-            m_db.AddTable(people);
-
-            TableColumn name = new TableColumn("name");
-            TableColumn surname = new TableColumn("surname");
-            Table t = m_db.GetTable(0);
-            t.AddColumn(name);
-            t.AddColumn(surname);
-
-            List<String> values = new List<string>();
-            values.Add("Adolfo");
-            values.Add("García");
-
-            m_db.InsertInto("people", values);
-
-            Assert.AreEqual(values,people.GetRowByIndex(0));
-            Assert.AreEqual("Adolfo", people.GetColumns()[0].GetColumns()[0]);
-            Assert.AreEqual("García", people.GetColumns()[1].GetColumns()[0]);
-            int i = people.GetColumns()[0].GetColumns().Count;
-            Assert.AreEqual(1, i);
-            int i2 = people.GetColumns()[1].GetColumns().Count;
-            Assert.AreEqual(1, i2);
-
-
-
-        }*/
+        
 
         [TestMethod]
         public void TestSelectWhere()
@@ -218,8 +187,84 @@ namespace UnitTests
         public void TestDeleteFrom()
         {
 
+            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            Table newTable = new Table("newTable");
+            TableColumn column = new TableColumn("a");
+            column.AddString("name");
+            column.AddString("surname");
+            string table = newTable.GetName();
+            newTable.AddColumn(column);
+            db.AddTable(newTable);
+            List<string> col = column.GetColumns();
+            Condition condition = new Condition(Condition.Operations.equals, "name", column.GetTableColumnName());
+            
+            db.DeleteFrom(table,col,condition);
+
+            Assert.AreEqual("surname",col[0]);
+
+            //falta por filas
+        }
+
+       
+        [TestMethod]
+        public void TestFindTableWithName()
+        {
+            m_db = new DB("db");
+            Table table = new Table("table");
+            Table table2 = new Table("table2");
+            Table table3 = new Table("table3");
+            m_db.AddTable(table);
+            m_db.AddTable(table2);
+            m_db.AddTable(table3);
+
+            int i = m_db.FindTableWithName("table2");
+
+            Assert.AreEqual(1, i);
 
 
+        }
+
+        [TestMethod]
+        public void TestSelectAllWhere()
+        {
+            m_db = new DB("db");
+            Table t = new Table("Tabla");
+            m_db.AddTable(t);
+            TableColumn columna1 = new TableColumn("Coches");
+            columna1.AddString("Renault");
+            columna1.AddString("Nissan");
+            columna1.AddString("Audi");
+            t.AddColumn(columna1);
+            TableColumn columna2 = new TableColumn("Propietarios");
+            columna2.AddString("Miren");
+            columna2.AddString("Claudia");
+            columna2.AddString("Pedro");
+            t.AddColumn(columna2);
+
+
+            Condition c = new Condition(Condition.Operations.equals, "Audi", "Coches");
+            Table table = m_db.SelectAllWhere("Tabla", c);
+            String s = table.ToString();
+            Assert.AreEqual("['Coches','Propietarios']{'Audi','Pedro'}", s);
+          
+        }
+        [TestMethod]
+        public void TestSelectAll()
+        {
+
+            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            Table newTable = new Table("newTable");
+            TableColumn column = new TableColumn("a");
+            column.AddString("name");
+            column.AddString("surname");
+            string table = newTable.GetName();
+            newTable.AddColumn(column);
+            db.AddTable(newTable);
+            Table newTable2 = new Table("newTable2");
+
+            newTable2 = db.SelectAll(table);
+
+            Assert.AreEqual("['a']{'name'}{'surname'}",newTable2.ToString());
 
         }
     }

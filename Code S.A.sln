@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Databa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{00FB6597-3FC0-4DA5-BB00-B8C68C07E455}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleDatabase", "ConsoleDatabase\ConsoleDatabase.csproj", "{40551626-2A71-4DA2-927B-4547BCBF961F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{00FB6597-3FC0-4DA5-BB00-B8C68C07E455}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00FB6597-3FC0-4DA5-BB00-B8C68C07E455}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00FB6597-3FC0-4DA5-BB00-B8C68C07E455}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40551626-2A71-4DA2-927B-4547BCBF961F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40551626-2A71-4DA2-927B-4547BCBF961F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40551626-2A71-4DA2-927B-4547BCBF961F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40551626-2A71-4DA2-927B-4547BCBF961F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

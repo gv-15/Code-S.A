@@ -85,11 +85,11 @@ namespace Database
 
 
 
-        public List<string> Select(List<string> listRows, Condition condition)
+        public List<string> Select(Condition condition)
         {
             List<string> list1 = new List<string>();
 
-            foreach (string element in listRows)
+            foreach (string element in m_columns)
             {
                 if (condition.GetOperation().Equals("equals"))
                 {
