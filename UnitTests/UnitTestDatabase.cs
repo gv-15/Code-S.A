@@ -224,7 +224,28 @@ namespace UnitTests
 
         }
 
-        //selectAll falta
+        [TestMethod]
+        public void TestSelectAllWhere()
+        {
+            m_db = new DB("db");
+            Table t = new Table("Tabla");
+            m_db.AddTable(t);
+            TableColumn columna1 = new TableColumn("Coches");
+            columna1.AddString("Renault");
+            columna1.AddString("Nissan");
+            columna1.AddString("Audi");
+            t.AddColumn(columna1);
+            TableColumn columna2 = new TableColumn("Propietarios");
+            columna2.AddString("Miren");
+            columna2.AddString("Claudia");
+            columna2.AddString("Pedro");
+
+            Condition c = new Condition(Condition.Operations.equals, "Audi", "Coches");
+            Table table = m_db.SelectAllWhere("Tabla", c);
+            String s = table.ToString();
+            Assert.AreEqual("['Coches','Propietarios']{'Audi','Pedro'}", s);
+          
+        }
     }
 
 }

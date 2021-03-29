@@ -252,7 +252,7 @@ namespace Database
             Table selectedTable = m_db[i];
             Table newTable = new Table("new");
 
-
+            List<int> index = selectedTable.SelectRowsPositions(condition);
 
 
             TableColumn newColumn;
