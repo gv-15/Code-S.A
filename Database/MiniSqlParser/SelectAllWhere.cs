@@ -15,10 +15,9 @@ namespace Database.MiniSqlParser
         }
         public string Run(DB database)
         {
-            /*
+            
             return database.SelectAllWhere(m_table, m_condition).ToString();
-            */
-            return null;
+            
         }
 
     }
