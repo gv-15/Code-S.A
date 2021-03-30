@@ -155,21 +155,50 @@ namespace Database
                     {
                         if (tc == m_columns.Last())
                         {
+                            if(int.TryParse(tc.GetColumns().ElementAt(i), out int n))
+                            { 
                             resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "'}";
+                            }
+                            else
+                            {
+                             resultadoFinal += "{" + tc.GetColumns().ElementAt(i) + "}";
+                            }
                         }
                         else
                         {
-                            resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "',";
+                            if (int.TryParse(tc.GetColumns().ElementAt(i), out int n))
+                            {
+                                resultadoFinal += "{'" + tc.GetColumns().ElementAt(i) + "',";
+                            }
+                            else
+                            {
+                                resultadoFinal += "{" + tc.GetColumns().ElementAt(i) + ",";
+                            }
                         }
                     }
                     else if (tc != m_columns.Last())
                     {
-                        resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "',";
+                        if (int.TryParse(tc.GetColumns().ElementAt(i), out int n))
+                        {
+                            resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "',";
+                        }
+                        else
+                        {
+                            resultadoFinal += "" + tc.GetColumns().ElementAt(i) + ",";
+                        }
                     }
 
                     else
                     {
-                        resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "'}";
+                        if (int.TryParse(tc.GetColumns().ElementAt(i), out int n))
+                        {
+                            resultadoFinal += "'" + tc.GetColumns().ElementAt(i) + "'}";
+                        }
+                        else
+                        {
+                            resultadoFinal += "" + tc.GetColumns().ElementAt(i) + "}";
+
+                        }
                     }
                 }
             }
