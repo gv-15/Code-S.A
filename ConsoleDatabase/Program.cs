@@ -1,35 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
 using Database;
+using Database.MiniSqlParser;
 
 namespace ConsoleDatabase
 {
     class Program
     {
+        private static DB db;
+      
         static void Main(string[] args)
         {
-            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            string stopCondition = "0";
+            Console.WriteLine("If you wanna exit write --> CLOSE");
+            Console.WriteLine("");
 
-            TableColumn tc1 = new TableColumn("NombreAdmin");
+            if (db == null)
+            {
+                db = new DB("MyDB", "Admin", "SoyAdmin");
+            }
 
-            TableColumn tc2 = new TableColumn("EdadAdmin");
+            while (stopCondition != "1")
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Write the line you want to execute in the DB");
+                Console.WriteLine("");
+                string linea = Console.ReadLine();
+                string queryResult = "";
+                try
+                {
+                   queryResult = UseDatabaseConsole(linea, db);
+                }
+                catch (NullReferenceException ex)
+                {
+                    Console.WriteLine("Formato incorrecto");
+                }
+                stopCondition = queryResult;
+                if(queryResult.Equals("1"))
+                {
+                    stopCondition = queryResult;
+                }
+                else
+                {
+                    Console.WriteLine(queryResult);
 
-            TableColumn tc3 = new TableColumn("PerrosAdmin");
+                }
+            }
+        }
 
-            List<TableColumn> tableColumns = new List<TableColumn>() { tc1, tc2, tc3 };
+        private static string UseDatabaseConsole(string miniSqlSentence, DB database)
+        {
 
-            Table table = new Table("DatosAdmin", tableColumns);
+            IQuery IQ = Parser.Parse(miniSqlSentence);
 
-            table.AddRow(new List<string>() { "Gaizka", "22", "Boss&Drogo" });
-            table.AddRow(new List<string>() { "Edurne", "22", "Zuri" });
-            table.AddRow(new List<string>() { "Iker", "22", "Null" });
-            table.AddRow(new List<string>() { "Xabi", "21", "Null" });
-
-            db.AddTable(table);
-
-            Console.WriteLine(db.RunMiniSqlQuery("SELECT * FROM DatosAdmin; "));
-            
+            return IQ.Run(database);
 
         }
+
+
     }
 }
+

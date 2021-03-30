@@ -63,6 +63,12 @@ namespace Database
             return respuesta;
         }
 
+        public string Close()
+        {
+            string respuesta = "1";
+            return respuesta;
+        }
+
         public string CreateTable(string nameOfTable, List<TableColumn> tableColumns)
         {
             string respuesta = "Table created";
@@ -167,17 +173,6 @@ namespace Database
                 li2.Add(li);
                 
             }
-/*
-            List<List<string>> rows = new List<List<string>>();
-            rows = t.GetRows();
-            int c = t.GetRows().Count;
-
-
-            //Replace the values
-            for (int i = 0; i < c; i++)
-            {
-                rows[i] = li2[i];
-            }*/
 
             return newTable;
         }
@@ -196,11 +191,16 @@ namespace Database
             }
 
             public string RunMiniSqlQuery(string query)
-        {
-            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
+            {
+       
 
+            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
+            
+          
             return queryObject.Run(this);
-        }
+
+            }
+
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {
             Table FilteredColumnTable = SelectColumns(table, columnNames);
