@@ -2,11 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Database
 {
     public class DB
     {
+        const string Pattern1 = @"([a-zA-Z0-9]+) TEXT";
+        const string Pattern2 = @"([a-zA-Z0-9]+) INT";
+        const string Pattern3 = @"([a-zA-Z0-9]+) DOUBLE";
+        const string Pattern4 = @"([a-zA-Z0-9]+)";
         private string m_name;
         private List<Table> m_db;
         private string m_username;
@@ -63,12 +68,74 @@ namespace Database
             return respuesta;
         }
 
+        public string Close()
+        {
+            string respuesta = "1";
+            return respuesta;
+        }
+
         public string CreateTable(string nameOfTable, List<TableColumn> tableColumns)
         {
+            List<TableColumn> tableColumns2 = new List<TableColumn>();
             string respuesta = "Table created";
-            Table table = new Table(nameOfTable, tableColumns);
-            m_db.Add(table);
+
+            TableColumn[] arrayTC = tableColumns.ToArray();
+
+            foreach (TableColumn column in arrayTC)
+            {
+                
+
+                 string value = column.GetTableColumnName();
+                 Match match1 = Regex.Match(value, Pattern4);
+                 Match match = Regex.Match(value, Pattern1);
+                 Match match2 = Regex.Match(value, Pattern2);
+                 Match match3 = Regex.Match(value, Pattern3);
+
+                 
+
+               if (match.Success)
+                 {
+                     string tcc = value.Replace(" TEXT","");
+                     TableColumn tc = new TableColumn(tcc);
+                     tableColumns2.Add(tc);
+                     Table table1 = new Table(nameOfTable, tableColumns2);
+                     m_db.Add(table1);
+
+                 }
+
+
+                 else if (match2.Success)
+                 {
+                     string tcc = value.Replace(" INT", "");
+                     TableColumn tc = new TableColumn(tcc);
+                     tableColumns2.Add(tc);
+                     Table table2 = new Table(nameOfTable, tableColumns2);
+                     m_db.Add(table2);
+
+                 }
+
+                 else if (match3.Success)
+                 {
+                     string tcc = value.Replace(" DOUBLE", "");
+                     TableColumn tc = new TableColumn(tcc);
+                     tableColumns2.Add(tc);
+                     Table table3 = new Table(nameOfTable, tableColumns2);
+                     m_db.Add(table3);
+
+                 }
+
+                else if (match1.Success)
+                {
+                    Table table = new Table(nameOfTable, tableColumns);
+                    m_db.Add(table);
+                }
+
+
+            }
+
+
             return respuesta;
+
         }
 
         public int FindTableWithName(string tableName)
@@ -167,17 +234,6 @@ namespace Database
                 li2.Add(li);
                 
             }
-/*
-            List<List<string>> rows = new List<List<string>>();
-            rows = t.GetRows();
-            int c = t.GetRows().Count;
-
-
-            //Replace the values
-            for (int i = 0; i < c; i++)
-            {
-                rows[i] = li2[i];
-            }*/
 
             return newTable;
         }
@@ -196,11 +252,16 @@ namespace Database
             }
 
             public string RunMiniSqlQuery(string query)
-        {
-            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
+            {
+       
 
+            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
+            
+          
             return queryObject.Run(this);
-        }
+
+            }
+
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {
             Table FilteredColumnTable = SelectColumns(table, columnNames);

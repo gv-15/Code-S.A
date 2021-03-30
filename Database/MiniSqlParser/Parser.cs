@@ -13,10 +13,11 @@ namespace Database.MiniSqlParser
             const string selectColumnsPattern = @"SELECT ([a-zA-Z0-9,]+) FROM ([a-zA-Z0-9]+)";
             const string deleteFromPattern = @"DELETE FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)";
             const string selectWherePattern = @"SELECT ([a-zA-Z0-9,]+) FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)";
-            const string insertIntoPattern = @"INSERT INTO ([a-zA-Z0-9.]+) VALUES \(([\a-zA-Z0-9.,\')]+)\)";
+            const string insertIntoPattern = @"INSERT INTO ([a-zA-Z0-9.]+) VALUES \(([\a-zA-Z0-9.,\'\-)]+)\)";
             const string dropTablePattern = @"DROP TABLE ([a-zA-Z0-9.]+)";
             const string createTablePattern = @"CREATE TABLE ([a-zA-Z0-9 ]+) \(([a-zA-Z0-9, ]+)\)";
             const string selectAllWherePattern = @"SELECT \* FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)";
+            const string closePattern = @"CLOSE";
 
 
 
@@ -56,6 +57,13 @@ namespace Database.MiniSqlParser
             {
                 SelectAll selectAll = new SelectAll(match.Groups[1].Value);
                 return selectAll;
+            }
+
+            match = Regex.Match(miniSqlSentence, closePattern);
+            if (match.Success)
+            {
+                Close close = new Close();
+                return close;
             }
 
             match = Regex.Match(miniSqlSentence, selectWherePattern);
@@ -159,9 +167,7 @@ namespace Database.MiniSqlParser
 
                 CreateTable createTable = new CreateTable(match.Groups[1].Value, tableColumn);
                 return createTable;
-            }
-
-           
+            } 
 
                 return null;
         }
