@@ -55,20 +55,22 @@ namespace UnitTests
             string resultadoInsert = "['NombreAdmin','EdadAdmin','PerrosAdmin']{'Gaizka','22','Boss&Drogo'}{'Edurne','22','Zuri'}{'Iker','22','Null'}{'Xabi','21','Null'}{'Tamara','23','Xia'}";
             Assert.AreEqual(resultadoInsert, table.ToString());
 
-            IQuery query3 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin;"); //Falta hacerlo para mas de una columna
+            IQuery query3 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin;"); 
             Assert.IsTrue(query3 is SelectColumns);
             string resultadoSelectColumns = "['EdadAdmin']{'22'}{'22'}{'22'}{'21'}{'23'}";
             Assert.AreEqual(db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin;"),resultadoSelectColumns);
+            string resultadoSelectColumns2 = "['NombreAdmin','EdadAdmin']{'Gaizka','22'}{'Edurne','22'}{'Iker','22'}{'Xabi','21'}{'Tamara','23'}";
+            Assert.AreEqual(db.RunMiniSqlQuery("SELECT NombreAdmin,EdadAdmin FROM DatosAdmin;"), resultadoSelectColumns2);
 
 
             IQuery query4 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin=21;");
             Assert.IsTrue(query4 is SelectWhere);
-
-            
             string resultadoSelectWhere = "['EdadAdmin']{'22'}{'22'}{'22'}";
             Assert.AreEqual(resultadoSelectWhere, db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin=22;"));
-           
-            
+            string resultadoSelectWhere2 = "['NombreAdmin','EdadAdmin']{'Gaizka','22'}{'Edurne','22'}{'Iker','22'}";
+            Assert.AreEqual(resultadoSelectWhere2, db.RunMiniSqlQuery("SELECT NombreAdmin,EdadAdmin FROM DatosAdmin WHERE EdadAdmin=22;"));
+
+
             IQuery query5 = Parser.Parse("DROP TABLE DatosAdmin;");
             Assert.IsTrue(query5 is DropTable);
             Assert.IsNotNull(db.FindTableWithName("AdminRules"));
