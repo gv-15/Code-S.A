@@ -84,27 +84,34 @@ namespace Database
 
         public string InsertInto(string table, List<string> values)
         {
-            string resultado = "Tuple added";
+            string resultado = "";
             int i = FindTableWithName(table);
-            Table t = new Table(m_db[i].GetName());
-            t = m_db[i];
-            t.AddRowsTrue(values);
-            string st = "";
-            List<string> columnNames = new List<string>();
-            foreach (TableColumn tc in t.GetColumns())
+            if (i == -1)
             {
-                columnNames.Add(tc.GetTableColumnName());
+                resultado = "ERROR: Table doesn't exist ";
             }
-
-            Table tableColumns = SelectColumns(t.GetName(), columnNames);
-            List<TableColumn> list = tableColumns.GetColumns();
-
-            for (int c = 0; c < list.Count; c++)
+            else
             {
-                list[c].AddString(values[c]);
-                st += values[c];
+                resultado = "Tuple added";
+                Table t = new Table(m_db[i].GetName());
+                t = m_db[i];
+                t.AddRowsTrue(values);
+                string st = "";
+                List<string> columnNames = new List<string>();
+                foreach (TableColumn tc in t.GetColumns())
+                {
+                    columnNames.Add(tc.GetTableColumnName());
+                }
+
+                Table tableColumns = SelectColumns(t.GetName(), columnNames);
+                List<TableColumn> list = tableColumns.GetColumns();
+
+                for (int c = 0; c < list.Count; c++)
+                {
+                    list[c].AddString(values[c]);
+                    st += values[c];
+                }
             }
-            
 
             return resultado;
         }
