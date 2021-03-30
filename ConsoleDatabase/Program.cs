@@ -32,20 +32,23 @@ namespace ConsoleDatabase
                 try
                 {
                    queryResult = UseDatabaseConsole(linea, db);
+               
+                stopCondition = queryResult;
+
                 }
                 catch (NullReferenceException ex)
                 {
                     Console.WriteLine("Formato incorrecto");
                 }
-                stopCondition = queryResult;
-                if(queryResult.Equals("1"))
+                if (queryResult.Equals("1"))
                 {
                     stopCondition = queryResult;
                 }
+
+
                 else
                 {
                     Console.WriteLine(queryResult);
-
                 }
               Console.WriteLine("");
             }
