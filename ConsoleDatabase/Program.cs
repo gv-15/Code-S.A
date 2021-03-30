@@ -11,10 +11,14 @@ namespace ConsoleDatabase
       
         static void Main(string[] args)
         {
+            
             string stopCondition = "0";
+            Console.WriteLine("");
             Console.WriteLine("If you wanna exit write --> CLOSE");
             Console.WriteLine("");
-
+            Console.WriteLine("Write the line you want to execute in the DB");
+            Console.WriteLine("");
+            
             if (db == null)
             {
                 db = new DB("MyDB", "Admin", "SoyAdmin");
@@ -22,11 +26,9 @@ namespace ConsoleDatabase
 
             while (stopCondition != "1")
             {
-                Console.WriteLine("");
-                Console.WriteLine("Write the line you want to execute in the DB");
-                Console.WriteLine("");
-                string linea = Console.ReadLine();
-                string queryResult = "";
+                 
+              string linea = Console.ReadLine();
+              string queryResult = "";
                 try
                 {
                    queryResult = UseDatabaseConsole(linea, db);
@@ -45,6 +47,7 @@ namespace ConsoleDatabase
                     Console.WriteLine(queryResult);
 
                 }
+              Console.WriteLine("");
             }
         }
 
