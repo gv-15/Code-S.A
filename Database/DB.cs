@@ -58,14 +58,14 @@ namespace Database
 
         public string DropTable(string tableName)
         {
-            string respuesta = "Tabla borrada correctamente";
+            string respuesta = "Table erased";
             m_db.RemoveAt(FindTableWithName(tableName));
             return respuesta;
         }
 
         public string CreateTable(string nameOfTable, List<TableColumn> tableColumns)
         {
-            string respuesta = "Tabla creada correctamente";
+            string respuesta = "Table created";
             Table table = new Table(nameOfTable, tableColumns);
             m_db.Add(table);
             return respuesta;
@@ -84,29 +84,35 @@ namespace Database
 
         public string InsertInto(string table, List<string> values)
         {
-            
+            string resultado = "";
             int i = FindTableWithName(table);
-            Table t = new Table(m_db[i].GetName());
-            t = m_db[i];
-            t.AddRowsTrue(values);
-            string st = "";
-            List<string> columnNames = new List<string>();
-            foreach (TableColumn tc in t.GetColumns())
+            if (i == -1)
             {
-                columnNames.Add(tc.GetTableColumnName());
+                resultado = "ERROR: Table doesn't exist ";
+            }
+            else
+            {
+                resultado = "Tuple added";
+                Table t = new Table(m_db[i].GetName());
+                t = m_db[i];
+                string st = "";
+                List<string> columnNames = new List<string>();
+                foreach (TableColumn tc in t.GetColumns())
+                {
+                    columnNames.Add(tc.GetTableColumnName());
+                }
+
+                Table tableColumns = SelectColumns(t.GetName(), columnNames);
+                List<TableColumn> list = tableColumns.GetColumns();
+
+                for (int c = 0; c < list.Count; c++)
+                {
+                    list[c].AddString(values[c]);
+                    st += values[c];
+                }
             }
 
-            Table tableColumns = SelectColumns(t.GetName(), columnNames);
-            List<TableColumn> list = tableColumns.GetColumns();
-
-            for (int c = 0; c < list.Count; c++)
-            {
-                list[c].AddString(values[c]);
-                st += values[c];
-            }
-            
-
-            return t.ToString();
+            return resultado;
         }
 
         public Table SelectAll(string table)
@@ -126,8 +132,6 @@ namespace Database
             t=this.GetTable(p);
             List<TableColumn> list = new List<TableColumn>();
             list = t.GetColumns();
-
-            //List<List<string>> rows2 = new List<List<string>>();
            
             for (int i = 0; i < columnNames.Count; i++)
             {
@@ -143,7 +147,6 @@ namespace Database
                 }
             }
 
-            //List part
             List<TableColumn> columns = new List<TableColumn>();
             columns = newTable.GetColumns();
             int n = columns.Count;
@@ -164,7 +167,7 @@ namespace Database
                 li2.Add(li);
                 
             }
-
+/*
             List<List<string>> rows = new List<List<string>>();
             rows = t.GetRows();
             int c = t.GetRows().Count;
@@ -174,43 +177,21 @@ namespace Database
             for (int i = 0; i < c; i++)
             {
                 rows[i] = li2[i];
-            }
+            }*/
 
             return newTable;
         }
 
             public string DeleteFrom(string table, List<string> columnNames, Condition condition)
             {
-                string resultado = "Se ha borrado correctamente";
+                string resultado = "Tuple(s) deleted";
                 int p = FindTableWithName(table);
                 Table t = this.GetTable(p);
                 List<TableColumn> list = t.GetColumns();
 
 
-                t.DeleteColumn(condition);//Con esto borramos de las columnas
+                t.DeleteColumn(condition);
 
-
-            /*
-                List<List<string>> rows = new List<List<string>>();
-           rows =  t.GetRows();//Ahora vamos a borrar filas
-                int counter = 0;
-                foreach (List<string> row in rows)
-                {
-                    Boolean find = false;
-                    foreach (string value in row)
-                    {
-                        if (value.Equals(condition.GetValue()))
-                        {
-                            find = true;
-                        }
-                    }
-                    if (find == true)
-                    {
-                        rows.RemoveAt(counter);
-                    }
-                    counter++;
-                }
-            */
             return resultado;
             }
 
@@ -221,7 +202,7 @@ namespace Database
             return queryObject.Run(this);
         }
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
-        {// Aqui Seleccionamos columnas y lo que hay que seleccionar son filas???
+        {
             Table FilteredColumnTable = SelectColumns(table, columnNames);
             Table newTable = new Table("newTable");
 
@@ -245,7 +226,6 @@ namespace Database
                 newTable.AddColumn(newColumn);
 
             }
-            //Faltan filas
 
             return newTable;
         }
@@ -277,7 +257,6 @@ namespace Database
                 newTable.AddColumn(newColumn);
 
             }
-            //Faltan filas
 
             return newTable;
 
