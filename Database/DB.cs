@@ -2,11 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Database
 {
     public class DB
     {
+        const string Pattern1 = @"([a-zA-Z0-9]+) TEXT";
+        const string Pattern2 = @"([a-zA-Z0-9]+) INT";
+        const string Pattern3 = @"([a-zA-Z0-9]+) DOUBLE";
+        const string Pattern4 = @"([a-zA-Z0-9]+)";
         private string m_name;
         private List<Table> m_db;
         private string m_username;
@@ -71,10 +76,58 @@ namespace Database
 
         public string CreateTable(string nameOfTable, List<TableColumn> tableColumns)
         {
+            List<TableColumn> tableColumns2 = new List<TableColumn>();
             string respuesta = "Table created";
-            Table table = new Table(nameOfTable, tableColumns);
-            m_db.Add(table);
+
+
+            foreach (TableColumn column in tableColumns)
+            {
+                    string value = column.GetTableColumnName();
+                    Match match1 = Regex.Match(value, Pattern4);
+                    if (match1.Success)
+                    {
+                        Table table = new Table(nameOfTable, tableColumns);
+                        m_db.Add(table);
+                    }
+                    Match match = Regex.Match(value, Pattern1);
+                    if (match.Success)
+                    {
+                        string tcc = value.Replace(" TEXT", "");
+                        TableColumn tc = new TableColumn(tcc);
+                        tableColumns2.Add(tc);
+                        Table table1 = new Table(nameOfTable, tableColumns2);
+                        m_db.Add(table1);
+                   
+                    }
+
+                    match = Regex.Match(value, Pattern2);
+                    if (match.Success)
+                    {
+                        string tcc = value.Replace(" INT", "");
+                        TableColumn tc = new TableColumn(tcc);
+                        tableColumns2.Add(tc);
+                        Table table2 = new Table(nameOfTable, tableColumns2);
+                        m_db.Add(table2);
+                      
+                    }
+                    match = Regex.Match(value, Pattern3);
+                    if (match.Success)
+                    {
+                        string tcc = value.Replace(" DOUBLE", "");
+                        TableColumn tc = new TableColumn(tcc);
+                        tableColumns2.Add(tc);
+                        Table table3 = new Table(nameOfTable, tableColumns2);
+                        m_db.Add(table3);
+                        
+                    }
+                    return null;
+                    
+                }
+          
+            
+            
             return respuesta;
+
         }
 
         public int FindTableWithName(string tableName)
