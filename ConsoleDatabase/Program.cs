@@ -8,7 +8,9 @@ namespace ConsoleDatabase
     class Program
     {
         private static DB db;
-      
+        private static string contraseña;
+        private static string nombreDB;
+        private static string usuario;
         static void Main(string[] args)
         {
             
@@ -16,12 +18,21 @@ namespace ConsoleDatabase
             Console.WriteLine("");
             Console.WriteLine("If you wanna exit write --> CLOSE");
             Console.WriteLine("");
+            Console.WriteLine("Enter a name for the Database");
+            nombreDB = Console.ReadLine();
+            Console.WriteLine("");
+            Console.WriteLine("Enter a username");
+            usuario = Console.ReadLine();
+            Console.WriteLine("");
+            Console.WriteLine("Enter a password");
+            contraseña = Console.ReadLine();
+            Console.WriteLine("");
             Console.WriteLine("Write the line you want to execute in the DB");
             Console.WriteLine("");
             
             if (db == null)
             {
-                db = new DB("MyDB", "Admin", "SoyAdmin");
+                db = new DB(nombreDB, usuario, contraseña);
             }
 
             while (stopCondition != "1")
