@@ -4,19 +4,22 @@ using System.Text;
 
 namespace Database.MiniSqlParser
 {
-    public class DropTable : IQuery
+    public class Close : IQuery
     {
-        private string tableName;
-        public DropTable(string name)
+
+     
+        public Close()
         {
-            tableName = name;
+          
         }
 
 
         public string Run(DB database)
         {
-            return database.DropTable(tableName);
-           
+
+            return database.Close();
         }
     }
+    
+    
 }
