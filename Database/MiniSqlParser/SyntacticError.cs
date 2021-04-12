@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Database.MiniSqlParser
 {
-    public class Sintacticerror : IQuery
+    public class SyntacticError : IQuery
     {
 
      
-        public Sintacticerror()
+        public SyntacticError()
         {
           
         }
@@ -17,7 +17,7 @@ namespace Database.MiniSqlParser
         public string Run(DB database)
         {
 
-            return database.Sintacticerror();
+            return database.SyntacticError();
         }
     }
     

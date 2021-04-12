@@ -9,16 +9,16 @@ namespace Database.MiniSqlParser
     {
         public static IQuery Parse(string miniSqlSentence)
         {
-            const string selectAllPattern = @"SELECT \* FROM ([a-zA-Z0-9]+)";
-            const string selectColumnsPattern = @"SELECT ([a-zA-Z0-9,]+) FROM ([a-zA-Z0-9]+)";
-            const string deleteFromPattern = @"DELETE FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)";
-            const string selectWherePattern = @"SELECT ([a-zA-Z0-9,]+) FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)";
-            const string insertIntoPattern = @"INSERT INTO ([a-zA-Z0-9.]+) VALUES \(([\a-zA-Z0-9.,\'\-)]+)\)";
-            const string dropTablePattern = @"DROP TABLE ([a-zA-Z0-9.]+)";
-            const string createTablePattern = @"CREATE TABLE ([a-zA-Z0-9 ]+) \(([a-zA-Z0-9, ]+)\)";
-            const string selectAllWherePattern = @"SELECT \* FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)";
-            const string closePattern = @"CLOSE";
-
+            const string selectAllPattern = @"SELECT \* FROM ([a-zA-Z0-9]+)\;";
+            const string selectColumnsPattern = @"SELECT ([a-zA-Z0-9]+(,[a-zA-Z0-9]+)*) FROM ([a-zA-Z0-9]+)\;";
+            const string deleteFromPattern = @"DELETE FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)\;";
+            const string selectWherePattern = @"SELECT ([a-zA-Z0-9,]+) FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)\;";
+            const string insertIntoPattern = @"INSERT INTO ([a-zA-Z0-9.]+) VALUES \(([\a-zA-Z0-9.,\'\-)]+)\)\;";
+            const string dropTablePattern = @"DROP TABLE ([a-zA-Z0-9.]+)\;";
+            const string createTablePattern = @"CREATE TABLE ([a-zA-Z0-9 ]+) \(([a-zA-Z0-9, ]+)\)\;";
+            const string selectAllWherePattern = @"SELECT \* FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)\;";
+            const string closePattern = @"CLOSE\;";
+            const string updatePattern = @"UPDATE ([a-zA-Z0-9,]+) SET ([a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\3(,[a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\5)*) WHERE ([a-zA-Z]+)([=><])('{0,1})([a-zA-Z0-9-\.\s]+)\;";
 
 
             Match match = Regex.Match(miniSqlSentence, selectAllWherePattern);
@@ -102,7 +102,7 @@ namespace Database.MiniSqlParser
             if (match.Success)
             {
                 string[] columnNames = match.Groups[1].Value.Split(',');
-                SelectColumns selectColumns = new SelectColumns(match.Groups[2].Value, Utils.ToList(columnNames));
+                SelectColumns selectColumns = new SelectColumns(match.Groups[3].Value, Utils.ToList(columnNames));
                 return selectColumns;
             }
             match = Regex.Match(miniSqlSentence, insertIntoPattern);
@@ -151,7 +151,72 @@ namespace Database.MiniSqlParser
                 DropTable dropTable = new DropTable(match.Groups[1].Value);
                 return dropTable;
             }
+            match = Regex.Match(miniSqlSentence, updatePattern);
+            if (match.Success)
+            {
 
+                if (match.Groups[7].Value.Equals("="))
+                {
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[9].Value, match.Groups[7].Value);
+                    List<string> columns = new List<string>();
+                    List<string> values = new List<string>();
+
+                    string set = match.Groups[2].Value.Replace("'", "");
+                    string[] setElements = set.Split(',');
+                    for (int i = 0; i < setElements.Length; i++)
+                    {
+                        string[] columnAndValue = setElements[i].Split('=');
+                        string column = columnAndValue[0];
+                        string value = columnAndValue[1];
+
+                        columns.Add(column);
+                        values.Add(value);
+                    }
+                    Update update = new Update(match.Groups[1].Value, condition, columns, values);
+                    return update;
+                }
+                if (match.Groups[7].Value.Equals(">"))
+                {
+                    Condition condition = new Condition(Condition.Operations.max, match.Groups[9].Value, match.Groups[7].Value);
+                    List<string> columns = new List<string>();
+                    List<string> values = new List<string>();
+
+                    string set = match.Groups[2].Value.Replace("'", "");
+                    string[] setElements = set.Split(',');
+                    for (int i = 0; i < setElements.Length; i++)
+                    {
+                        string[] columnAndValue = setElements[i].Split('=');
+                        string column = columnAndValue[0];
+                        string value = columnAndValue[1];
+
+                        columns.Add(column);
+                        values.Add(value);
+                    }
+                    Update update = new Update(match.Groups[1].Value, condition, columns, values);
+                    return update;
+                }
+                if (match.Groups[7].Value.Equals("<"))
+                {
+                    Condition condition = new Condition(Condition.Operations.min, match.Groups[9].Value, match.Groups[7].Value);
+                    List<string> columns = new List<string>();
+                    List<string> values = new List<string>();
+
+                    string set = match.Groups[2].Value.Replace("'", "");
+                    string[] setElements = set.Split(',');
+                    for (int i = 0; i < setElements.Length; i++)
+                    {
+                        string[] columnAndValue = setElements[i].Split('=');
+                        string column = columnAndValue[0];
+                        string value = columnAndValue[1];
+
+                        columns.Add(column);
+                        values.Add(value);
+                    }
+                    Update update = new Update(match.Groups[1].Value, condition, columns, values);
+                    return update;
+                }
+
+}
             match = Regex.Match(miniSqlSentence, createTablePattern);
             if (match.Success)
             {
@@ -168,8 +233,13 @@ namespace Database.MiniSqlParser
                 CreateTable createTable = new CreateTable(match.Groups[1].Value, tableColumn);
                 return createTable;
             }
+           
+            else
+            {
+                SyntacticError se = new SyntacticError();
+                return se;
+            }
 
-            return null;
         }
     }
 }

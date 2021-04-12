@@ -37,7 +37,7 @@ namespace Database
             int position = FindTableWithName(name);
             return m_db[position];
         }
-        public string Sintacticerror()
+        public string SyntacticError()
         {
 
             return "ERROR: Syntactical error";
@@ -68,9 +68,21 @@ namespace Database
 
         public string DropTable(string tableName)
         {
-            string respuesta = "Table erased";
-            m_db.RemoveAt(FindTableWithName(tableName));
-            return respuesta;
+            string respuesta = "Table dropped";
+            if (m_db.Contains(m_db[FindTableWithName(tableName)]))
+            {
+                   
+                      //No funciona
+              m_db.Remove(GetTableWithName(tableName));
+                
+                return respuesta;
+            }
+            else
+            {
+
+                return "ERROR: Table does not exist";
+            }
+            
         }
 
         public string Close()
@@ -338,6 +350,17 @@ namespace Database
 
             return newTable;
 
+        }
+
+
+        public string Update(List<string> columns, List<string> values, string table, Condition condition)
+        {
+            string resultado = "Tuple(s) updated";
+
+
+
+
+            return resultado;
         }
 
         public DB Load(string directory, string name, string newName)
