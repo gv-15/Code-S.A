@@ -37,9 +37,14 @@ namespace Database
             int position = FindTableWithName(name);
             return m_db[position];
         }
+        public string Sintacticerror()
+        {
 
+            return "ERROR: Syntactical error";
+        }
         public Table GetTable(int position)
         {
+        
             return m_db[position];
         }
 
@@ -185,8 +190,14 @@ namespace Database
         public Table SelectAll(string table)
         {
             int i = FindTableWithName(table);
-
+            if (i == -1)
+            {
+                return null;
+            }
+            else
+            { 
             return m_db[i];
+            }
         }
 
         public Table SelectColumns(string table, List<string> columnNames)
@@ -194,7 +205,11 @@ namespace Database
             Table newTable = new Table("newTable");
 
             int p = FindTableWithName(table);
-
+            if(p == -1)
+            {
+                return null;
+            }
+            else { 
             Table t = new Table("t"); 
             t=this.GetTable(p);
             List<TableColumn> list = new List<TableColumn>();
@@ -236,7 +251,9 @@ namespace Database
             }
 
             return newTable;
+          }
         }
+
 
             public string DeleteFrom(string table, List<string> columnNames, Condition condition)
             {

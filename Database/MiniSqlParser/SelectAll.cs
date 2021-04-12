@@ -26,9 +26,13 @@ namespace Database.MiniSqlParser
 
             public string Run(DB database)
             {
-
-            return database.SelectAll(m_table).ToString();
-          
+            if(database.SelectAll(m_table) == null)
+            {
+                return "ERROR: Table does not exist";
             }
+            else { 
+            return database.SelectAll(m_table).ToString();
+            }
+        }
         }
 }
