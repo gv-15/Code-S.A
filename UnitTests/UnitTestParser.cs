@@ -92,11 +92,14 @@ namespace UnitTests
 
             IQuery query8 = Parser.Parse("SELECT * FROM DatosAdmin WHERE EdadAdmin=22;");
             Assert.IsTrue(query8 is SelectAllWhere);
-           
 
-            IQuery query9 = Parser.Parse("CLOSE");
+            IQuery query9 = Parser.Parse("CLOSE;");
             Assert.IsTrue(query9 is Close);
+
+            IQuery query10 = Parser.Parse("UPDATE DatosAdmin SET EdadAdmin=22 WHERE EdadAdmin=23;");
+            Assert.IsTrue(query10 is Update);
         }
+       
 
 
     }
