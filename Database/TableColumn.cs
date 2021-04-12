@@ -141,7 +141,7 @@ namespace Database
             {
                 for (int i = 0; i < m_columns.Count; i++)
                 {
-                    if (condition.GetValue().CompareTo(m_columns.ElementAt(i)) == 1) //Este if no me inspira confianza
+                    if (condition.GetValue().CompareTo(m_columns.ElementAt(i)) == 1) 
                     {
                         positions.Add(i);
                     }
@@ -152,7 +152,7 @@ namespace Database
             {
                 for (int i = 0; i < m_columns.Count; i++)
                 {
-                    if (condition.GetValue().CompareTo(m_columns.ElementAt(i)) == -1) //Este if tampoco me inspira confianza 
+                    if (condition.GetValue().CompareTo(m_columns.ElementAt(i)) == -1) 
                     {
                         positions.Add(i);
                     }

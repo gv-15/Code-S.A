@@ -167,9 +167,9 @@ namespace Database.MiniSqlParser
 
                 CreateTable createTable = new CreateTable(match.Groups[1].Value, tableColumn);
                 return createTable;
-            } 
+            }
 
-                return null;
+            return null;
         }
     }
 }
