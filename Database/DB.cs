@@ -69,19 +69,12 @@ namespace Database
         public string DropTable(string tableName)
         {
             string respuesta = "Table dropped";
-            if (m_db.Contains(m_db[FindTableWithName(tableName)]))
-            {
-                   
-                      //No funciona
-              m_db.Remove(GetTableWithName(tableName));
+
+            m_db.RemoveAt(FindTableWithName(tableName));
                 
                 return respuesta;
-            }
-            else
-            {
-
-                return "ERROR: Table does not exist";
-            }
+            
+          
             
         }
 
@@ -97,7 +90,7 @@ namespace Database
             string respuesta = "Table created";
 
             TableColumn[] arrayTC = tableColumns.ToArray();
-
+            Table table1 = null;
             foreach (TableColumn column in arrayTC)
             {
                 
@@ -115,9 +108,8 @@ namespace Database
                      string tcc = value.Replace(" TEXT","");
                      TableColumn tc = new TableColumn(tcc);
                      tableColumns2.Add(tc);
-                     Table table1 = new Table(nameOfTable, tableColumns2);
-                     m_db.Add(table1);
-
+                   
+                
                  }
 
 
@@ -126,9 +118,9 @@ namespace Database
                      string tcc = value.Replace(" INT", "");
                      TableColumn tc = new TableColumn(tcc);
                      tableColumns2.Add(tc);
-                     Table table2 = new Table(nameOfTable, tableColumns2);
+                  /*   Table table2 = new Table(nameOfTable, tableColumns2);
                      m_db.Add(table2);
-
+                  */
                  }
 
                  else if (match3.Success)
@@ -136,21 +128,45 @@ namespace Database
                      string tcc = value.Replace(" DOUBLE", "");
                      TableColumn tc = new TableColumn(tcc);
                      tableColumns2.Add(tc);
-                     Table table3 = new Table(nameOfTable, tableColumns2);
+                    /* Table table3 = new Table(nameOfTable, tableColumns2);
                      m_db.Add(table3);
-
+                    */
                  }
 
-                else if (match1.Success)
+               else if (match1.Success)
                 {
-                    Table table = new Table(nameOfTable, tableColumns);
-                    m_db.Add(table);
-                }
+                    TableColumn tc = new TableColumn(value);
+                    tableColumns2.Add(tc);
 
+                } 
+               /*
+                if (table1 == null)
+                {
+                    table1 = new Table(nameOfTable, tableColumns2);
+                   
+                }
+                else
+                {
+                    Table table2 = new Table("");
+                    foreach(TableColumn tc in tableColumns2)
+                    { 
+                    table2.AddColumn(tc);
+                    }
+
+                    foreach(TableColumn tc in table2.GetColumns())
+                    {
+                        table1.AddColumn(tc);
+
+                    }
+
+                }
+            */
+               
 
             }
 
-
+            table1 = new Table(nameOfTable, tableColumns2);
+            m_db.Add(table1);
             return respuesta;
 
         }
@@ -282,14 +298,21 @@ namespace Database
 
             public string RunMiniSqlQuery(string query)
             {
-       
 
-            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
+
+            /*IQuery queryObject = MiniSqlParser.Parser.Parse(query);
             
           
             return queryObject.Run(this);
+            */
 
+            IQuery IQ = Parser.Parse(query);
+            if (IQ != null)
+            {
+                return IQ.Run(this);
             }
+            return null;
+        }
 
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {
@@ -323,32 +346,40 @@ namespace Database
         public Table SelectAllWhere(String table, Condition condition)
         {
             int i = FindTableWithName(table);
-            Table selectedTable = m_db[i];
-            Table newTable = new Table("new");
-
-            List<int> index = selectedTable.SelectRowsPositions(condition);
-
-
-            TableColumn newColumn;
-            List<string> values;
-            foreach (TableColumn column in selectedTable.GetColumns())//Columnas de NewTable
+            if (i == -1)
             {
-                values = new List<string>();
-                newColumn = new TableColumn(column.GetTableColumnName());
-                foreach(int row in index)
-                {
-                    values.Add(column.GetColumns()[row]);
-                }
-                
-                foreach (string value in values)
-                {
-                    newColumn.AddString(value);
-                }
-                newTable.AddColumn(newColumn);
-
+                return null;
+               
             }
+            else
+            {
+                Table selectedTable = m_db[i];
+                Table newTable = new Table("new");
 
-            return newTable;
+                List<int> index = selectedTable.SelectRowsPositions(condition);
+
+
+                TableColumn newColumn;
+                List<string> values;
+                foreach (TableColumn column in selectedTable.GetColumns())//Columnas de NewTable
+                {
+                    values = new List<string>();
+                    newColumn = new TableColumn(column.GetTableColumnName());
+                    foreach (int row in index)
+                    {
+                        values.Add(column.GetColumns()[row]);
+                    }
+
+                    foreach (string value in values)
+                    {
+                        newColumn.AddString(value);
+                    }
+                    newTable.AddColumn(newColumn);
+
+                }
+
+                return newTable;
+            }
 
         }
 

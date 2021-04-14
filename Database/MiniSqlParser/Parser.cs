@@ -34,19 +34,19 @@ namespace Database.MiniSqlParser
                 TableColumn tc = new TableColumn(match.Groups[2].Value);
                 if (match.Groups[3].Value.Equals("="))
                 {
-                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[4].Value, match.Groups[2].Value);
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[5].Value, match.Groups[2].Value);
                     SelectAllWhere selectAllWhere = new SelectAllWhere(match.Groups[1].Value, condition);
                     return selectAllWhere;
                 }
                 if (match.Groups[3].Value.Equals(">"))
                 {
-                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[4].Value, match.Groups[2].Value);
+                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[5].Value, match.Groups[2].Value);
                     SelectAllWhere selectAllWhere2 = new SelectAllWhere(match.Groups[1].Value, condition2);
                     return selectAllWhere2;
                 }
                 if (match.Groups[3].Value.Equals("<"))
                 {
-                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[4].Value, match.Groups[2].Value);
+                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[5].Value, match.Groups[2].Value);
                     SelectAllWhere selectAllWhere3 = new SelectAllWhere(match.Groups[1].Value, condition3);
                     return selectAllWhere3;
                 }
@@ -74,24 +74,24 @@ namespace Database.MiniSqlParser
                 string[] columnNames = match.Groups[2].Value.Split(','); //Nombre de la tabla
                 string[] izquierdaWhere = match.Groups[3].Value.Split(','); //Atributo despues del Where
                 string[] operationCondition = match.Groups[4].Value.Split(','); //El igual, > o <
-                string[] derechaWhere = match.Groups[5].Value.Split(','); //Parte derecha del where
+                string[] derechaWhere = match.Groups[6].Value.Split(','); //Parte derecha del where
 
                 TableColumn tc = new TableColumn(match.Groups[3].Value);
                 if (match.Groups[4].Value.Equals("="))
                 {
-                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[5].Value, match.Groups[3].Value);
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[6].Value, match.Groups[3].Value);
                     SelectWhere selectWhere = new SelectWhere(match.Groups[2].Value, Utils.ToList(atributo), condition);
                     return selectWhere;
                 }
                 if (match.Groups[4].Value.Equals(">"))
                 {
-                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[5].Value, match.Groups[3].Value);
+                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[6].Value, match.Groups[3].Value);
                     SelectWhere selectWhere2 = new SelectWhere(match.Groups[2].Value, Utils.ToList(atributo), condition2);
                     return selectWhere2;
                 }
                 if (match.Groups[4].Value.Equals("<"))
                 {
-                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[5].Value, match.Groups[3].Value);
+                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[6].Value, match.Groups[3].Value);
                     SelectWhere selectWhere3 = new SelectWhere(match.Groups[2].Value, Utils.ToList(atributo), condition3);
                     return selectWhere3;
                 }
@@ -157,7 +157,7 @@ namespace Database.MiniSqlParser
 
                 if (match.Groups[7].Value.Equals("="))
                 {
-                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[9].Value, match.Groups[7].Value);
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[9].Value, match.Groups[6].Value);
                     List<string> columns = new List<string>();
                     List<string> values = new List<string>();
 
@@ -177,7 +177,7 @@ namespace Database.MiniSqlParser
                 }
                 if (match.Groups[7].Value.Equals(">"))
                 {
-                    Condition condition = new Condition(Condition.Operations.max, match.Groups[9].Value, match.Groups[7].Value);
+                    Condition condition = new Condition(Condition.Operations.max, match.Groups[9].Value, match.Groups[6].Value);
                     List<string> columns = new List<string>();
                     List<string> values = new List<string>();
 
@@ -197,7 +197,7 @@ namespace Database.MiniSqlParser
                 }
                 if (match.Groups[7].Value.Equals("<"))
                 {
-                    Condition condition = new Condition(Condition.Operations.min, match.Groups[9].Value, match.Groups[7].Value);
+                    Condition condition = new Condition(Condition.Operations.min, match.Groups[9].Value, match.Groups[6].Value);
                     List<string> columns = new List<string>();
                     List<string> values = new List<string>();
 

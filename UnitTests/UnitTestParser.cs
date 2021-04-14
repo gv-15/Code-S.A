@@ -58,8 +58,6 @@ namespace UnitTests
             string resultadoSelectColumns = "['EdadAdmin']{'22'}{'22'}{'22'}{'21'}";
             Assert.AreEqual(db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin;"),resultadoSelectColumns);
            
-
-/*
             IQuery query4 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin=21;");
             Assert.IsTrue(query4 is SelectWhere);
             string resultadoSelectWhere = "['EdadAdmin']{'22'}{'22'}{'22'}";
@@ -96,12 +94,17 @@ namespace UnitTests
             IQuery query9 = Parser.Parse("CLOSE;");
             Assert.IsTrue(query9 is Close);
 
-            IQuery query10 = Parser.Parse("UPDATE DatosAdmin SET EdadAdmin=22 WHERE EdadAdmin=23;");
+            IQuery query10 = Parser.Parse("UPDATE Employees SET Name='Patxi',Surname='Elorriaga' WHERE Id=2;");
             Assert.IsTrue(query10 is Update);
+            db.RunMiniSqlQuery("UPDATE DatosAdmin SET EdadAdmin=24,PerrosAdmin='Kong' WHERE EdadAdmin=21;");
+            string resultadoUpdate = "['NombreAdmin','EdadAdmin','PerrosAdmin']{Gaizka,'22',Boss&Drogo}{Edurne,'22',Zuri}{Iker,'22',Null}{Xabi,'24','Kong'}";
+          /*  Assert.AreEqual(resultadoUpdate, db.RunMiniSqlQuery("SELECT * FROM DatosAdmin;"));
+
+            Para probar si funciona el update descomentar esto
 
             */
         }
-       
+
 
 
     }
