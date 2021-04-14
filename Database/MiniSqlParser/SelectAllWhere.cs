@@ -15,9 +15,14 @@ namespace Database.MiniSqlParser
         }
         public string Run(DB database)
         {
-            
+            if (database.SelectAllWhere(m_table, m_condition) == null)
+            {
+                return "ERROR: Table does not exist";
+
+            }
+            else { 
             return database.SelectAllWhere(m_table, m_condition).ToString();
-            
+            }
         }
 
     }
