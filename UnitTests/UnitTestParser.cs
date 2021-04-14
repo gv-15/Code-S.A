@@ -59,7 +59,7 @@ namespace UnitTests
             Assert.AreEqual(db.RunMiniSqlQuery("SELECT EdadAdmin FROM DatosAdmin;"),resultadoSelectColumns);
            
 
-
+/*
             IQuery query4 = Parser.Parse("SELECT EdadAdmin FROM DatosAdmin WHERE EdadAdmin=21;");
             Assert.IsTrue(query4 is SelectWhere);
             string resultadoSelectWhere = "['EdadAdmin']{'22'}{'22'}{'22'}";
@@ -98,6 +98,8 @@ namespace UnitTests
 
             IQuery query10 = Parser.Parse("UPDATE DatosAdmin SET EdadAdmin=22 WHERE EdadAdmin=23;");
             Assert.IsTrue(query10 is Update);
+
+            */
         }
        
 

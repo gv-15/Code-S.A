@@ -12,13 +12,13 @@ namespace Database.MiniSqlParser
             const string selectAllPattern = @"SELECT \* FROM ([a-zA-Z0-9]+)\;";
             const string selectColumnsPattern = @"SELECT ([a-zA-Z0-9]+(,[a-zA-Z0-9]+)*) FROM ([a-zA-Z0-9]+)\;";
             const string deleteFromPattern = @"DELETE FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)\;";
-            const string selectWherePattern = @"SELECT ([a-zA-Z0-9,]+) FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)\;";
+            const string selectWherePattern = @"SELECT ([a-zA-Z0-9,]+) FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z]+)([=><])('{0,1})([a-zA-Z0-9-\.\s]+)('{0,1})";
             const string insertIntoPattern = @"INSERT INTO ([a-zA-Z0-9.]+) VALUES \(([\a-zA-Z0-9.,\'\-)]+)\)\;";
             const string dropTablePattern = @"DROP TABLE ([a-zA-Z0-9.]+)\;";
             const string createTablePattern = @"CREATE TABLE ([a-zA-Z0-9 ]+) \(([a-zA-Z0-9, ]+)\)\;";
-            const string selectAllWherePattern = @"SELECT \* FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])([a-zA-Z0-9.]+)\;";
+            const string selectAllWherePattern = @"SELECT \* FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z]+)([=><])('{0,1})([a-zA-Z0-9-\.\s]+)('{0,1})";
             const string closePattern = @"CLOSE\;";
-            const string updatePattern = @"UPDATE ([a-zA-Z0-9,]+) SET ([a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\3(,[a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\5)*) WHERE ([a-zA-Z]+)([=><])('{0,1})([a-zA-Z0-9-\.\s]+)\;";
+            const string updatePattern = @"UPDATE ([a-zA-Z0-9,]+) SET ([a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\3(,[a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\5)*) WHERE ([a-zA-Z]+)([=><])('{0,1})([a-zA-Z0-9-\.\s]+)('{0,1})\;";
 
 
             Match match = Regex.Match(miniSqlSentence, selectAllWherePattern);
