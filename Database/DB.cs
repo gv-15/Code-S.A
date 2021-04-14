@@ -118,9 +118,7 @@ namespace Database
                      string tcc = value.Replace(" INT", "");
                      TableColumn tc = new TableColumn(tcc);
                      tableColumns2.Add(tc);
-                  /*   Table table2 = new Table(nameOfTable, tableColumns2);
-                     m_db.Add(table2);
-                  */
+                 
                  }
 
                  else if (match3.Success)
@@ -128,9 +126,7 @@ namespace Database
                      string tcc = value.Replace(" DOUBLE", "");
                      TableColumn tc = new TableColumn(tcc);
                      tableColumns2.Add(tc);
-                    /* Table table3 = new Table(nameOfTable, tableColumns2);
-                     m_db.Add(table3);
-                    */
+                 
                  }
 
                else if (match1.Success)
@@ -139,29 +135,7 @@ namespace Database
                     tableColumns2.Add(tc);
 
                 } 
-               /*
-                if (table1 == null)
-                {
-                    table1 = new Table(nameOfTable, tableColumns2);
-                   
-                }
-                else
-                {
-                    Table table2 = new Table("");
-                    foreach(TableColumn tc in tableColumns2)
-                    { 
-                    table2.AddColumn(tc);
-                    }
-
-                    foreach(TableColumn tc in table2.GetColumns())
-                    {
-                        table1.AddColumn(tc);
-
-                    }
-
-                }
-            */
-               
+          
 
             }
 
@@ -299,13 +273,6 @@ namespace Database
             public string RunMiniSqlQuery(string query)
             {
 
-
-            /*IQuery queryObject = MiniSqlParser.Parser.Parse(query);
-            
-          
-            return queryObject.Run(this);
-            */
-
             IQuery IQ = Parser.Parse(query);
             if (IQ != null)
             {
@@ -324,7 +291,7 @@ namespace Database
             List<int> index = FilteredColumnTable.SelectRowsPositions(condition);
             TableColumn newColumn;
             List<string> values;
-            foreach (TableColumn column in FilteredColumnTable.GetColumns())//Columnas de NewTable
+            foreach (TableColumn column in FilteredColumnTable.GetColumns()) //Columnas de NewTable
             {
                 values = new List<string>();
                 newColumn = new TableColumn(column.GetTableColumnName());
@@ -361,7 +328,7 @@ namespace Database
 
                 TableColumn newColumn;
                 List<string> values;
-                foreach (TableColumn column in selectedTable.GetColumns())//Columnas de NewTable
+                foreach (TableColumn column in selectedTable.GetColumns()) //Columnas de NewTable
                 {
                     values = new List<string>();
                     newColumn = new TableColumn(column.GetTableColumnName());
