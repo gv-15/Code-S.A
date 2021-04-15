@@ -45,6 +45,22 @@ namespace Database
 
         }
 
+        public TableColumn GetColumnWithName(string name)
+        {
+            int position = FindColumnWithName(name);
+            return m_columns[position];
+        }
+
+        public int FindColumnWithName(string columnName)
+        {
+            for (int i = 0; i < m_columns.Count; i++)
+            {
+                if (m_columns[i].GetTableColumnName() == columnName)
+                    return i;
+            }
+            return -1;
+        }
+
         public List<int> SelectRowsPositions(Condition condition)
         {
 
