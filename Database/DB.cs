@@ -284,12 +284,14 @@ namespace Database
 
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {
+            Table fullTable = GetTableWithName(table);
             Table FilteredColumnTable = SelectColumns(table, columnNames);
             Table newTable = new Table("newTable");
 
 
 
-            List<int> index = FilteredColumnTable.SelectRowsPositions(condition);
+            List<int> index = new List<int>();
+                index = fullTable.SelectRowsPositions(condition);
             TableColumn newColumn;
             List<string> values;
             foreach (TableColumn column in FilteredColumnTable.GetColumns()) //Columnas de NewTable
