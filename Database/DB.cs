@@ -37,7 +37,7 @@ namespace Database
             int position = FindTableWithName(name);
             return m_db[position];
         }
-        public string Sintacticerror()
+        public string SyntacticError()
         {
 
             return "ERROR: Syntactical error";
@@ -68,9 +68,14 @@ namespace Database
 
         public string DropTable(string tableName)
         {
-            string respuesta = "Table erased";
+            string respuesta = "Table dropped";
+
             m_db.RemoveAt(FindTableWithName(tableName));
-            return respuesta;
+                
+                return respuesta;
+            
+          
+            
         }
 
         public string Close()
@@ -85,7 +90,7 @@ namespace Database
             string respuesta = "Table created";
 
             TableColumn[] arrayTC = tableColumns.ToArray();
-
+            Table table1 = null;
             foreach (TableColumn column in arrayTC)
             {
                 
@@ -103,9 +108,8 @@ namespace Database
                      string tcc = value.Replace(" TEXT","");
                      TableColumn tc = new TableColumn(tcc);
                      tableColumns2.Add(tc);
-                     Table table1 = new Table(nameOfTable, tableColumns2);
-                     m_db.Add(table1);
-
+                   
+                
                  }
 
 
@@ -114,9 +118,7 @@ namespace Database
                      string tcc = value.Replace(" INT", "");
                      TableColumn tc = new TableColumn(tcc);
                      tableColumns2.Add(tc);
-                     Table table2 = new Table(nameOfTable, tableColumns2);
-                     m_db.Add(table2);
-
+                 
                  }
 
                  else if (match3.Success)
@@ -124,21 +126,21 @@ namespace Database
                      string tcc = value.Replace(" DOUBLE", "");
                      TableColumn tc = new TableColumn(tcc);
                      tableColumns2.Add(tc);
-                     Table table3 = new Table(nameOfTable, tableColumns2);
-                     m_db.Add(table3);
-
+                 
                  }
 
-                else if (match1.Success)
+               else if (match1.Success)
                 {
-                    Table table = new Table(nameOfTable, tableColumns);
-                    m_db.Add(table);
-                }
+                    TableColumn tc = new TableColumn(value);
+                    tableColumns2.Add(tc);
 
+                } 
+          
 
             }
 
-
+            table1 = new Table(nameOfTable, tableColumns2);
+            m_db.Add(table1);
             return respuesta;
 
         }
@@ -270,26 +272,28 @@ namespace Database
 
             public string RunMiniSqlQuery(string query)
             {
-       
 
-            IQuery queryObject = MiniSqlParser.Parser.Parse(query);
-            
-          
-            return queryObject.Run(this);
-
+            IQuery IQ = Parser.Parse(query);
+            if (IQ != null)
+            {
+                return IQ.Run(this);
             }
+            return null;
+        }
 
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {
+            Table fullTable = GetTableWithName(table);
             Table FilteredColumnTable = SelectColumns(table, columnNames);
             Table newTable = new Table("newTable");
 
 
 
-            List<int> index = FilteredColumnTable.SelectRowsPositions(condition);
+            List<int> index = new List<int>();
+                index = fullTable.SelectRowsPositions(condition);
             TableColumn newColumn;
             List<string> values;
-            foreach (TableColumn column in FilteredColumnTable.GetColumns())//Columnas de NewTable
+            foreach (TableColumn column in FilteredColumnTable.GetColumns()) //Columnas de NewTable
             {
                 values = new List<string>();
                 newColumn = new TableColumn(column.GetTableColumnName());
@@ -311,33 +315,52 @@ namespace Database
         public Table SelectAllWhere(String table, Condition condition)
         {
             int i = FindTableWithName(table);
-            Table selectedTable = m_db[i];
-            Table newTable = new Table("new");
-
-            List<int> index = selectedTable.SelectRowsPositions(condition);
-
-
-            TableColumn newColumn;
-            List<string> values;
-            foreach (TableColumn column in selectedTable.GetColumns())//Columnas de NewTable
+            if (i == -1)
             {
-                values = new List<string>();
-                newColumn = new TableColumn(column.GetTableColumnName());
-                foreach(int row in index)
-                {
-                    values.Add(column.GetColumns()[row]);
-                }
-                
-                foreach (string value in values)
-                {
-                    newColumn.AddString(value);
-                }
-                newTable.AddColumn(newColumn);
+                return null;
+               
+            }
+            else
+            {
+                Table selectedTable = m_db[i];
+                Table newTable = new Table("new");
 
+                List<int> index = selectedTable.SelectRowsPositions(condition);
+
+
+                TableColumn newColumn;
+                List<string> values;
+                foreach (TableColumn column in selectedTable.GetColumns()) //Columnas de NewTable
+                {
+                    values = new List<string>();
+                    newColumn = new TableColumn(column.GetTableColumnName());
+                    foreach (int row in index)
+                    {
+                        values.Add(column.GetColumns()[row]);
+                    }
+
+                    foreach (string value in values)
+                    {
+                        newColumn.AddString(value);
+                    }
+                    newTable.AddColumn(newColumn);
+
+                }
+
+                return newTable;
             }
 
-            return newTable;
+        }
 
+
+        public string Update(List<string> columns, List<string> values, string table, Condition condition)
+        {
+            string resultado = "Tuple(s) updated";
+
+
+
+
+            return resultado;
         }
 
         public DB Load(string directory, string name, string newName)
