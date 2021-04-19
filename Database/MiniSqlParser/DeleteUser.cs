@@ -4,7 +4,20 @@ using System.Text;
 
 namespace Database.MiniSqlParser
 {
-    class DeleteUser
+    public class DeleteUser : IQuery
     {
+        public DeleteUser()
+        {
+
+        }
+
+        public string Run(DB database)
+        {
+
+            // return database.DeleteUser;
+
+            return null;
+        }
+
     }
 }

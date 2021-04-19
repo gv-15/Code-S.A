@@ -4,7 +4,20 @@ using System.Text;
 
 namespace Database.MiniSqlParser
 {
-    class AddUser
+    public class AddUser: IQuery
     {
+        public AddUser()
+        {
+
+        }
+
+        public string Run(DB database)
+        {
+
+            // return database.AddUser;
+
+            return null;
+        }
+
     }
 }

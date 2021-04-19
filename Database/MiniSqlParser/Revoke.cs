@@ -4,7 +4,20 @@ using System.Text;
 
 namespace Database.MiniSqlParser
 {
-    class Revoke
+    public class Revoke : IQuery
     {
+        public Revoke()
+        {
+
+        }
+
+        public string Run(DB database)
+        {
+
+            // return database.Revoke;
+
+            return null;
+        }
+
     }
 }
