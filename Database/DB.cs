@@ -17,6 +17,7 @@ namespace Database
         private List<Table> m_db;
         private string m_username;
         private string m_password;
+        private Security m_security;
         public DB(string name)
         {
             m_name = name;
@@ -280,7 +281,7 @@ namespace Database
                 return IQ.Run(this);
             }
             return null;
-        }
+            }
 
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {
@@ -493,6 +494,8 @@ namespace Database
                 }
             }
         }
+
+
 
     }
 

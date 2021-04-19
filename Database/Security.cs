@@ -4,18 +4,20 @@ using System.Text;
 
 namespace Database
 {
-    public class Admin
+    public class Security
     {
 
-        public Admin()
-        {
+        private List<User> m_users;
 
+        public Security(List<User> users)
+        {
+            m_users = users;
         }
 
 
         public void CreateSecurityProfile() 
         {
-
+            
         }
 
         public void DropSecurityProfile()
