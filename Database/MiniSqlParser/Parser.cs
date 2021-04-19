@@ -24,6 +24,7 @@ namespace Database.MiniSqlParser
             const string grantPattern = @"GRANT SELECT ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
             const string deleteUserPattern = @"DELETE USER ([a-zA-Z0-9]+)\;";
             const string revokePriviligePattern = @"REVOKE ([a-zA-Z0-9]+) ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
+            const string addUserPattern = @"ADD USER \((['a-zA-Z0-9,'] +)\)\;";
 
             Match match = Regex.Match(miniSqlSentence, selectAllWherePattern);
             if (match.Success)
