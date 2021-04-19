@@ -45,6 +45,22 @@ namespace Database
 
         }
 
+        public TableColumn GetColumnWithName(string name)
+        {
+            int position = FindColumnWithName(name);
+            return m_columns[position];
+        }
+
+        public int FindColumnWithName(string columnName)
+        {
+            for (int i = 0; i < m_columns.Count; i++)
+            {
+                if (m_columns[i].GetTableColumnName() == columnName)
+                    return i;
+            }
+            return -1;
+        }
+
         public List<int> SelectRowsPositions(Condition condition)
         {
 
@@ -57,12 +73,16 @@ namespace Database
                 if (element.GetTableColumnName().Equals(condition.GetColumnName()))
                 {
                     columnslist = element.GetColumns();
-
+                    string tcc = "";
+                    string tcc2 = "";
                     foreach (string element2 in columnslist)
                     {
+                        tcc = element2.Replace("'", "");
+                        tcc2 = tcc.Replace("\"", "");
                         if (condition.GetOperation().Equals("equals"))
                         {
-                            if (element2.Equals(condition.GetValue()))
+                            
+                            if (tcc2.Equals(condition.GetValue()))
                             {
                                 if (!position.Contains(counter))
                                 {
@@ -72,9 +92,9 @@ namespace Database
                         }
                         else if (condition.GetOperation().Equals("max"))
                         {
-                            if (int.TryParse(element2, out int n))
+                            if (int.TryParse(tcc2, out int n))
                             {
-                                if (int.Parse(element2) > int.Parse(condition.GetValue()))
+                                if (int.Parse(tcc2) > int.Parse(condition.GetValue()))
                                 {
                                     if (!position.Contains(counter))
                                     {
@@ -85,9 +105,9 @@ namespace Database
                         }
                         else
                         {
-                            if (int.TryParse(element2, out int n))
+                            if (int.TryParse(tcc2, out int n))
                             {
-                                if (int.Parse(element2) < int.Parse(condition.GetValue()))
+                                if (int.Parse(tcc2) < int.Parse(condition.GetValue()))
                                 {
                                     if (!position.Contains(counter))
                                     {

@@ -1,6 +1,7 @@
 ﻿using Database.MiniSqlParser;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -283,12 +284,14 @@ namespace Database
 
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {
+            Table fullTable = GetTableWithName(table);
             Table FilteredColumnTable = SelectColumns(table, columnNames);
             Table newTable = new Table("newTable");
 
 
 
-            List<int> index = FilteredColumnTable.SelectRowsPositions(condition);
+            List<int> index = new List<int>();
+                index = fullTable.SelectRowsPositions(condition);
             TableColumn newColumn;
             List<string> values;
             foreach (TableColumn column in FilteredColumnTable.GetColumns()) //Columnas de NewTable
@@ -355,11 +358,52 @@ namespace Database
         {
             string resultado = "Tuple(s) updated";
 
+            int p = FindTableWithName(table);
 
+            if (p == -1)
+            {
+                return null;
 
+            }
+            else {
 
+                Table selectedTable = m_db[p];
+                
+                List<TableColumn> cols = new List<TableColumn>();
+
+                string name = null;
+                for(int n=0; n<columns.Count; n++)
+                {
+                    name = columns[n];
+                    cols.Add(selectedTable.GetColumnWithName(name));
+                }
+                 
+                List<int> index = selectedTable.SelectRowsPositions(condition);
+                              
+                List<string> l = new List<string>();
+                int i = 0;
+                foreach (int row in index)
+                { 
+                    while (i < columns.Count && i < values.Count)
+                    {
+                        foreach (TableColumn column in cols)
+                        {
+                          
+                            column.GetColumns()[row] = "\'" + values[i] + "\'" ;
+                            i++;
+                        }
+
+                    }
+                }
+                              
+  
+           
+            }
+           
             return resultado;
         }
+            
+  
 
         public DB Load(string directory, string name, string newName)
         {
