@@ -97,7 +97,7 @@ namespace UnitTests
             IQuery query10 = Parser.Parse("UPDATE Employees SET Name='Patxi',Surname='Elorriaga' WHERE Id=2;");
             Assert.IsTrue(query10 is Update);
             db.RunMiniSqlQuery("UPDATE DatosAdmin SET EdadAdmin=24,PerrosAdmin='Kong' WHERE EdadAdmin=21;");
-            string resultadoUpdate = "['NombreAdmin','EdadAdmin','PerrosAdmin']{Gaizka,'22',Boss&Drogo}{Edurne,'22',Zuri}{Iker,'22',Null}{Xabi,'24',Kong}";
+            string resultadoUpdate = "['NombreAdmin','EdadAdmin','PerrosAdmin']{Gaizka,'22',Boss&Drogo}{Edurne,'22',Zuri}{Iker,'22',Null}{Xabi,'24','Kong'}";
             Assert.AreEqual(resultadoUpdate, db.RunMiniSqlQuery("SELECT * FROM DatosAdmin;"));
 
            
