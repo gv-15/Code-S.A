@@ -228,6 +228,30 @@ namespace UnitTests
             Assert.AreEqual("['a']{name}{surname}",newTable2.ToString());
 
         }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            Table t = new Table("People");
+            TableColumn column = new TableColumn("name");
+            column.AddString("Juan");
+            column.AddString("Pedro");
+            TableColumn column2 = new TableColumn("age");
+            column2.AddString("20");
+            column2.AddString("21");
+            string table = t.GetName();
+            t.AddColumn(column);
+            t.AddColumn(column2);
+            db.AddTable(t);
+            List<string> colName = column.GetColumns();
+            Condition condition = new Condition(Condition.Operations.equals, "Juan", column.GetTableColumnName());
+            List<int> positions = column.GetPositions(condition);
+            List<string> values = column.GetValues(positions);
+
+            db.Update(colName, values, table, condition);
+
+        }
     }
 
 }
