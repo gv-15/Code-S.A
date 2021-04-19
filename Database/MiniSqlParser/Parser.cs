@@ -244,18 +244,18 @@ namespace Database.MiniSqlParser
                 SyntacticError se = new SyntacticError();
                 return se;
             }
-
+            /*
             match = Regex.Match(miniSqlSentence, deleteUserPattern);
             if (match.Success)
             {
-                /*
+                
                 string[] userName = match.Groups[1].Value.Split(',');
                                 
                DeleteUser deleteUser= new DeleteUser(match.Groups[1].Value);
                return deleteUser;
             */
-            }
         }
+    }
 
           
      }
