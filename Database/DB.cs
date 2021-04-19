@@ -387,8 +387,9 @@ namespace Database
                     while (i < columns.Count && i < values.Count)
                     {
                         foreach (TableColumn column in cols)
-                        { 
-                            column.GetColumns()[row] = values[i];
+                        {
+                          
+                            column.GetColumns()[row] = "\'" + values[i] + "\'" ;
                             i++;
                         }
 
