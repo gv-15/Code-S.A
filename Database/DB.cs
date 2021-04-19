@@ -280,7 +280,7 @@ namespace Database
                 return IQ.Run(this);
             }
             return null;
-        }
+            }
 
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {
@@ -493,6 +493,8 @@ namespace Database
                 }
             }
         }
+
+
 
     }
 
