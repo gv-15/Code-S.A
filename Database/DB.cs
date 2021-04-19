@@ -17,6 +17,7 @@ namespace Database
         private List<Table> m_db;
         private string m_username;
         private string m_password;
+        private Security m_security;
         public DB(string name)
         {
             m_name = name;
