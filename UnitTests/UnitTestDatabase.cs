@@ -244,12 +244,22 @@ namespace UnitTests
             t.AddColumn(column);
             t.AddColumn(column2);
             db.AddTable(t);
-            List<string> colName = column.GetColumns();
+            string colName = column.GetTableColumnName();
+            List<string> cols = new List<string>();
+            cols.Add(colName);
             Condition condition = new Condition(Condition.Operations.equals, "Juan", column.GetTableColumnName());
-            List<int> positions = column.GetPositions(condition);
-            List<string> values = column.GetValues(positions);
+            List<string> values = new List<string>();
+            values.Add("David");
 
-            db.Update(colName, values, table, condition);
+            db.Update(cols, values, table, condition);
+          
+
+
+            Assert.AreEqual("'David'",column.GetColumns()[0]);
+            Assert.AreEqual("20", column2.GetColumns()[0]);
+
+
+           
 
         }
     }
