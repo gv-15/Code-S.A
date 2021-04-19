@@ -51,7 +51,7 @@ namespace UnitTests
 
             int num = m_db.GetDBTableList().Count;
 
-            //Assert.AreEqual(1, num);
+            
             Assert.AreEqual("table3", m_db.GetDBTableList()[0].GetName());
         }
         
@@ -78,7 +78,7 @@ namespace UnitTests
             t.AddColumn(columna2);
             t.AddColumn(columna3);
             m_db.AddTable(t);
-            //Condition c = new Condition();
+           
 
 
             
@@ -163,7 +163,7 @@ namespace UnitTests
 
             Assert.AreEqual("surname",col[0]);
 
-            //falta por filas
+           
         }
 
        
