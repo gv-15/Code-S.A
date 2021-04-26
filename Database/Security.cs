@@ -136,11 +136,17 @@ namespace Database
             }
         }
 
-        public string AddUser(string name, string password, SecurityProfile profile)
+        public string AddUser(string name, string password, string profile)
         {
-            User newUser = new User(name,password,profile);
-            int index = m_security_profiles.IndexOf(profile);
-            m_security_profiles[1].AddUser(newUser);
+            
+            
+
+
+            SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profile);
+            int index = m_security_profiles.IndexOf(newProfile);
+            User newUser = new User(name, password, profile);
+
+            m_security_profiles[index].AddUser(newUser);
             return "User added to security profile";
 
         }
