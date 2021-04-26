@@ -59,6 +59,7 @@ namespace Database
 
         public string Revoke(string profileName, string tableName, Enum priviledgeType)
         {
+            
             Priviledge priviledge = new Priviledge(priviledgeType, tableName);
             bool found = false;
             int i = 0;

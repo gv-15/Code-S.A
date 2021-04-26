@@ -7,22 +7,20 @@ namespace Database.MiniSqlParser
     public class Revoke : IQuery
     {
         private string m_profileName;
-        private string m_table;
-        private string m_privilage;
-
-        public Revoke(string profileName, string tableName, string privilage)
+        private string m_tableName;
+        private Enum m_priviledfeType;
+        public Revoke(string profileName, string tableName, Enum priviledgeType)
         {
             m_profileName = profileName;
-            m_table = tableName;
-            m_privilage = privilage;
+            m_tableName = tableName;
+            m_priviledfeType = priviledgeType;
         }
 
         public string Run(DB database)
         {
 
-            // return database.GetSecurity().Revoke(m_profileName, m_table, m_privilage);
-
-            return null;
+            return database.GetSecurity().Revoke(m_profileName, m_tableName, m_priviledfeType);
+            
         }
 
     }

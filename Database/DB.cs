@@ -438,7 +438,7 @@ namespace Database
                         for (int i = 0; i <= fileValues.Length - 1; i++)
                         {
 
-                            fileValues[i] = fileValues[i].Replace("[[delimiter]]", ",");
+                             fileValues[i] = fileValues[i].Replace("[[delimiter]]", ",");
                             concatenatedValues += fileValues[i] + ",";
                         }
 

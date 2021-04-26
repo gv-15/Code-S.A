@@ -8,22 +8,22 @@ namespace Database.MiniSqlParser
     {
         private string m_profile;
         private string m_table;
+        private Enum m_priviledfeType;
 
-
-        public Grant(string profile, string table)
+        public Grant(string profile, string table, Enum priviledgeType)
         {
             m_profile = profile;
-            m_table = table; 
-
+            m_table = table;
+            m_priviledfeType = priviledgeType;
         }
 
 
         public string Run(DB database)
         {
 
-            //return database.GetSecurity().Grant(m_profile,m_table, Privilage.SELECT);  //Falta cambiar a string en security
+            return database.GetSecurity().Grant(m_profile,m_table, m_priviledfeType); 
 
-            return null;
+            
         }
     }
     
