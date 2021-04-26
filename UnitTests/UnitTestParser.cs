@@ -99,9 +99,25 @@ namespace UnitTests
             db.RunMiniSqlQuery("UPDATE DatosAdmin SET EdadAdmin=24,PerrosAdmin='Kong' WHERE EdadAdmin=21;");
             string resultadoUpdate = "['NombreAdmin','EdadAdmin','PerrosAdmin']{Gaizka,'22',Boss&Drogo}{Edurne,'22',Zuri}{Iker,'22',Null}{Xabi,'24','Kong'}";
             Assert.AreEqual(resultadoUpdate, db.RunMiniSqlQuery("SELECT * FROM DatosAdmin;"));
+        
+            IQuery query12 = Parser.Parse("CREATE SECURITY PROFILE Employee;");
+            Assert.IsTrue(query12 is CreateSecurityProfile);
+             
+            IQuery query13 = Parser.Parse("DROP SECURITY PROFILE securityProfile;");
+            Assert.IsTrue(query13 is DropSecurityProfile);
+              
+            IQuery query14 = Parser.Parse("GRANT SELECT ON EmployeesPublic TO Employee;");
+            Assert.IsTrue(query14 is Grant);
+          
+            IQuery query15 = Parser.Parse("REVOKE privilegeType ON table TO securityProfile;");
+            Assert.IsTrue(query15 is Revoke);
+               
+            IQuery query16 = Parser.Parse("DELETE USER user;");
+            Assert.IsTrue(query16 is DeleteUser);
 
-           
-            
+
+            IQuery query11 = Parser.Parse("ADD USER ('Eva','1234',Employee);");
+            Assert.IsTrue(query11 is AddUser);
         }
 
 

@@ -221,7 +221,55 @@ namespace Database.MiniSqlParser
                     return update;
                 }
 
-}
+            }
+
+            match = Regex.Match(miniSqlSentence, deleteUserPattern);
+            if (match.Success)
+            {
+
+                string[] userName = match.Groups[1].Value.Split(',');
+
+                
+            }
+            match = Regex.Match(miniSqlSentence, createSecurityProfilePattern);
+            if (match.Success)
+            {
+
+
+
+            }
+
+
+            match = Regex.Match(miniSqlSentence, dropSecurityProfilePattern);
+            if (match.Success)
+            {
+
+
+
+            }
+
+            match = Regex.Match(miniSqlSentence, grantPattern);
+            if (match.Success)
+            {
+
+
+
+            }
+
+            match = Regex.Match(miniSqlSentence, revokePriviligePattern);
+            if (match.Success)
+            {
+
+
+
+            }
+            match = Regex.Match(miniSqlSentence, addUserPattern);
+            if (match.Success)
+            {
+
+
+
+            }
             match = Regex.Match(miniSqlSentence, createTablePattern);
             if (match.Success)
             {
@@ -244,16 +292,7 @@ namespace Database.MiniSqlParser
                 SyntacticError se = new SyntacticError();
                 return se;
             }
-            /*
-            match = Regex.Match(miniSqlSentence, deleteUserPattern);
-            if (match.Success)
-            {
-                
-                string[] userName = match.Groups[1].Value.Split(',');
-                                
-               DeleteUser deleteUser= new DeleteUser(match.Groups[1].Value);
-               return deleteUser;
-            */
+           
         }
     }
 
