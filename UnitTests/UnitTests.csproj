@@ -52,6 +52,7 @@
     <Compile Include="UnitTestParser.cs" />
     <Compile Include="UnitTestDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTestSecurity.cs" />
     <Compile Include="UnitTestTable.cs" />
     <Compile Include="UnitTestTableColumn.cs" />
   </ItemGroup>
