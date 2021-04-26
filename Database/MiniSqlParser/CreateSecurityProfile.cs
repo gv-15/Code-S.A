@@ -8,6 +8,8 @@ namespace Database.MiniSqlParser
     {
 
         private SecurityProfile sp;
+
+        //Problema: tienes tres parámetros pero en parser sólo le pasas un string profile
         public CreateSecurityProfile(string profile, string password, List<Priviledge> priviledges)
         {
        

@@ -290,7 +290,8 @@ namespace Database.MiniSqlParser
                 string[] datos = match.Groups[1].Value.Split(',');
 
 
-                AddUser addUser = new AddUser(datos[0], datos[1], datos[2]);
+                //AddUser addUser = new AddUser(datos[0], datos[1], datos[2]); datos[2] tiene que ser un profile
+                
 
             }
             match = Regex.Match(miniSqlSentence, createTablePattern);
