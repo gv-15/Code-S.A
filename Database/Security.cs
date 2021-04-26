@@ -16,17 +16,19 @@ namespace Database
         }
 
 
-        public void CreateSecurityProfile(SecurityProfile profile) 
+        public string CreateSecurityProfile(SecurityProfile profile) 
         {
             m_security_profiles.Add(profile);
+            return "Security profile created";
         }
 
-        public void DropSecurityProfile(SecurityProfile profile)
+        public string DropSecurityProfile(SecurityProfile profile)
         {
             m_security_profiles.Remove(profile);
+            return "Security profile deleted";
         }
 
-        public void Grant(string profileName, string tableName, Enum priviledgeType)
+        public string Grant(string profileName, string tableName, Enum priviledgeType)
         {
             Priviledge priviledge = new Priviledge(priviledgeType,tableName);
             bool found = false;
@@ -45,9 +47,17 @@ namespace Database
                     i++;
                 }
             }
+            if (found)
+            {
+                return "The priviledge has been granted";
+            }
+            else
+            {
+                return "The priviledge hasn't been granted";
+            }
         }
 
-        public void Revoke(string profileName, string tableName, Enum priviledgeType)
+        public string Revoke(string profileName, string tableName, Enum priviledgeType)
         {
             Priviledge priviledge = new Priviledge(priviledgeType, tableName);
             bool found = false;
@@ -64,12 +74,22 @@ namespace Database
                     i++;
                 }
             }
+            if (found)
+            {
+                return "The priviledge has been revoked";
+            }
+            else
+            {
+                return "The priviledge hasn't been revoked";
+            }
         }
 
-        public void AddUser(string name, string password, SecurityProfile profile)
+        public string AddUser(string name, string password, SecurityProfile profile)
         {
             User newUser = new User(name,password,profile);
             m_users.Add(newUser);
+            return "User added to security profile";
+
         }
 
         public string DeleteUser(string user)
@@ -78,7 +98,7 @@ namespace Database
             bool found = false;
             while(!found && i< m_users.Count)
             {
-                if (m_users[i].Equals(user))
+                if (m_users[i].GetName().Equals(user))
                 {
                     m_users.RemoveAt(i);
                     found = true;
@@ -88,8 +108,14 @@ namespace Database
                     i++;
                 }
             }
-
-            return null;
+            if (found)
+            {
+                return "User deleted from security profile";
+            }
+            else
+            {
+                return "The user hasn't been deleted";
+            }
         }
     }
 }
