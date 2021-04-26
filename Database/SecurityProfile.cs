@@ -10,6 +10,8 @@ namespace Database
 
         private List<Priviledge> m_priviledges;
 
+        private List<User> m_users;
+
         public SecurityProfile(string name, string password, List<Priviledge> priviledges)
         {
             m_name = name;
@@ -42,28 +44,31 @@ namespace Database
 
         }
 
+        public void AddUser(User user)
+        {
+            if (!m_users.Contains(user)) 
+            {
+                m_users.Add(user);
+            }
+            
+        }
+
+        public void DeleteUser(string userName)
+        {
+            User user = m_users.Find(usuario => usuario.GetName() == userName);
+            m_users.Remove(user);
+        }
+
         public bool CheckPriviledge(Priviledge priviledge)
         {
-            
-            bool found = false;
-            int i = 0;
-            if (m_priviledges.Count!=0)
+            if (m_priviledges.Contains(priviledge))
             {
-                while (!found && i < m_priviledges.Count)
-                {
-                    if (m_priviledges[i].Equals(priviledge))
-                    {
-                        found = true;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-
+                return true;
             }
-
-            return found;
+            else
+            {
+                return false;
+            }
         }
     }
 }

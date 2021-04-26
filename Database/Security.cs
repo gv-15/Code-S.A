@@ -7,12 +7,11 @@ namespace Database
     public class Security
     {
 
-        private List<User> m_users;
         private List<SecurityProfile> m_security_profiles;
 
         public Security(List<User> users)
         {
-            m_users = users;
+         
         }
 
 
@@ -87,35 +86,23 @@ namespace Database
         public string AddUser(string name, string password, SecurityProfile profile)
         {
             User newUser = new User(name,password,profile);
-            m_users.Add(newUser);
+            int index = m_security_profiles.IndexOf(profile);
+            m_security_profiles[1].AddUser(newUser);
             return "User added to security profile";
 
         }
 
         public string DeleteUser(string user)
         {
-            int i = 0;
-            bool found = false;
-            while(!found && i< m_users.Count)
+            
+            for(int i=0; i< m_security_profiles.Count;i++)
             {
-                if (m_users[i].GetName().Equals(user))
-                {
-                    m_users.RemoveAt(i);
-                    found = true;
-                }
-                else
-                {
-                    i++;
-                }
+
+                m_security_profiles[i].DeleteUser(user);
+                                
             }
-            if (found)
-            {
-                return "User deleted from security profile";
-            }
-            else
-            {
-                return "The user hasn't been deleted";
-            }
+            return "User deleted from security profile";
+            
         }
     }
 }
