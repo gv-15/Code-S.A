@@ -265,15 +265,21 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, revokePriviligePattern);
             if (match.Success)
             {
+                string profileName = match.Groups[1].Value;
+                string table = match.Groups[2].Value;
+                string privilage = match.Groups[3].Value;
 
-
+                Revoke revoke = new Revoke(profileName, table, privilage);
 
             }
             match = Regex.Match(miniSqlSentence, addUserPattern);
             if (match.Success)
             {
 
+                string[] datos = match.Groups[1].Value.Split(',');
 
+
+                AddUser addUser = new AddUser(datos[0], datos[1], datos[2]);
 
             }
             match = Regex.Match(miniSqlSentence, createTablePattern);

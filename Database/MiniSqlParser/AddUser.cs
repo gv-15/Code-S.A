@@ -6,15 +6,20 @@ namespace Database.MiniSqlParser
 {
     public class AddUser: IQuery
     {
-        public AddUser()
+        private string m_name;
+        private string m_password;
+        private string m_profile;
+        public AddUser(string name, string password, string profile)
         {
-
+            m_name = name;
+            m_password = password;
+            m_profile = profile;
         }
 
         public string Run(DB database)
         {
 
-            // return database.AddUser;
+            // return database.GetSecurity().AddUser(m_name,m_password,m_profile);
 
             return null;
         }
