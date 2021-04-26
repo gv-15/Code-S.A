@@ -6,17 +6,15 @@ namespace Database.MiniSqlParser
 {
     public class DeleteUser : IQuery
     {
-        public DeleteUser()
+        private string m_name;
+        public DeleteUser(string name)
         {
-
+            m_name = name;
         }
 
         public string Run(DB database)
         {
-
-            // return database.DeleteUser;
-
-            return null;
+            return database.GetSecurity().DeleteUser(m_name);
         }
 
     }

@@ -72,7 +72,7 @@ namespace Database
             m_users.Add(newUser);
         }
 
-        public void DeleteUser(User user)
+        public string DeleteUser(string user)
         {
             int i = 0;
             bool found = false;
@@ -88,6 +88,8 @@ namespace Database
                     i++;
                 }
             }
+
+            return null;
         }
     }
 }

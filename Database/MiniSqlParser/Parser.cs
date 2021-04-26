@@ -227,7 +227,9 @@ namespace Database.MiniSqlParser
             if (match.Success)
             {
 
-                string[] userName = match.Groups[1].Value.Split(',');
+                string userName = match.Groups[1].Value;
+
+                DeleteUser deleteUser = new DeleteUser(userName);
 
                 
             }
@@ -235,24 +237,28 @@ namespace Database.MiniSqlParser
             if (match.Success)
             {
 
+                string profile = match.Groups[1].Value;
 
-
+                CreateSecurityProfile createSecurityProfile = new CreateSecurityProfile(profile);
             }
 
 
             match = Regex.Match(miniSqlSentence, dropSecurityProfilePattern);
             if (match.Success)
             {
+                string secProfile = match.Groups[1].Value;
 
-
-
+                DropSecurityProfile dropSecurityProfile = new DropSecurityProfile(secProfile);
             }
 
             match = Regex.Match(miniSqlSentence, grantPattern);
             if (match.Success)
             {
 
+                string table = match.Groups[1].Value;
+                string secProfile = match.Groups[2].Value;
 
+                Grant grant = new Grant(secProfile, table);
 
             }
 

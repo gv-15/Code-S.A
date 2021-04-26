@@ -6,18 +6,22 @@ namespace Database.MiniSqlParser
 {
     public class Grant : IQuery
     {
+        private string m_profile;
+        private string m_table;
 
-     
-        public Grant()
+
+        public Grant(string profile, string table)
         {
-          
+            m_profile = profile;
+            m_table = table; 
+
         }
 
 
         public string Run(DB database)
         {
 
-            //return database.Grant();
+            //return database.GetSecurity().Grant(m_profile,m_table, Privilage.SELECT);  //Falta cambiar a string en security
 
             return null;
         }

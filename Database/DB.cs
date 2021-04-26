@@ -34,6 +34,10 @@ namespace Database
 
         }
 
+        public Security GetSecurity()
+        {
+            return m_security;
+        }
         public Table GetTableWithName(string name)
         {
             int position = FindTableWithName(name);
