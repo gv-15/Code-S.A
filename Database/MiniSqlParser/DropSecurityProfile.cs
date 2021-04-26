@@ -6,20 +6,20 @@ namespace Database.MiniSqlParser
 {
     public class DropSecurityProfile : IQuery
     {
-        private string m_profile;
+        private SecurityProfile sp;
 
-        public DropSecurityProfile(string profile)
+        public DropSecurityProfile(string profile,string password, List<Priviledge> priviledges)
         {
-            m_profile = profile;
+            SecurityProfile sp = new SecurityProfile(profile, password, priviledges);
         }
 
 
         public string Run(DB database)
         {
 
-            // return database.GetSecurity().DropSecurityProfile(m_profile);  //Falta cambiar a string en security
+             return database.GetSecurity().DropSecurityProfile(sp); 
 
-            return null;
+          
         }
     }
     

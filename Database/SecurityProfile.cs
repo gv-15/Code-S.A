@@ -7,13 +7,14 @@ namespace Database
     public class SecurityProfile
     {
         private string m_name;
-
+        private string m_password;
         private List<Priviledge> m_priviledges;
 
         public SecurityProfile(string name, string password, List<Priviledge> priviledges)
         {
             m_name = name;
             m_priviledges = priviledges;
+            m_password = password;
         }
         public string GetName()
         {

@@ -6,18 +6,19 @@ namespace Database.MiniSqlParser
 {
     public class CreateSecurityProfile : IQuery
     {
-        private string m_profile;
 
-        public CreateSecurityProfile(string profile)
+        private SecurityProfile sp;
+        public CreateSecurityProfile(string profile, string password, List<Priviledge> priviledges)
         {
-            m_profile = profile;
+       
+          sp = new SecurityProfile(profile, password, priviledges);
         }
 
 
         public string Run(DB database)
         {
-            //return database.GetSecurity().CreateSecurityProfile(m_profile);  profile has to be a string
-            return null;
+            return database.GetSecurity().CreateSecurityProfile(sp);
+            
         }
     }
     
