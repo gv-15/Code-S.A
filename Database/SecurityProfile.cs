@@ -44,6 +44,7 @@ namespace Database
 
         public bool CheckPriviledge(Priviledge priviledge)
         {
+            
             bool found = false;
             int i = 0;
             if (m_priviledges.Count!=0)
