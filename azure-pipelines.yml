@@ -33,4 +33,10 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+
+- task: CmdLine@2
+  inputs:
+    script: 'Bundler\bin\release\Bundler.exe'
+    
+
     
