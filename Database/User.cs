@@ -18,5 +18,30 @@ namespace Database
 
         }
 
+        public string GetName()
+        {
+            return m_name;
+        }
+        public void SetName(string name)
+        {
+            m_name = name;
+        }
+        public string GetPassword()
+        {
+            return m_password;
+        }
+        public void SetPassword(string password)
+        {
+            m_password = password;
+        }
+        public SecurityProfile GetSecurityProfile()
+        {
+            return m_securityProfile;
+        }
+        public void SetSecurityProfile(SecurityProfile securityProfile)
+        {
+            m_securityProfile = securityProfile;
+        }
+
     }
 }

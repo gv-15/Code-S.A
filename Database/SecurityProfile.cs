@@ -15,6 +15,14 @@ namespace Database
             m_name = name;
             m_priviledges = priviledges;
         }
+        public string GetName()
+        {
+            return m_name;
+        }
+        public List<Priviledge> GetPriviledgeList()
+        {
+            return m_priviledges;
+        }
 
         public void AddPriviledge(Priviledge priviledge)
         {
@@ -36,6 +44,7 @@ namespace Database
 
         public bool CheckPriviledge(Priviledge priviledge)
         {
+            
             bool found = false;
             int i = 0;
             if (m_priviledges.Count!=0)
