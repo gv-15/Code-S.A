@@ -7,49 +7,75 @@ namespace Database
     public class Security
     {
 
-        private List<User> m_users;
         private List<SecurityProfile> m_security_profiles;
 
         public Security(List<User> users)
         {
-            m_users = users;
+         
         }
 
 
-        public string CreateSecurityProfile(SecurityProfile profile) 
+        public string CreateSecurityProfile(string profileName) 
         {
-            m_security_profiles.Add(profile);
+            SecurityProfile newProfile = new SecurityProfile(profileName);
+            m_security_profiles.Add(newProfile);
             return "Security profile created";
         }
 
-        public string DropSecurityProfile(SecurityProfile profile)
+        public string DropSecurityProfile(string profileName)
         {
-            m_security_profiles.Remove(profile);
+            SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
+            m_security_profiles.Remove(newProfile);
             return "Security profile deleted";
         }
 
-        public string Grant(string profileName, string tableName, Enum priviledgeType)
+        public string Grant(string profileName, string tableName, string priviledgeType)
         {
-            Priviledge priviledge = new Priviledge(priviledgeType,tableName);
-            bool found = false;
-            int i = 0;
-            while (!found && i<m_security_profiles.Count)
+            if (priviledgeType.Equals("DELETE")|| priviledgeType.Equals("INSERT") || priviledgeType.Equals("SELECT") || priviledgeType.Equals("UPDATE"))
             {
-                if (m_security_profiles[i].GetName().Equals(profileName))
+                Priviledge priviledge;
+                if (priviledgeType.Equals("DELETE"))
                 {
-                    
-                    m_security_profiles[i].AddPriviledge(priviledge);
-                    
-                    found = true;
+                    priviledge = new Priviledge(Priviledge.Priviledge_type.DELETE, tableName);
+                }
+                else if (priviledgeType.Equals("INSERT"))
+                {
+                    priviledge = new Priviledge(Priviledge.Priviledge_type.INSERT, tableName);
+                }
+                else if (priviledgeType.Equals("SELECT"))
+                {
+                    priviledge = new Priviledge(Priviledge.Priviledge_type.SELECT, tableName);
                 }
                 else
                 {
-                    i++;
+                    priviledge = new Priviledge(Priviledge.Priviledge_type.UPDATE, tableName);
                 }
-            }
-            if (found)
-            {
-                return "The priviledge has been granted";
+
+                bool found = false;
+                int i = 0;
+                while (!found && i < m_security_profiles.Count)
+                {
+                    if (m_security_profiles[i].GetName().Equals(profileName))
+                    {
+
+                        m_security_profiles[i].AddPriviledge(priviledge);
+
+                        found = true;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+                if (found)
+                {
+                    return "The priviledge has been granted";
+                }
+                else
+                {
+                    return "The priviledge hasn't been granted";
+                }
+
             }
             else
             {
@@ -57,27 +83,54 @@ namespace Database
             }
         }
 
-        public string Revoke(string profileName, string tableName, Enum priviledgeType)
+        public string Revoke(string profileName, string tableName, string priviledgeType)
         {
-            
-            Priviledge priviledge = new Priviledge(priviledgeType, tableName);
-            bool found = false;
-            int i = 0;
-            while (!found && i < m_security_profiles.Count)
+
+
+            if (priviledgeType.Equals("DELETE") || priviledgeType.Equals("INSERT") || priviledgeType.Equals("SELECT") || priviledgeType.Equals("UPDATE"))
             {
-                if (m_security_profiles[i].GetName().Equals(profileName))
+
+                Priviledge priviledge;
+                if (priviledgeType.Equals("DELETE"))
                 {
-                    m_security_profiles[i].RemovePriviledge(priviledge);
-                    found = true;
+                    priviledge = new Priviledge(Priviledge.Priviledge_type.DELETE, tableName);
+                }
+                else if (priviledgeType.Equals("INSERT"))
+                {
+                    priviledge = new Priviledge(Priviledge.Priviledge_type.INSERT, tableName);
+                }
+                else if (priviledgeType.Equals("SELECT"))
+                {
+                    priviledge = new Priviledge(Priviledge.Priviledge_type.SELECT, tableName);
                 }
                 else
                 {
-                    i++;
+                    priviledge = new Priviledge(Priviledge.Priviledge_type.UPDATE, tableName);
                 }
-            }
-            if (found)
-            {
-                return "The priviledge has been revoked";
+
+
+                bool found = false;
+                int i = 0;
+                while (!found && i < m_security_profiles.Count)
+                {
+                    if (m_security_profiles[i].GetName().Equals(profileName))
+                    {
+                        m_security_profiles[i].RemovePriviledge(priviledge);
+                        found = true;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+                if (found)
+                {
+                    return "The priviledge has been revoked";
+                }
+                else
+                {
+                    return "The priviledge hasn't been revoked";
+                }
             }
             else
             {
@@ -85,38 +138,32 @@ namespace Database
             }
         }
 
-        public string AddUser(string name, string password, SecurityProfile profile)
+        public string AddUser(string name, string password, string profile)
         {
-            User newUser = new User(name,password,profile);
-            m_users.Add(newUser);
+            
+            
+
+
+            SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profile);
+            int index = m_security_profiles.IndexOf(newProfile);
+            User newUser = new User(name, password);
+
+            m_security_profiles[index].AddUser(newUser);
             return "User added to security profile";
 
         }
 
         public string DeleteUser(string user)
         {
-            int i = 0;
-            bool found = false;
-            while(!found && i< m_users.Count)
+            
+            for(int i=0; i< m_security_profiles.Count;i++)
             {
-                if (m_users[i].GetName().Equals(user))
-                {
-                    m_users.RemoveAt(i);
-                    found = true;
-                }
-                else
-                {
-                    i++;
-                }
+
+                m_security_profiles[i].DeleteUser(user);
+                                
             }
-            if (found)
-            {
-                return "User deleted from security profile";
-            }
-            else
-            {
-                return "The user hasn't been deleted";
-            }
+            return "User deleted from security profile";
+            
         }
     }
 }

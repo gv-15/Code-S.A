@@ -8,13 +8,11 @@ namespace Database
     {
         private string m_name;
         private string m_password;
-        private SecurityProfile m_securityProfile;
 
-        public User(string name, string password, SecurityProfile profile)
+        public User(string name, string password)
         {
             m_name = name;
             m_password = password;
-            m_securityProfile = profile;
 
         }
 
@@ -33,14 +31,6 @@ namespace Database
         public void SetPassword(string password)
         {
             m_password = password;
-        }
-        public SecurityProfile GetSecurityProfile()
-        {
-            return m_securityProfile;
-        }
-        public void SetSecurityProfile(SecurityProfile securityProfile)
-        {
-            m_securityProfile = securityProfile;
         }
 
     }
