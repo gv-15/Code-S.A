@@ -12,10 +12,10 @@ namespace Database
 
         private List<User> m_users;
 
-        public SecurityProfile(string name, string password, List<Priviledge> priviledges)
+        public SecurityProfile(string name)
         {
             m_name = name;
-            m_priviledges = priviledges;
+            m_priviledges = new List<Priviledge>();
         }
         public string GetName()
         {

@@ -15,15 +15,17 @@ namespace Database
         }
 
 
-        public string CreateSecurityProfile(SecurityProfile profile) 
+        public string CreateSecurityProfile(string profileName) 
         {
-            m_security_profiles.Add(profile);
+            SecurityProfile newProfile = new SecurityProfile(profileName);
+            m_security_profiles.Add(newProfile);
             return "Security profile created";
         }
 
-        public string DropSecurityProfile(SecurityProfile profile)
+        public string DropSecurityProfile(string profileName)
         {
-            m_security_profiles.Remove(profile);
+            SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
+            m_security_profiles.Remove(newProfile);
             return "Security profile deleted";
         }
 
@@ -144,7 +146,7 @@ namespace Database
 
             SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profile);
             int index = m_security_profiles.IndexOf(newProfile);
-            User newUser = new User(name, password, profile);
+            User newUser = new User(name, password);
 
             m_security_profiles[index].AddUser(newUser);
             return "User added to security profile";
