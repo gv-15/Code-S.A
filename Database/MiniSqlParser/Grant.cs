@@ -8,9 +8,9 @@ namespace Database.MiniSqlParser
     {
         private string m_profile;
         private string m_table;
-        private Enum m_priviledfeType;
+        private string m_priviledfeType;
 
-        public Grant(string profile, string table, Enum priviledgeType)
+        public Grant(string profile, string table, string priviledgeType)
         {
             m_profile = profile;
             m_table = table;

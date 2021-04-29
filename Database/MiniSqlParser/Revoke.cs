@@ -8,8 +8,8 @@ namespace Database.MiniSqlParser
     {
         private string m_profileName;
         private string m_tableName;
-        private Enum m_priviledfeType;
-        public Revoke(string profileName, string tableName, Enum priviledgeType)
+        private string m_priviledfeType;
+        public Revoke(string profileName, string tableName, string priviledgeType)
         {
             m_profileName = profileName;
             m_tableName = tableName;

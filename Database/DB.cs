@@ -31,7 +31,7 @@ namespace Database
             m_username = username;
             m_password = password;
             m_db = new List<Table>();
-
+            
         }
 
         public Security GetSecurity()

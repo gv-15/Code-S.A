@@ -6,13 +6,13 @@ namespace Database.MiniSqlParser
 {
     public class DropSecurityProfile : IQuery
     {
-        private SecurityProfile sp;
+        private string sp;
 
 
         //Hay tres parametros pero solo le pasas un string en Parser
-        public DropSecurityProfile(string profile,string password, List<Priviledge> priviledges)
+        public DropSecurityProfile(string profile)
         {
-            SecurityProfile sp = new SecurityProfile(profile, password, priviledges);
+            sp = profile;
         }
 
 

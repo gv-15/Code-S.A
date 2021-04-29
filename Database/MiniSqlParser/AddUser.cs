@@ -8,8 +8,8 @@ namespace Database.MiniSqlParser
     {
         private string m_name;
         private string m_password;
-        private SecurityProfile sp;
-        public AddUser(string name, string password, SecurityProfile profile)
+        private string sp;
+        public AddUser(string name, string password, string profile)
         {
             m_name = name;
             m_password = password;

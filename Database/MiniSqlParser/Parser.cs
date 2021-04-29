@@ -262,8 +262,9 @@ namespace Database.MiniSqlParser
 
                 string table = match.Groups[1].Value;
                 string secProfile = match.Groups[2].Value;
+                string privi = match.Groups[3].Value;
 
-                Grant grant = new Grant(secProfile, table);
+                Grant grant = new Grant(secProfile, table, privi);
 
                 return grant;
 

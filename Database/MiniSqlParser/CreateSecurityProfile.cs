@@ -7,13 +7,13 @@ namespace Database.MiniSqlParser
     public class CreateSecurityProfile : IQuery
     {
 
-        private SecurityProfile sp;
+        private string sp;
 
         //Problema: tienes tres parámetros pero en parser sólo le pasas un string profile
-        public CreateSecurityProfile(string profile, string password, List<Priviledge> priviledges)
+        public CreateSecurityProfile(string profile)
         {
-       
-          sp = new SecurityProfile(profile, password, priviledges);
+
+            sp = profile;
         }
 
 
