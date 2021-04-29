@@ -94,8 +94,6 @@ namespace UnitTests
             IQuery query9 = Parser.Parse("CLOSE;");
             Assert.IsTrue(query9 is Close);
 
-            IQuery query11 = Parser.Parse("ADD USER ('Eva','1234',Employee);");
-            Assert.IsTrue(query11 is AddUser);
 
             IQuery query10 = Parser.Parse("UPDATE Employees SET Name='Patxi',Surname='Elorriaga' WHERE Id=2;");
             Assert.IsTrue(query10 is Update);
@@ -117,7 +115,10 @@ namespace UnitTests
                
             IQuery query16 = Parser.Parse("DELETE USER user;");
             Assert.IsTrue(query16 is DeleteUser);
-          
+
+            IQuery query11 = Parser.Parse("ADD USER ('Eva','1234',Employee);");
+            Assert.IsTrue(query11 is AddUser);
+
         }
 
 

@@ -24,7 +24,7 @@ namespace Database.MiniSqlParser
             const string grantPattern = @"GRANT SELECT ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
             const string deleteUserPattern = @"DELETE USER ([a-zA-Z0-9]+)\;";
             const string revokePriviligePattern = @"REVOKE ([a-zA-Z0-9]+) ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
-            const string addUserPattern = @"ADD USER \('([a-zA-Z0-9]+)','([a-zA-Z0-9]+)',([a-zA-Z0-9]+)\)\;";
+            const string addUserPattern = @"ADD USER \('([a-zA-Z0-9]+)','([a-zA-Z0-9]+)',([a-zA-Z0-9]+)\);";
 
             Match match = Regex.Match(miniSqlSentence, selectAllWherePattern);
             if (match.Success)
@@ -258,13 +258,13 @@ namespace Database.MiniSqlParser
 
             match = Regex.Match(miniSqlSentence, grantPattern);
             if (match.Success)
-            {
+            { 
 
                 string table = match.Groups[1].Value;
                 string secProfile = match.Groups[2].Value;
-                string privi = match.Groups[3].Value;
+     
 
-                Grant grant = new Grant(secProfile, table, privi);
+                Grant grant = new Grant(secProfile, table);
 
                 return grant;
 
@@ -273,13 +273,11 @@ namespace Database.MiniSqlParser
             match = Regex.Match(miniSqlSentence, revokePriviligePattern);
             if (match.Success)
             {
-                string profileName = match.Groups[1].Value;
+                string priviligeType = match.Groups[1].Value;
                 string table = match.Groups[2].Value;
-                string privilage = match.Groups[3].Value;
-
-               //Lo 3 no puede ser enumerado da error
+                string SecurityProfile = match.Groups[3].Value;
                
-                Revoke revoke = new Revoke(match.Groups[1].Value, match.Groups[2].Value,match.Groups[3].Value);
+                Revoke revoke = new Revoke(SecurityProfile, match.Groups[2].Value, priviligeType);
 
                     return revoke;
 
@@ -288,10 +286,10 @@ namespace Database.MiniSqlParser
             if (match.Success)
             {
 
-                string[] datos = match.Groups[1].Value.Split(',');
 
+                AddUser addUser = new AddUser(match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value);
 
-                //AddUser addUser = new AddUser(datos[0], datos[1], datos[2]); datos[2] tiene que ser un profile
+                return addUser;
                 
 
             }

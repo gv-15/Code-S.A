@@ -31,7 +31,7 @@ namespace Database
             m_username = username;
             m_password = password;
             m_db = new List<Table>();
-            
+            m_security = new Security();
         }
 
         public Security GetSecurity()
@@ -41,7 +41,16 @@ namespace Database
         public Table GetTableWithName(string name)
         {
             int position = FindTableWithName(name);
-            return m_db[position];
+            if(position != -1)
+            {
+                return m_db[position];
+            }
+            else
+            {
+                return null;
+            }
+
+                
         }
         public string SyntacticError()
         {
@@ -78,9 +87,7 @@ namespace Database
 
             m_db.RemoveAt(FindTableWithName(tableName));
                 
-                return respuesta;
-            
-          
+                return respuesta; 
             
         }
 
@@ -296,7 +303,7 @@ namespace Database
 
 
             List<int> index = new List<int>();
-                index = fullTable.SelectRowsPositions(condition);
+            index = fullTable.SelectRowsPositions(condition);
             TableColumn newColumn;
             List<string> values;
             foreach (TableColumn column in FilteredColumnTable.GetColumns()) //Columnas de NewTable

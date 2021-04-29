@@ -7,9 +7,7 @@ namespace Database
     public class SecurityProfile
     {
         private string m_name;
-        private string m_password;
         private List<Priviledge> m_priviledges;
-
         private List<User> m_users;
 
         public SecurityProfile(string name)
