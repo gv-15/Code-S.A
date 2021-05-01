@@ -20,11 +20,14 @@ namespace ConsoleDatabase
 
             using (TextWriter writer = File.CreateText("output-file.txt"))
             {
+                TimeSpan totalTime = new TimeSpan(0);
+                TimeSpan totalTimeTotal = new TimeSpan(0);
                 int numtest = 0;
-                Console.WriteLine("# Test " + (numtest));
                 writer.WriteLine("# Test " + (numtest));
+                DateTime startTotal = DateTime.Now;
                 foreach (string line in lines)
                 {
+                    
                     string queryResult = "";
                     Match match = Regex.Match(line, loginPattern);
                     if (match.Success)
@@ -42,7 +45,6 @@ namespace ConsoleDatabase
 
                             db = dbList[FindDBWithName(dbName)];
                             queryResult = UseDatabaseConsole(line, db);
-                            Console.WriteLine("# Test " + (numtest));
                             writer.WriteLine("# Test " + (numtest));
                         }
                     }
@@ -52,18 +54,26 @@ namespace ConsoleDatabase
                         string close = "";
                         writer.WriteLine(close);
                         numtest++;
+                        writer.WriteLine("TOTAL TIME: " + totalTime.TotalSeconds + "s");
+                        totalTime = new TimeSpan(0);
                     }
                     else 
-                    { 
-             
-       
+                    {
+
+                        DateTime start = DateTime.Now;
                         queryResult = UseDatabaseConsole(line, db);
+                        DateTime end = DateTime.Now;
+                        TimeSpan ts = (end - start);
+                        totalTime += ts;
+                        writer.WriteLine(queryResult + " (" + ts.TotalSeconds + "s)");
+                      
                
                     }
 
-                        writer.WriteLine(queryResult);
-
                 }
+                DateTime endTotal = DateTime.Now;
+                TimeSpan ts1 = (endTotal - startTotal);
+                writer.WriteLine("TOTAL TIME: " + ts1.TotalSeconds + "s");
             }          
       }
 
@@ -72,7 +82,6 @@ namespace ConsoleDatabase
 
             IQuery IQ = Parser.Parse(miniSqlSentence);
         
-
             if (IQ != null)
             { 
                 return IQ.Run(database);
