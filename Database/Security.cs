@@ -39,9 +39,6 @@ namespace Database
         public string Grant(string profileName, string tableName, string priviledgeType) //Esto esta cambiado para pasarle solo 2 parametros al metodo que es lo que se puede cojer con el parser
         {
          
-          
-            
-
        
             if (priviledgeType.Equals("DELETE")|| priviledgeType.Equals("INSERT") || priviledgeType.Equals("SELECT") || priviledgeType.Equals("UPDATE"))
             {
@@ -81,7 +78,7 @@ namespace Database
                 }
                 if (found)
                 {
-                    return "The priviledge has been granted";
+                    return "Security privilege granted";
                 }
                 else
                 {

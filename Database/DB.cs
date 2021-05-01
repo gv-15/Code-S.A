@@ -113,7 +113,7 @@ namespace Database
 
         public string Close()
         {
-            string respuesta = "1";
+            string respuesta = "";
             return respuesta;
         }
 
@@ -188,6 +188,11 @@ namespace Database
             return -1;
         }
 
+        public string GetName()
+        {
+
+            return m_name;
+        }
 
         public string InsertInto(string table, List<string> values)
         {

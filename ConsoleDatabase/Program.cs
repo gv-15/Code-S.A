@@ -3,49 +3,55 @@ using System.Collections.Generic;
 using System.IO;
 using Database;
 using Database.MiniSqlParser;
+using System.Text.RegularExpressions;
 
 namespace ConsoleDatabase
 {
     class Program
     {
 
-        private static DB db;
-        private static string contraseña;
-        private static string nombreDB;
-        private static string usuario;
+        private static DB db = new DB("Prueba");
+        private static List<DB> dbList = new List<DB>();
+        const string loginPattern = @"([a-zA-Z0-9]+),([a-zA-Z0-9]+),([a-zA-Z0-9]+)";
+
         static void Main(string[] args)
         {
             string[] lines = System.IO.File.ReadAllLines("input-file.txt");
 
-            /*
-                        string stopCondition = "0";
-                        Console.WriteLine("");
-                        Console.WriteLine("If you wanna exit write --> CLOSE");
-                        Console.WriteLine("");
-                        Console.WriteLine("Enter a name for the Database");
-                        nombreDB = Console.ReadLine();
-                        Console.WriteLine("");
-                        Console.WriteLine("Enter a username");
-                        usuario = Console.ReadLine();
-                        Console.WriteLine("");
-                        Console.WriteLine("Enter a password");
-                        contraseña = Console.ReadLine();
-                        Console.WriteLine("");
-                        Console.WriteLine("Write the line you want to execute in the DB");
-                        Console.WriteLine("");  
-            */
-
-
             using (TextWriter writer = File.CreateText("output-file.txt"))
-            {                     
-                foreach(string line in lines)
+            {
+                int numtest = 0;
+                Console.WriteLine("# Test " + (numtest));
+                writer.WriteLine("# Test " + (numtest));
+                foreach (string line in lines)
                 {
                     string queryResult = "";
-
-                    if (line.Equals(""))
+                    Match match = Regex.Match(line, loginPattern);
+                    if (match.Success)
                     {
-                            db = new DB(nombreDB, usuario, contraseña);
-                         
+                        string dbName = match.Groups[1].Value;
+                        int num = FindDBWithName(dbName);
+                        if (num == -1)
+                        {
+                            db = new DB(match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value);
+                            dbList.Add(db);
+                            writer.WriteLine("Database created");
+                        }
+                        else
+                        {
+
+                            db = dbList[FindDBWithName(dbName)];
+                            queryResult = UseDatabaseConsole(line, db);
+                            Console.WriteLine("# Test " + (numtest));
+                            writer.WriteLine("# Test " + (numtest));
+                        }
+                    }
+                  
+                   if (line.Equals(""))
+                    {
+                        string close = "";
+                        writer.WriteLine(close);
+                        numtest++;
                     }
                     else 
                     { 
@@ -75,7 +81,16 @@ namespace ConsoleDatabase
 
 
         }
-        
+        private static int FindDBWithName(string dbName)
+        {
+            for (int i = 0; i < dbList.Count; i++)
+            {
+                if (dbList[i].GetName() == dbName)
+                    return i;
+            }
+            return -1;
+        }
+
 
 
     }
