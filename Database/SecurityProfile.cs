@@ -84,5 +84,15 @@ namespace Database
         {
             return m_users;
         }
+        public User FindUser(string userName)
+        {
+            User user = m_users.Find(usuario => usuario.GetName() == userName);
+            return user;
+        }
+        public List<Priviledge> FindPriviledgesByTable(string tableName)
+        {
+            List<Priviledge> priviledges = m_priviledges.FindAll(priv => priv.GetTableName() == tableName);
+            return priviledges;
+        }
     }
 }

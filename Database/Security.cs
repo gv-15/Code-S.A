@@ -164,5 +164,36 @@ namespace Database
             return "User deleted from security profile";
             
         }
+
+        public bool CheckUserAction(string userName, string tableName, string priviledgeType) // We assume that the user has already logged in and therefore, we don't need to check if it either exist or not
+        {
+            if (userName.Equals("admin"))
+            {
+                return true;
+            }
+            else
+            {
+                User userL = m_users.Find(us => us.GetName() == userName);
+                List<SecurityProfile> profiles = m_security_profiles.FindAll(prof => prof.FindUser(userName) == userL);
+                int i = 0;
+                bool found = false;
+                while (i<profiles.Count && !found)
+                {
+                    List<Priviledge> tablePriviledges = profiles[i].FindPriviledgesByTable(tableName);
+                    Priviledge priviledge = tablePriviledges.Find(priv => priv.GetPriviledgeType() == priviledgeType);
+
+                    if (priviledge.Equals(null))
+                    {
+                        found = true;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+
+                return found;
+            }
+        }
     }
 }
