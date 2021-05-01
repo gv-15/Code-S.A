@@ -21,7 +21,7 @@ namespace Database.MiniSqlParser
             const string updatePattern = @"UPDATE ([a-zA-Z0-9,]+) SET ([a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\3(,[a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\5)*) WHERE ([a-zA-Z]+)([=><])('{0,1})([a-zA-Z0-9-\.\s]+)('{0,1})\;";
             const string createSecurityProfilePattern = @"CREATE SECURITY PROFILE ([a-zA-Z0-9_]+)\;";
             const string dropSecurityProfilePattern = @"DROP SECURITY PROFILE ([a-zA-Z0-9_]+)\;";
-            const string grantPattern = @"GRANT SELECT ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
+            const string grantPattern = @"GRANT ([a-zA-Z0-9]+) ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
             const string deleteUserPattern = @"DELETE USER ([a-zA-Z0-9]+)\;";
             const string revokePriviligePattern = @"REVOKE ([a-zA-Z0-9]+) ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
             const string addUserPattern = @"ADD USER \('([a-zA-Z0-9]+)','([a-zA-Z0-9]+)',([a-zA-Z0-9]+)\);";

@@ -31,7 +31,8 @@ namespace ConsoleDatabase
                         contraseña = Console.ReadLine();
                         Console.WriteLine("");
                         Console.WriteLine("Write the line you want to execute in the DB");
-                        Console.WriteLine("");  */
+                        Console.WriteLine("");  
+            */
 
 
             using (TextWriter writer = File.CreateText("output-file.txt"))
