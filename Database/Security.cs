@@ -60,30 +60,18 @@ namespace Database
                     priviledge = new Priviledge(Priviledge.Priviledge_type.UPDATE, tableName);
                 }
 
-                bool found = false;
-                int i = 0;
-                while (!found && i < m_security_profiles.Count)
-                {
-                    if (m_security_profiles[i].GetName().Equals(profileName))
-                    {
 
-                        m_security_profiles[i].AddPriviledge(priviledge);
-
-                        found = true;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-                if (found)
+                SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
+                if (newProfile.Equals(null))
                 {
-                    return "Security privilege granted";
+                    newProfile.AddPriviledge(priviledge);
+                    return "The priviledge has been granted";
                 }
                 else
                 {
                     return "The priviledge hasn't been granted";
                 }
+                
 
             }
             else
@@ -132,22 +120,10 @@ namespace Database
                 }
 
 
-                bool found = false;
-                int i = 0;
-                while (!found && i < m_security_profiles.Count)
+                SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
+                if (newProfile.Equals(null))
                 {
-                    if (m_security_profiles[i].GetName().Equals(profileName))
-                    {
-                        m_security_profiles[i].RemovePriviledge(priviledge);
-                        found = true;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-                if (found)
-                {
+                    newProfile.RemovePriviledge(priviledge);
                     return "The priviledge has been revoked";
                 }
                 else
@@ -176,8 +152,8 @@ namespace Database
 
         public string DeleteUser(string user)
         {
-            
-            for(int i=0; i< m_security_profiles.Count;i++)
+
+            for (int i=0; i< m_security_profiles.Count;i++)
             {
 
                 m_security_profiles[i].DeleteUser(user);
@@ -188,6 +164,37 @@ namespace Database
 
             return "User deleted from security profile";
             
+        }
+
+        public bool CheckUserAction(string userName, string tableName, string priviledgeType) // We assume that the user has already logged in and therefore, we don't need to check if it either exist or not
+        {
+            if (userName.Equals("admin"))
+            {
+                return true;
+            }
+            else
+            {
+                User userL = m_users.Find(us => us.GetName() == userName);
+                List<SecurityProfile> profiles = m_security_profiles.FindAll(prof => prof.FindUser(userName) == userL);
+                int i = 0;
+                bool found = false;
+                while (i<profiles.Count && !found)
+                {
+                    List<Priviledge> tablePriviledges = profiles[i].FindPriviledgesByTable(tableName);
+                    Priviledge priviledge = tablePriviledges.Find(priv => priv.GetPriviledgeType() == priviledgeType);
+
+                    if (priviledge.Equals(null))
+                    {
+                        found = true;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+
+                return found;
+            }
         }
     }
 }

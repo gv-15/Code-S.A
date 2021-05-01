@@ -44,7 +44,7 @@ namespace Database
 
         public void AddUser(User user)
         {
-            if (!m_users.Contains(user)) 
+            if (CheckUser(user.GetName())) 
             {
                 m_users.Add(user);
             }
@@ -67,6 +67,32 @@ namespace Database
             {
                 return false;
             }
+        }
+        public bool CheckUser(string userName)
+        {
+            User user = m_users.Find(usuario => usuario.GetName() == userName);
+            if (user.Equals(null))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public List<User> GetUsers()
+        {
+            return m_users;
+        }
+        public User FindUser(string userName)
+        {
+            User user = m_users.Find(usuario => usuario.GetName() == userName);
+            return user;
+        }
+        public List<Priviledge> FindPriviledgesByTable(string tableName)
+        {
+            List<Priviledge> priviledges = m_priviledges.FindAll(priv => priv.GetTableName() == tableName);
+            return priviledges;
         }
     }
 }
