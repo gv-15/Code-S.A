@@ -25,6 +25,7 @@ namespace Database.MiniSqlParser
             const string deleteUserPattern = @"DELETE USER ([a-zA-Z0-9]+)\;";
             const string revokePriviligePattern = @"REVOKE ([a-zA-Z0-9]+) ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
             const string addUserPattern = @"ADD USER \('([a-zA-Z0-9]+)','([a-zA-Z0-9]+)',([a-zA-Z0-9]+)\);";
+            const string loginPattern = @"([a-zA-Z0-9]+),([a-zA-Z0-9]+),([a-zA-Z0-9]+)";
 
             Match match = Regex.Match(miniSqlSentence, selectAllWherePattern);
             if (match.Success)
@@ -57,7 +58,18 @@ namespace Database.MiniSqlParser
                 }
             }
 
-           match = Regex.Match(miniSqlSentence, selectAllPattern);
+
+            match = Regex.Match(miniSqlSentence, loginPattern);
+            if (match.Success)
+            {
+             
+                Login lg = new Login(match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value);
+
+                return lg;
+
+            }
+
+            match = Regex.Match(miniSqlSentence, selectAllPattern);
             if (match.Success)
             {
                 SelectAll selectAll = new SelectAll(match.Groups[1].Value);

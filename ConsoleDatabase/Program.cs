@@ -8,6 +8,7 @@ namespace ConsoleDatabase
 {
     class Program
     {
+
         private static DB db;
         private static string contraseña;
         private static string nombreDB;
@@ -44,7 +45,7 @@ namespace ConsoleDatabase
                     if (line.Equals(""))
                     {
                             db = new DB(nombreDB, usuario, contraseña);
-               
+                         
                     }
                     else 
                     { 
@@ -64,6 +65,8 @@ namespace ConsoleDatabase
         {
 
             IQuery IQ = Parser.Parse(miniSqlSentence);
+        
+
             if (IQ != null)
             { 
                 return IQ.Run(database);
@@ -72,6 +75,7 @@ namespace ConsoleDatabase
 
 
         }
+        
 
 
     }
