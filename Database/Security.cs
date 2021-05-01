@@ -8,13 +8,16 @@ namespace Database
     {
 
         private List<SecurityProfile> m_security_profiles;
-
+        private List<User> m_users;
         public Security(List<User> users)
         {
-         
+            m_users = users;
+            m_security_profiles = new List<SecurityProfile>();
         }
         public Security()
         {
+            m_users = new List<User>();
+            m_security_profiles = new List<SecurityProfile>();
             //Este constructor esta credao porque en database no tenemos una lista de usuarios para pasarle por parametro no tenia sentido usar el parametrizado
         }
 
@@ -43,7 +46,7 @@ namespace Database
                 if (m_security_profiles[j].GetName().Equals(profileName))
                 {
 
-                    priviledgeType = m_security_profiles[j].GetPriviledgeList()[0].GetPriviledgeType();
+                    priviledgeType = m_security_profiles[j].GetPriviledgeList()[0].GetPriviledgeType(); //Igual aqui hay que poner j en verde 0
 
                     found1 = true;
                 }
@@ -163,14 +166,12 @@ namespace Database
 
         public string AddUser(string name, string password, string profile)
         {
-            
-            
 
 
             SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profile);
             int index = m_security_profiles.IndexOf(newProfile);
             User newUser = new User(name, password);
-
+            m_users.Add(newUser);
             m_security_profiles[index].AddUser(newUser);
             return "User added to security profile";
 
@@ -185,6 +186,9 @@ namespace Database
                 m_security_profiles[i].DeleteUser(user);
                                 
             }
+            User user1 = m_users.Find(user2 => user2.GetName() == user);
+            m_users.Remove(user1);
+
             return "User deleted from security profile";
             
         }
