@@ -44,7 +44,7 @@ namespace Database
 
         public void AddUser(User user)
         {
-            if (!m_users.Contains(user)) 
+            if (CheckUser(user.GetName())) 
             {
                 m_users.Add(user);
             }
@@ -67,6 +67,22 @@ namespace Database
             {
                 return false;
             }
+        }
+        public bool CheckUser(string userName)
+        {
+            User user = m_users.Find(usuario => usuario.GetName() == userName);
+            if (user.Equals(null))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public List<User> GetUsers()
+        {
+            return m_users;
         }
     }
 }

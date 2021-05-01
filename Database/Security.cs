@@ -38,10 +38,6 @@ namespace Database
 
         public string Grant(string profileName, string tableName, string priviledgeType) //Esto esta cambiado para pasarle solo 2 parametros al metodo que es lo que se puede cojer con el parser
         {
-         
-          
-            
-
        
             if (priviledgeType.Equals("DELETE")|| priviledgeType.Equals("INSERT") || priviledgeType.Equals("SELECT") || priviledgeType.Equals("UPDATE"))
             {
@@ -63,30 +59,18 @@ namespace Database
                     priviledge = new Priviledge(Priviledge.Priviledge_type.UPDATE, tableName);
                 }
 
-                bool found = false;
-                int i = 0;
-                while (!found && i < m_security_profiles.Count)
-                {
-                    if (m_security_profiles[i].GetName().Equals(profileName))
-                    {
 
-                        m_security_profiles[i].AddPriviledge(priviledge);
-
-                        found = true;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-                if (found)
+                SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
+                if (newProfile.Equals(null))
                 {
+                    newProfile.AddPriviledge(priviledge);
                     return "The priviledge has been granted";
                 }
                 else
                 {
                     return "The priviledge hasn't been granted";
                 }
+                
 
             }
             else
@@ -135,22 +119,10 @@ namespace Database
                 }
 
 
-                bool found = false;
-                int i = 0;
-                while (!found && i < m_security_profiles.Count)
+                SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
+                if (newProfile.Equals(null))
                 {
-                    if (m_security_profiles[i].GetName().Equals(profileName))
-                    {
-                        m_security_profiles[i].RemovePriviledge(priviledge);
-                        found = true;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-                if (found)
-                {
+                    newProfile.RemovePriviledge(priviledge);
                     return "The priviledge has been revoked";
                 }
                 else
@@ -179,8 +151,8 @@ namespace Database
 
         public string DeleteUser(string user)
         {
-            
-            for(int i=0; i< m_security_profiles.Count;i++)
+
+            for (int i=0; i< m_security_profiles.Count;i++)
             {
 
                 m_security_profiles[i].DeleteUser(user);
