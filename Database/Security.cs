@@ -36,25 +36,11 @@ namespace Database
             return "Security profile deleted";
         }
 
-        public string Grant(string profileName, string tableName) //Esto esta cambiado para pasarle solo 2 parametros al metodo que es lo que se puede cojer con el parser
+        public string Grant(string profileName, string tableName, string priviledgeType) //Esto esta cambiado para pasarle solo 2 parametros al metodo que es lo que se puede cojer con el parser
         {
-            string priviledgeType = "";
-            bool found1 = false;
-            int j = 0;
-            while (!found1 && j < m_security_profiles.Count)
-            {
-                if (m_security_profiles[j].GetName().Equals(profileName))
-                {
-
-                    priviledgeType = m_security_profiles[j].GetPriviledgeList()[0].GetPriviledgeType(); //Igual aqui hay que poner j en verde 0
-
-                    found1 = true;
-                }
-                else
-                {
-                    j++;
-                }
-            }
+         
+          
+            
 
        
             if (priviledgeType.Equals("DELETE")|| priviledgeType.Equals("INSERT") || priviledgeType.Equals("SELECT") || priviledgeType.Equals("UPDATE"))

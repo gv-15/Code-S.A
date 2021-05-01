@@ -8,19 +8,20 @@ namespace Database.MiniSqlParser
     {
         private string m_profile;
         private string m_table;
+        private string m_priviledge;
 
-        public Grant(string profile, string table)
+        public Grant(string privedgeType,string profile, string table)
         {
             m_profile = profile;
             m_table = table;
-            
+            m_priviledge = privedgeType;
         }
 
 
         public string Run(DB database)
         {
 
-            return database.GetSecurity().Grant(m_profile,m_table); 
+            return database.GetSecurity().Grant(m_profile,m_table,m_priviledge); 
 
             
         }

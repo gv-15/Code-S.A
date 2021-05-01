@@ -258,13 +258,13 @@ namespace Database.MiniSqlParser
 
             match = Regex.Match(miniSqlSentence, grantPattern);
             if (match.Success)
-            { 
-
-                string table = match.Groups[1].Value;
-                string secProfile = match.Groups[2].Value;
+            {
+                string priviledge = match.Groups[1].Value;
+                string table = match.Groups[2].Value;
+                string secProfile = match.Groups[3].Value;
      
 
-                Grant grant = new Grant(secProfile, table);
+                Grant grant = new Grant(priviledge,secProfile, table);
 
                 return grant;
 
