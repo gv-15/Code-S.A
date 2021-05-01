@@ -38,7 +38,6 @@ namespace Database
         {
             return m_security;
         }
-
         public string Login(string name, string password)
         {
             if (name.Equals("admin") && password.Equals("admin"))

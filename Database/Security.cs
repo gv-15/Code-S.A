@@ -109,6 +109,20 @@ namespace Database
             }
         }
 
+        public bool Login(string name, string password)
+        {
+            List<User> users = m_users.FindAll(userName => userName.GetName() == name);
+            User user = users.Find(userPass => userPass.GetPassword() == password);
+            if (user.Equals(null)) 
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public string Revoke(string profileName, string tableName, string priviledgeType)
         {
 
