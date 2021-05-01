@@ -38,6 +38,25 @@ namespace Database
         {
             return m_security;
         }
+
+        public string Login(string name, string password)
+        {
+            if (name.Equals("admin") && password.Equals("admin"))
+            {
+                return "Database opened";
+            }
+            else
+            {
+                if (m_security.Login(name, password))
+                {
+                    return "Database opened";
+                }
+                else
+                {
+                    return "Incorrect login";
+                }
+            }
+        }
         public Table GetTableWithName(string name)
         {
             int position = FindTableWithName(name);
