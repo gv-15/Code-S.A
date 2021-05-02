@@ -22,7 +22,7 @@ namespace ConsoleDatabase
             {
                 TimeSpan totalTime = new TimeSpan(0);
                 TimeSpan totalTimeTotal = new TimeSpan(0);
-                int numtest = 0;
+                int numtest = 1 ;
                 writer.WriteLine("# Test " + (numtest));
                 DateTime startTotal = DateTime.Now;
                 foreach (string line in lines)
@@ -36,9 +36,13 @@ namespace ConsoleDatabase
                         int num = FindDBWithName(dbName);
                         if (num == -1)
                         {
+                            DateTime start = DateTime.Now;
                             db = new DB(match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value);
                             dbList.Add(db);
-                            writer.WriteLine("Database created");
+                            DateTime end = DateTime.Now;
+                            TimeSpan ts = (end - start);
+                            totalTime += ts;
+                            writer.WriteLine("Database created" + " (" + ts.TotalSeconds + "s)");
                         }
                         else
                         {
@@ -51,10 +55,10 @@ namespace ConsoleDatabase
                   
                    if (line.Equals(""))
                     {
-                        string close = "";
-                        writer.WriteLine(close);
+                        string close = ""; 
                         numtest++;
                         writer.WriteLine("TOTAL TIME: " + totalTime.TotalSeconds + "s");
+                        writer.WriteLine(close);
                         totalTime = new TimeSpan(0);
                     }
                     else 
