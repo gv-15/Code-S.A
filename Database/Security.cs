@@ -69,7 +69,7 @@ namespace Database
                 else
                 {
                     newProfile.AddPriviledge(priviledge);
-                    return "Security priviledge not granted";
+                    return "Security priviledge granted";
                 }
                 
 
