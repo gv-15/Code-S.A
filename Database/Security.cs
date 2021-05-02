@@ -64,19 +64,19 @@ namespace Database
                 SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
                 if (newProfile == null)
                 {
-                    return "Security priviledge granted";
+                    return "Security priviledge not granted";
                 }
                 else
                 {
                     newProfile.AddPriviledge(priviledge);
-                    return "The priviledge has been granted";
+                    return "Security priviledge not granted";
                 }
                 
 
             }
             else
             {
-                return "The priviledge hasn't been granted";
+                return "Security priviledge not granted";
             }
         }
 
@@ -121,19 +121,19 @@ namespace Database
 
 
                 SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
-                if (newProfile.Equals(null))
+                if (newProfile == null)
                 {
                     newProfile.RemovePriviledge(priviledge);
-                    return "The priviledge has been revoked";
+                    return "Security priviledge revoked";
                 }
                 else
                 {
-                    return "The priviledge hasn't been revoked";
+                    return "Security priviledge not revoked";
                 }
             }
             else
             {
-                return "The priviledge hasn't been revoked";
+                return "Security priviledge not revoked";
             }
         }
 
