@@ -88,7 +88,7 @@ namespace UnitTests
         public void TestSave()
         {
 
-            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            DB db = new DB("MyDB", "admin", "admin");
 
             TableColumn tc1 = new TableColumn("NombreAdmin");
 
@@ -113,7 +113,7 @@ namespace UnitTests
         [TestMethod]
         public void TestSelectColumns()
         {
-            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            DB db = new DB("MyDB", "Admin", "admin");
             Table newTable = new Table("newTable");
             TableColumn column = new TableColumn("a");
             column.AddString("name");
@@ -148,7 +148,7 @@ namespace UnitTests
         public void TestDeleteFrom()
         {
 
-            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            DB db = new DB("MyDB", "admin", "admin");
             Table newTable = new Table("newTable");
             TableColumn column = new TableColumn("a");
             column.AddString("name");
@@ -213,7 +213,7 @@ namespace UnitTests
         public void TestSelectAll()
         {
 
-            DB db = new DB("MyDB", "Admin", "SoyAdmin");
+            DB db = new DB("MyDB", "admin", "admin");
             Table newTable = new Table("newTable");
             TableColumn column = new TableColumn("a");
             column.AddString("name");
