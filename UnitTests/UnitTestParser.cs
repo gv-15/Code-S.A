@@ -13,7 +13,7 @@ namespace UnitTests
         public void Parsing()
         {
 
-            DB db = new DB("MyDB", "Admin", "Admin");
+            DB db = new DB("MyDB", "admin", "admin");
 
             TableColumn tc1 = new TableColumn("NombreAdmin");
 

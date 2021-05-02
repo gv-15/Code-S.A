@@ -228,11 +228,11 @@ namespace UnitTests
             Assert.AreEqual("['a']{name}{surname}",newTable2.ToString());
 
         }
-/*
+
         [TestMethod]
         public void TestUpdate()
         {
-            DB db = new DB("MyDB", "Admin", "Admin");
+            DB db = new DB("MyDB", "admin", "admin");
             Table t = new Table("People");
             TableColumn column = new TableColumn("name");
             column.AddString("Juan");
@@ -262,7 +262,7 @@ namespace UnitTests
            
 
         }
-*/
+
     }
 
 }
