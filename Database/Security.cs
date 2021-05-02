@@ -62,14 +62,14 @@ namespace Database
 
 
                 SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
-                if (newProfile.Equals(null))
+                if (newProfile == null)
                 {
-                    newProfile.AddPriviledge(priviledge);
-                    return "The priviledge has been granted";
+                    return "Security priviledge granted";
                 }
                 else
                 {
-                    return "The priviledge hasn't been granted";
+                    newProfile.AddPriviledge(priviledge);
+                    return "The priviledge has been granted";
                 }
                 
 
@@ -84,7 +84,7 @@ namespace Database
         {
             List<User> users = m_users.FindAll(userName => userName.GetName() == name);
             User user = users.Find(userPass => userPass.GetPassword() == password);
-            if (user.Equals(null)) 
+            if (user == null) 
             {
                 return false;
             }
@@ -183,13 +183,14 @@ namespace Database
                     List<Priviledge> tablePriviledges = profiles[i].FindPriviledgesByTable(tableName);
                     Priviledge priviledge = tablePriviledges.Find(priv => priv.GetPriviledgeType() == priviledgeType);
 
-                    if (priviledge.Equals(null))
+                    if (priviledge == null)
                     {
-                        found = true;
+                        i++;
                     }
                     else
                     {
-                        i++;
+                        found = true;
+                        
                     }
                 }
 

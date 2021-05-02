@@ -14,6 +14,7 @@ namespace Database
         {
             m_name = name;
             m_priviledges = new List<Priviledge>();
+            m_users = new List<User>();
         }
         public string GetName()
         {
@@ -44,7 +45,7 @@ namespace Database
 
         public void AddUser(User user)
         {
-            if (CheckUser(user.GetName())) 
+            if (!CheckUser(user.GetName())) 
             {
                 m_users.Add(user);
             }
@@ -71,7 +72,7 @@ namespace Database
         public bool CheckUser(string userName)
         {
             User user = m_users.Find(usuario => usuario.GetName() == userName);
-            if (user.Equals(null))
+            if (user==null)
             {
                 return false;
             }

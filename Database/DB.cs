@@ -38,6 +38,10 @@ namespace Database
         {
             return m_security;
         }
+        public string getUsername()
+        {
+            return m_username;
+        }
         public string Login(string dbName ,string name, string password)
         {
 
@@ -199,31 +203,39 @@ namespace Database
         public string InsertInto(string table, List<string> values)
         {
             string resultado = "";
-            int i = FindTableWithName(table);
-            if (i == -1)
+            if (m_security.CheckUserAction(m_username, table, "DELETE"))
             {
-                resultado = "ERROR: Table doesn't exist ";
+                
+                int i = FindTableWithName(table);
+                if (i == -1)
+                {
+                    resultado = "ERROR: Table doesn't exist ";
+                }
+                else
+                {
+                    resultado = "Tuple added";
+                    Table t = new Table(m_db[i].GetName());
+                    t = m_db[i];
+                    string st = "";
+                    List<string> columnNames = new List<string>();
+                    foreach (TableColumn tc in t.GetColumns())
+                    {
+                        columnNames.Add(tc.GetTableColumnName());
+                    }
+
+                    Table tableColumns = SelectColumns(t.GetName(), columnNames);
+                    List<TableColumn> list = tableColumns.GetColumns();
+
+                    for (int c = 0; c < list.Count; c++)
+                    {
+                        list[c].AddString(values[c]);
+                        st += values[c];
+                    }
+                }
             }
             else
             {
-                resultado = "Tuple added";
-                Table t = new Table(m_db[i].GetName());
-                t = m_db[i];
-                string st = "";
-                List<string> columnNames = new List<string>();
-                foreach (TableColumn tc in t.GetColumns())
-                {
-                    columnNames.Add(tc.GetTableColumnName());
-                }
-
-                Table tableColumns = SelectColumns(t.GetName(), columnNames);
-                List<TableColumn> list = tableColumns.GetColumns();
-
-                for (int c = 0; c < list.Count; c++)
-                {
-                    list[c].AddString(values[c]);
-                    st += values[c];
-                }
+                resultado = "ERROR: Not sufficient priviledges";
             }
 
             return resultado;
@@ -297,18 +309,27 @@ namespace Database
         }
 
 
-            public string DeleteFrom(string table, List<string> columnNames, Condition condition)
+        public string DeleteFrom(string table, List<string> columnNames, Condition condition)
+        {
+            string resultado = "";
+            if (m_security.CheckUserAction(m_username, table, "DELETE"))
             {
-                string resultado = "Tuple(s) deleted";
+                
                 int p = FindTableWithName(table);
                 Table t = this.GetTable(p);
                 List<TableColumn> list = t.GetColumns();
 
 
                 t.DeleteColumn(condition);
+                resultado = "Tuple(s) deleted";
+            }
+            else
+            {
+                resultado = "ERROR: Not sufficient priviledges";
+            }
 
             return resultado;
-            }
+        }
 
             public string RunMiniSqlQuery(string query)
             {
@@ -352,8 +373,9 @@ namespace Database
             return newTable;
         }
 
-        public Table SelectAllWhere(String table, Condition condition)
+        public Table SelectAllWhere(string table, Condition condition)
         {
+            
             int i = FindTableWithName(table);
             if (i == -1)
             {
@@ -397,7 +419,8 @@ namespace Database
         {
             string resultado = "Tuple(s) updated";
 
-            if (m_security.CheckUserAction(m_username, table,"UPDATE")) { 
+            if (m_security.CheckUserAction(m_username, table,"UPDATE"))
+            { 
                 
 
                 int p = FindTableWithName(table);
@@ -437,11 +460,13 @@ namespace Database
 
                         }
                     }
-                              
-  
-           
                 }
             }
+            else
+            {
+                resultado = "ERROR: Not sufficient priviledges";
+            }
+
 
             return resultado;
         }

@@ -21,8 +21,12 @@ namespace Database.MiniSqlParser
                 return "ERROR: Table does not exist";
 
             }
+            else if (!database.GetSecurity().CheckUserAction(database.getUsername(), m_table, "SELECT"))
+            {
+                return "ERROR: Not sufficient priviledges";
+            }
             else 
-            { 
+            {
             return database.SelectColumns(m_table,m_columnNames).ToString();
             }
         }
