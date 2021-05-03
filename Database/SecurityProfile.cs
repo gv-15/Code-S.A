@@ -60,7 +60,10 @@ namespace Database
 
         public bool CheckPriviledge(Priviledge priviledge)
         {
-            if (m_priviledges.Contains(priviledge))
+            Priviledge match = 
+                m_priviledges.Find(priv => priv.GetTableName() == priviledge.GetTableName() && priv.GetType() == priviledge.GetType());
+            
+            if (match != null)
             {
                 return true;
             }
