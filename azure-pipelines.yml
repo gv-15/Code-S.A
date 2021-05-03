@@ -39,4 +39,12 @@ steps:
     script: 'Bundler\bin\release\Bundler.exe'
     
 
-    
+    - task: GitHubRelease@1
+      inputs:
+        gitHubConnection: 'github.com_gv-15'
+        repositoryName: 'gv-15/Code-S.A'
+        action: 'edit'
+        target: '$(Build.SourceVersion)'
+        tag: 'v1.0'
+        changeLogCompareToRelease: 'lastFullRelease'
+        changeLogType: 'commitBased'
