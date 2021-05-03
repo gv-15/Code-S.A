@@ -58,8 +58,21 @@ namespace UnitTests
         [TestMethod]
         public void TestLogin()
         {
-           
+            DB db = new DB("people", "admin", "admin");
+
+            db.GetSecurity().CreateSecurityProfile("Employee");
+
+            db.GetSecurity().AddUser("Lana", "111", "Employee");
+            db.GetSecurity().AddUser("Mikel", "333", "Employee");
+
+            bool b = db.GetSecurity().Login("Lana", "111");
+            Assert.IsTrue(b);
+
+            bool b2 = db.GetSecurity().Login("Lana", "121");
+            Assert.IsFalse(b2);
         }
+
+
         [TestMethod]
         public void TestAddUser()
         {
@@ -79,7 +92,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void DeleteUser()
+        public void TestDeleteUser()
         {
             DB db = new DB("people", "admin","admin");
 
@@ -99,7 +112,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void CheckUserAction()
+        public void TestCheckUserAction()
         {
             //El usuario tiene los permisos para hacer las acciones que está intentando
             DB db = new DB("people", "admin", "admin");
@@ -122,7 +135,8 @@ namespace UnitTests
             bool b2 = db.GetSecurity().CheckUserAction("Lana", "girls", "SELECT");
             Assert.IsTrue(b2);
 
-
         }
+
+        
     }
 }
