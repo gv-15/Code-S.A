@@ -72,6 +72,26 @@ namespace UnitTests
             Assert.IsFalse(b2);
         }
 
+        public void TestRevoke()
+        {
+            DB db = new DB("people", "admin", "admin");
+
+            db.GetSecurity().CreateSecurityProfile("Employee");
+
+            db.GetSecurity().AddUser("Hana", "121", "Employee");
+            db.GetSecurity().AddUser("Lisa", "345", "Employee");
+
+            Table t = new Table("girls");
+            db.GetDBTableList().Add(t);
+
+            db.GetSecurity().Grant("Employee", "girls", "SELECT");
+            bool yes = db.GetSecurity().CheckUserAction("Hana", "girls", "SELECT");
+            Assert.IsTrue(yes);
+
+            db.GetSecurity().Revoke("Employee", "girls", "SELECT");
+            bool no = db.GetSecurity().CheckUserAction("Hana", "girls", "SELECT");
+            Assert.IsFalse(no);
+        }
 
         [TestMethod]
         public void TestAddUser()
