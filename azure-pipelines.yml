@@ -45,7 +45,7 @@ steps:
     repositoryName: 'gv-15/Code-S.A'
     action: 'edit'
     target: '$(Build.SourceVersion)'
-    tag: 'v1.0'
+    tag: 'v1.1'
     title: 'Code S.A. release'
     assets: '*.zip'
     changeLogCompareToRelease: 'lastFullRelease'
