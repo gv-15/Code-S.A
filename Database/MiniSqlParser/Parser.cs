@@ -21,9 +21,11 @@ namespace Database.MiniSqlParser
             const string updatePattern = @"UPDATE ([a-zA-Z0-9,]+) SET ([a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\3(,[a-zA-Z0-9]+=('{0,1})[a-zA-Z0-9\.\s-]+\5)*) WHERE ([a-zA-Z]+)([=><])('{0,1})([a-zA-Z0-9-\.\s]+)('{0,1})\;";
             const string createSecurityProfilePattern = @"CREATE SECURITY PROFILE ([a-zA-Z0-9_]+)\;";
             const string dropSecurityProfilePattern = @"DROP SECURITY PROFILE ([a-zA-Z0-9_]+)\;";
-            const string grantPattern = @"GRANT SELECT ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
+            const string grantPattern = @"GRANT ([a-zA-Z0-9]+) ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
             const string deleteUserPattern = @"DELETE USER ([a-zA-Z0-9]+)\;";
             const string revokePriviligePattern = @"REVOKE ([a-zA-Z0-9]+) ON ([a-zA-Z0-9]+) TO ([a-zA-Z0-9]+)\;";
+            const string addUserPattern = @"ADD USER \('([a-zA-Z0-9]+)','([a-zA-Z0-9]+)',([a-zA-Z0-9]+)\);";
+            const string loginPattern = @"([a-zA-Z0-9]+),([a-zA-Z0-9]+),([a-zA-Z0-9]+)";
 
             Match match = Regex.Match(miniSqlSentence, selectAllWherePattern);
             if (match.Success)
@@ -56,7 +58,18 @@ namespace Database.MiniSqlParser
                 }
             }
 
-           match = Regex.Match(miniSqlSentence, selectAllPattern);
+
+            match = Regex.Match(miniSqlSentence, loginPattern);
+            if (match.Success)
+            {
+             
+                Login lg = new Login(match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value);
+
+                return lg;
+
+            }
+
+            match = Regex.Match(miniSqlSentence, selectAllPattern);
             if (match.Success)
             {
                 SelectAll selectAll = new SelectAll(match.Groups[1].Value);
@@ -220,7 +233,78 @@ namespace Database.MiniSqlParser
                     return update;
                 }
 
-}
+            }
+
+            match = Regex.Match(miniSqlSentence, deleteUserPattern);
+            if (match.Success)
+            {
+
+                string userName = match.Groups[1].Value;
+
+                DeleteUser deleteUser = new DeleteUser(userName);
+
+                return deleteUser;
+                
+            }
+            match = Regex.Match(miniSqlSentence, createSecurityProfilePattern);
+            if (match.Success)
+            {
+
+                string profile = match.Groups[1].Value;
+
+                CreateSecurityProfile createSecurityProfile = new CreateSecurityProfile(profile);
+
+                return createSecurityProfile;
+            }
+
+
+            match = Regex.Match(miniSqlSentence, dropSecurityProfilePattern);
+            if (match.Success)
+            {
+                string secProfile = match.Groups[1].Value;
+
+                DropSecurityProfile dropSecurityProfile = new DropSecurityProfile(secProfile);
+
+                return dropSecurityProfile;
+            }
+
+            match = Regex.Match(miniSqlSentence, grantPattern);
+            if (match.Success)
+            {
+                string priviledge = match.Groups[1].Value;
+                string table = match.Groups[2].Value;
+                string secProfile = match.Groups[3].Value;
+     
+
+                Grant grant = new Grant(priviledge,secProfile, table);
+
+                return grant;
+
+            }
+
+            match = Regex.Match(miniSqlSentence, revokePriviligePattern);
+            if (match.Success)
+            {
+                string priviligeType = match.Groups[1].Value;
+                string table = match.Groups[2].Value;
+                string SecurityProfile = match.Groups[3].Value;
+               
+                Revoke revoke = new Revoke(SecurityProfile, match.Groups[2].Value, priviligeType);
+
+                    return revoke;
+
+            }
+            match = Regex.Match(miniSqlSentence, addUserPattern);
+            if (match.Success)
+            {
+
+
+                AddUser addUser = new AddUser(match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value);
+
+                return addUser;
+                
+
+            }
             match = Regex.Match(miniSqlSentence, createTablePattern);
             if (match.Success)
             {
@@ -243,7 +327,10 @@ namespace Database.MiniSqlParser
                 SyntacticError se = new SyntacticError();
                 return se;
             }
-
+           
         }
     }
+
+          
+     
 }

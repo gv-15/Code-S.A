@@ -31,13 +31,52 @@ namespace Database
             m_username = username;
             m_password = password;
             m_db = new List<Table>();
-
+            m_security = new Security();
         }
 
+        public Security GetSecurity()
+        {
+            return m_security;
+        }
+        public string getUsername()
+        {
+            return m_username;
+        }
+        public string Login(string dbName ,string name, string password)
+        {
+
+
+            if (name.Equals("admin") && password.Equals("admin"))
+            {
+                m_username = "admin";
+                return "Database opened";
+            }
+            else
+            {
+                if (m_security.Login(name, password))
+                {
+                    m_username = name;
+                    return "Database opened";
+                }
+                else
+                {
+                    return "ERROR: Incorrect login";
+                }
+            }
+        }
         public Table GetTableWithName(string name)
         {
             int position = FindTableWithName(name);
-            return m_db[position];
+            if(position != -1)
+            {
+                return m_db[position];
+            }
+            else
+            {
+                return null;
+            }
+
+                
         }
         public string SyntacticError()
         {
@@ -74,15 +113,13 @@ namespace Database
 
             m_db.RemoveAt(FindTableWithName(tableName));
                 
-                return respuesta;
-            
-          
+                return respuesta; 
             
         }
 
         public string Close()
         {
-            string respuesta = "1";
+            string respuesta = "";
             return respuesta;
         }
 
@@ -157,35 +194,48 @@ namespace Database
             return -1;
         }
 
+        public string GetName()
+        {
+
+            return m_name;
+        }
 
         public string InsertInto(string table, List<string> values)
         {
             string resultado = "";
-            int i = FindTableWithName(table);
-            if (i == -1)
+            if (m_security.CheckUserAction(m_username, table, "DELETE"))
             {
-                resultado = "ERROR: Table doesn't exist ";
+                
+                int i = FindTableWithName(table);
+                if (i == -1)
+                {
+                    resultado = "ERROR: Table doesn't exist ";
+                }
+                else
+                {
+                    resultado = "Tuple added";
+                    Table t = new Table(m_db[i].GetName());
+                    t = m_db[i];
+                    string st = "";
+                    List<string> columnNames = new List<string>();
+                    foreach (TableColumn tc in t.GetColumns())
+                    {
+                        columnNames.Add(tc.GetTableColumnName());
+                    }
+
+                    Table tableColumns = SelectColumns(t.GetName(), columnNames);
+                    List<TableColumn> list = tableColumns.GetColumns();
+
+                    for (int c = 0; c < list.Count; c++)
+                    {
+                        list[c].AddString(values[c]);
+                        st += values[c];
+                    }
+                }
             }
             else
             {
-                resultado = "Tuple added";
-                Table t = new Table(m_db[i].GetName());
-                t = m_db[i];
-                string st = "";
-                List<string> columnNames = new List<string>();
-                foreach (TableColumn tc in t.GetColumns())
-                {
-                    columnNames.Add(tc.GetTableColumnName());
-                }
-
-                Table tableColumns = SelectColumns(t.GetName(), columnNames);
-                List<TableColumn> list = tableColumns.GetColumns();
-
-                for (int c = 0; c < list.Count; c++)
-                {
-                    list[c].AddString(values[c]);
-                    st += values[c];
-                }
+                resultado = "ERROR: Not sufficient priviledges";
             }
 
             return resultado;
@@ -259,18 +309,27 @@ namespace Database
         }
 
 
-            public string DeleteFrom(string table, List<string> columnNames, Condition condition)
+        public string DeleteFrom(string table, List<string> columnNames, Condition condition)
+        {
+            string resultado = "";
+            if (m_security.CheckUserAction(m_username, table, "DELETE"))
             {
-                string resultado = "Tuple(s) deleted";
+                
                 int p = FindTableWithName(table);
                 Table t = this.GetTable(p);
                 List<TableColumn> list = t.GetColumns();
 
 
                 t.DeleteColumn(condition);
+                resultado = "Tuple(s) deleted";
+            }
+            else
+            {
+                resultado = "ERROR: Not sufficient priviledges";
+            }
 
             return resultado;
-            }
+        }
 
             public string RunMiniSqlQuery(string query)
             {
@@ -281,7 +340,7 @@ namespace Database
                 return IQ.Run(this);
             }
             return null;
-        }
+            }
 
         public Table SelectWhere(string table, List<string> columnNames, Condition condition)
         {
@@ -292,7 +351,7 @@ namespace Database
 
 
             List<int> index = new List<int>();
-                index = fullTable.SelectRowsPositions(condition);
+            index = fullTable.SelectRowsPositions(condition);
             TableColumn newColumn;
             List<string> values;
             foreach (TableColumn column in FilteredColumnTable.GetColumns()) //Columnas de NewTable
@@ -314,8 +373,9 @@ namespace Database
             return newTable;
         }
 
-        public Table SelectAllWhere(String table, Condition condition)
+        public Table SelectAllWhere(string table, Condition condition)
         {
+            
             int i = FindTableWithName(table);
             if (i == -1)
             {
@@ -359,48 +419,55 @@ namespace Database
         {
             string resultado = "Tuple(s) updated";
 
-            int p = FindTableWithName(table);
-
-            if (p == -1)
-            {
-                return null;
-
-            }
-            else {
-
-                Table selectedTable = m_db[p];
+            if (m_security.CheckUserAction(m_username, table,"UPDATE"))
+            { 
                 
-                List<TableColumn> cols = new List<TableColumn>();
 
-                string name = null;
-                for(int n=0; n<columns.Count; n++)
+                int p = FindTableWithName(table);
+
+                if (p == -1)
                 {
-                    name = columns[n];
-                    cols.Add(selectedTable.GetColumnWithName(name));
-                }
-                 
-                List<int> index = selectedTable.SelectRowsPositions(condition);
-                              
-                List<string> l = new List<string>();
-                int i = 0;
-                foreach (int row in index)
-                { 
-                    while (i < columns.Count && i < values.Count)
-                    {
-                        foreach (TableColumn column in cols)
-                        {
-                          
-                            column.GetColumns()[row] = "\'" + values[i] + "\'" ;
-                            i++;
-                        }
+                    return null;
 
+                }
+                else {
+
+                    Table selectedTable = m_db[p];
+                
+                    List<TableColumn> cols = new List<TableColumn>();
+
+                    string name = null;
+                    for(int n=0; n<columns.Count; n++)
+                    {
+                        name = columns[n];
+                        cols.Add(selectedTable.GetColumnWithName(name));
+                    }
+                 
+                    List<int> index = selectedTable.SelectRowsPositions(condition);
+                              
+                    List<string> l = new List<string>();
+                    int i = 0;
+                    foreach (int row in index)
+                    { 
+                        while (i < columns.Count && i < values.Count)
+                        {
+                            foreach (TableColumn column in cols)
+                            {
+                          
+                                column.GetColumns()[row] = "\'" + values[i] + "\'" ;
+                                i++;
+                            }
+
+                        }
                     }
                 }
-                              
-  
-           
             }
-           
+            else
+            {
+                resultado = "ERROR: Not sufficient priviledges";
+            }
+
+
             return resultado;
         }
             
@@ -434,7 +501,7 @@ namespace Database
                         for (int i = 0; i <= fileValues.Length - 1; i++)
                         {
 
-                            fileValues[i] = fileValues[i].Replace("[[delimiter]]", ",");
+                             fileValues[i] = fileValues[i].Replace("[[delimiter]]", ",");
                             concatenatedValues += fileValues[i] + ",";
                         }
 
@@ -494,6 +561,8 @@ namespace Database
                 }
             }
         }
+
+
 
     }
 
