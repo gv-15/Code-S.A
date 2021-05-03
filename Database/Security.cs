@@ -21,15 +21,19 @@ namespace Database
             //Este constructor esta credao porque en database no tenemos una lista de usuarios para pasarle por parametro no tenia sentido usar el parametrizado
         }
 
-        public List<User> GetUsers()
+        public List<User> getUserList()
         {
             return m_users;
+        }
+         public List<SecurityProfile> GetSecurityProfiles()
+        {
+            return m_security_profiles;
         }
         public string CreateSecurityProfile(string profileName) 
         {
             SecurityProfile newProfile = new SecurityProfile(profileName);
             m_security_profiles.Add(newProfile);
-            return "Security profile created";
+            return "Security profile created"; 
         }
 
         public string DropSecurityProfile(string profileName)

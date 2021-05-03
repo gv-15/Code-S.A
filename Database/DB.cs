@@ -1,4 +1,5 @@
-﻿using Database.MiniSqlParser;
+﻿
+using Database.MiniSqlParser;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
