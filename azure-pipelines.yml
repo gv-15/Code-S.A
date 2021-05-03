@@ -39,7 +39,7 @@ steps:
     script: 'Bundler\bin\release\Bundler.exe'
 
 - task: GitHubRelease@1
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master'. 'refs/heads/develop')
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master', 'refs/heads/develop')
   inputs:
     gitHubConnection: 'github.com_gv-15'
     repositoryName: 'gv-15/Code-S.A'
