@@ -61,8 +61,41 @@ namespace UnitTests
         [TestMethod]
         public void TestLogin()
         {
-           
+            DB db = new DB("people", "admin", "admin");
+
+            db.GetSecurity().CreateSecurityProfile("Employee");
+
+            db.GetSecurity().AddUser("Lana", "111", "Employee");
+            db.GetSecurity().AddUser("Mikel", "333", "Employee");
+
+            bool b = db.GetSecurity().Login("Lana", "111");
+            Assert.IsTrue(b);
+
+            bool b2 = db.GetSecurity().Login("Lana", "121");
+            Assert.IsFalse(b2);
         }
+
+        public void TestRevoke()
+        {
+            DB db = new DB("people", "admin", "admin");
+
+            db.GetSecurity().CreateSecurityProfile("Employee");
+
+            db.GetSecurity().AddUser("Hana", "121", "Employee");
+            db.GetSecurity().AddUser("Lisa", "345", "Employee");
+
+            Table t = new Table("girls");
+            db.GetDBTableList().Add(t);
+
+            db.GetSecurity().Grant("Employee", "girls", "SELECT");
+            bool yes = db.GetSecurity().CheckUserAction("Hana", "girls", "SELECT");
+            Assert.IsTrue(yes);
+
+            db.GetSecurity().Revoke("Employee", "girls", "SELECT");
+            bool no = db.GetSecurity().CheckUserAction("Hana", "girls", "SELECT");
+            Assert.IsFalse(no);
+        }
+
         [TestMethod]
         public void TestAddUser()
         {
@@ -78,8 +111,56 @@ namespace UnitTests
             db.GetSecurity().AddUser(name, password, profile); 
             
 
-            Assert.AreEqual(1,db.GetSecurity().getUserList().Count ); 
+            Assert.AreEqual(1,db.GetSecurity().GetUserList().Count ); 
 
         }
+
+        [TestMethod]
+        public void TestDeleteUser()
+        {
+            DB db = new DB("people", "admin","admin");
+
+            db.GetSecurity().CreateSecurityProfile("Employee");
+
+            db.GetSecurity().AddUser("Lana", "111","Employee");
+            db.GetSecurity().AddUser("Mikel", "333", "Employee");
+
+
+            db.GetSecurity().DeleteUser("Lana");
+
+            int i =  db.GetSecurity().GetUserList().Count;
+            Assert.AreEqual(1, i);
+
+            Assert.AreEqual("Mikel", db.GetSecurity().GetUserList()[0].GetName());
+
+        }
+
+        [TestMethod]
+        public void TestCheckUserAction()
+        {
+            //El usuario tiene los permisos para hacer las acciones que está intentando
+            DB db = new DB("people", "admin", "admin");
+
+            db.GetSecurity().CreateSecurityProfile("Employee");
+
+            db.GetSecurity().AddUser("Lana", "111", "Employee");
+            db.GetSecurity().AddUser("Mikel", "333", "Employee");
+
+            Table t = new Table("girls");
+            db.GetDBTableList().Add(t);
+
+            db.GetSecurity().Grant("Employee", "girls", "SELECT");
+
+            db.GetSecurity().Login("Lana", "111");
+
+            bool b = db.GetSecurity().CheckUserAction("Lana","girls", "DELETE");
+            Assert.IsFalse(b);
+
+            bool b2 = db.GetSecurity().CheckUserAction("Lana", "girls", "SELECT");
+            Assert.IsTrue(b2);
+
+        }
+
+        
     }
 }

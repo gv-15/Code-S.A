@@ -21,7 +21,7 @@ namespace Database
             //Este constructor esta credao porque en database no tenemos una lista de usuarios para pasarle por parametro no tenia sentido usar el parametrizado
         }
 
-        public List<User> getUserList()
+        public List<User> GetUserList()
         {
             return m_users;
         }
@@ -128,7 +128,7 @@ namespace Database
 
 
                 SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
-                if (newProfile == null)
+                if (newProfile != null)
                 {
                     newProfile.RemovePriviledge(priviledge);
                     return "Security priviledge revoked";
