@@ -128,7 +128,7 @@ namespace Database
 
 
                 SecurityProfile newProfile = m_security_profiles.Find(prof => prof.GetName() == profileName);
-                if (newProfile == null)
+                if (newProfile != null)
                 {
                     newProfile.RemovePriviledge(priviledge);
                     return "Security priviledge revoked";
