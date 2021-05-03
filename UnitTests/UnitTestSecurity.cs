@@ -111,7 +111,7 @@ namespace UnitTests
             db.GetSecurity().AddUser(name, password, profile); 
             
 
-            Assert.AreEqual(1,db.GetSecurity().getUserList().Count ); 
+            Assert.AreEqual(1,db.GetSecurity().GetUserList().Count ); 
 
         }
 
@@ -128,10 +128,10 @@ namespace UnitTests
 
             db.GetSecurity().DeleteUser("Lana");
 
-            int i =  db.GetSecurity().GetUsers().Count;
+            int i =  db.GetSecurity().GetUserList().Count;
             Assert.AreEqual(1, i);
 
-            Assert.AreEqual("Mikel", db.GetSecurity().GetUsers()[0].GetName());
+            Assert.AreEqual("Mikel", db.GetSecurity().GetUserList()[0].GetName());
 
         }
 
