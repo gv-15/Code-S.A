@@ -77,5 +77,25 @@ namespace UnitTests
             Assert.AreEqual(1, list.Count); 
 
         }
+
+        [TestMethod]
+        public void DeleteUser()
+        {
+            DB db = new DB("people", "admin","admin");
+
+            db.GetSecurity().CreateSecurityProfile("Employee");
+
+            db.GetSecurity().AddUser("Lana", "111","Employee");
+            db.GetSecurity().AddUser("Mikel", "333", "Employee");
+
+
+            db.GetSecurity().DeleteUser("Lana");
+
+            int i =  db.GetSecurity().GetUsers().Count;
+            Assert.AreEqual(1, i);
+
+            Assert.AreEqual("Mikel", db.GetSecurity().GetUsers()[0].GetName());
+
+        }
     }
 }

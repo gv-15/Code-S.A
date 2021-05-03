@@ -21,7 +21,10 @@ namespace Database
             //Este constructor esta credao porque en database no tenemos una lista de usuarios para pasarle por parametro no tenia sentido usar el parametrizado
         }
 
-
+        public List<User> GetUsers()
+        {
+            return m_users;
+        }
         public string CreateSecurityProfile(string profileName) 
         {
             SecurityProfile newProfile = new SecurityProfile(profileName);
