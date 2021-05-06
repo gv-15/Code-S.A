@@ -39,11 +39,13 @@ steps:
     script: 'Bundler\bin\release\Bundler.exe'
 
 - task: GitHubRelease@1
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   inputs:
     gitHubConnection: 'github.com_gv-15'
     repositoryName: 'gv-15/Code-S.A'
     action: 'edit'
     target: '$(Build.SourceVersion)'
+    tagSource: 'userSpecifiedTag'
     tag: 'v1.1'
     title: 'Code S.A. release'
     assets: '*.zip'
