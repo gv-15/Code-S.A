@@ -11,7 +11,7 @@ namespace Database.MiniSqlParser
         {
             const string selectAllPattern = @"SELECT \* FROM ([a-zA-Z0-9]+)\;";
             const string selectColumnsPattern = @"SELECT ([a-zA-Z0-9]+(,[a-zA-Z0-9]+)*) FROM ([a-zA-Z0-9]+)\;";
-            const string deleteFromPattern = @"DELETE FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])('[a-zA-Z0-9.]+')\;";
+            const string deleteFromPattern = @"DELETE FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z0-9.]+)([\<+-\>-\=])('{0,1})([a-zA-Z0-9.]+)('{0,1})\;";
             const string selectWherePattern = @"SELECT ([a-zA-Z0-9,]+) FROM ([a-zA-Z0-9.]+) WHERE ([a-zA-Z]+)([=><])('{0,1})([a-zA-Z0-9-\.\s]+)('{0,1})";
             const string insertIntoPattern = @"INSERT INTO ([a-zA-Z0-9.]+) VALUES \(([\a-zA-Z0-9.,\'\-)]+)\)\;";
             const string dropTablePattern = @"DROP TABLE ([a-zA-Z0-9.]+)\;";
@@ -139,23 +139,23 @@ namespace Database.MiniSqlParser
                 string[] columnNames = match.Groups[1].Value.Split(','); //Nombre de la tabla
                 string[] atributo = match.Groups[2].Value.Split(','); //Condicion despues del where
                 string[] operationCondition = match.Groups[3].Value.Split(','); //El igual, > o <
-                string[] parteDerechaCondition = match.Groups[4].Value.Split(','); //La parte de la derecha de la condicion
+                string[] parteDerechaCondition = match.Groups[5].Value.Split(','); //La parte de la derecha de la condicion
                 TableColumn tc = new TableColumn(match.Groups[2].Value);
                 if (match.Groups[3].Value.Equals("="))
                 {
-                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[4].Value, match.Groups[2].Value);
+                    Condition condition = new Condition(Condition.Operations.equals, match.Groups[5].Value, match.Groups[2].Value);
                     DeleteFrom deleteFrom = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition);
                     return deleteFrom;
                 }
                 if (match.Groups[3].Value.Equals(">"))
                 {
-                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[4].Value, match.Groups[2].Value);
+                    Condition condition2 = new Condition(Condition.Operations.max, match.Groups[5].Value, match.Groups[2].Value);
                     DeleteFrom deleteFrom2 = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition2);
                     return deleteFrom2;
                 }
                 if (match.Groups[3].Value.Equals("<"))
                 {
-                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[4].Value, match.Groups[2].Value);
+                    Condition condition3 = new Condition(Condition.Operations.min, match.Groups[5].Value, match.Groups[2].Value);
                     DeleteFrom deleteFrom3 = new DeleteFrom(match.Groups[1].Value, Utils.ToList(atributo), condition3);
                     return deleteFrom3;
                 }
