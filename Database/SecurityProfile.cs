@@ -60,17 +60,30 @@ namespace Database
 
         public bool CheckPriviledge(Priviledge priviledge)
         {
-            Priviledge match = 
-                m_priviledges.Find(priv => priv.GetTableName() == priviledge.GetTableName() && priv.GetType() == priviledge.GetType());
+            bool exists = false;
+            List<Priviledge> tablePriviledges=m_priviledges.FindAll(privt => privt.GetTableName() == priviledge.GetTableName());
+            if (tablePriviledges != null)
+            {
+                foreach (Priviledge p in tablePriviledges)
+                {
+                    if (p == priviledge)
+                    {
+                        exists = true;
+                    }
+                }
+            }
+            return exists;
+
+            //Priviledge match = tablePriviledges.Find(priv => priv.GetType() == priviledge.GetType());
             
-            if (match != null)
+            /*if (match != null)
             {
                 return true;
             }
             else
             {
                 return false;
-            }
+            }*/
         }
         public bool CheckUser(string userName)
         {
