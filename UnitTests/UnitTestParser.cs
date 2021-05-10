@@ -84,7 +84,7 @@ namespace UnitTests
             string resultadoCreateTable2 = "['Name','Age','Address']";
             Assert.AreEqual(resultadoCreateTable2, db.GetTableWithName("MyTable").ToString());
 
-            IQuery query7 = Parser.Parse("DELETE FROM Table1 WHERE Edad=21;");
+            IQuery query7 = Parser.Parse("DELETE FROM Table1 WHERE Edad='21';");
             Assert.IsTrue(query7 is DeleteFrom);
            
 
