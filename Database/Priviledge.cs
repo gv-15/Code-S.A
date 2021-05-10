@@ -6,7 +6,7 @@ namespace Database
 {
     public class Priviledge
     {
-        public enum Priviledge_type { DELETE, INSERT, SELECT, UPDATE};
+        public enum Priviledge_type {DELETE, INSERT, SELECT, UPDATE};
 
         private Enum m_type;
 

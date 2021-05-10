@@ -47,7 +47,7 @@ namespace Database
         {
          
        
-            if (priviledgeType.Equals("DELETE")|| priviledgeType.Equals("INSERT") || priviledgeType.Equals("SELECT") || priviledgeType.Equals("UPDATE"))
+            if (priviledgeType.Equals("DELETE") || priviledgeType.Equals("INSERT") || priviledgeType.Equals("SELECT") || priviledgeType.Equals("UPDATE"))
             {
                 Priviledge priviledge;
                 if (priviledgeType.Equals("DELETE"))
@@ -169,7 +169,7 @@ namespace Database
             User user1 = m_users.Find(user2 => user2.GetName() == user);
             m_users.Remove(user1);
 
-            return "User deleted from security profile";
+            return "Security user deleted";
             
         }
 
