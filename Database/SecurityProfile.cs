@@ -66,7 +66,7 @@ namespace Database
             {
                 foreach (Priviledge p in tablePriviledges)
                 {
-                    if (p == priviledge)
+                    if (p.GetPriviledgeType().Equals(priviledge.GetPriviledgeType()))
                     {
                         exists = true;
                     }

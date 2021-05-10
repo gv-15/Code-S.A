@@ -206,7 +206,7 @@ namespace Database
         public string InsertInto(string table, List<string> values)
         {
             string resultado = "";
-            if (m_security.CheckUserAction(m_username, table, "DELETE"))
+            if (m_security.CheckUserAction(m_username, table, "INSERT"))
             {
                 
                 int i = FindTableWithName(table);
