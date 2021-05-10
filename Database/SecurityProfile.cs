@@ -38,7 +38,25 @@ namespace Database
         {
             if (CheckPriviledge(priviledge))
             {
-                m_priviledges.Remove(priviledge);
+                int contador = 0;
+                int num = 0;
+                 List<Priviledge> tablePriviledges = m_priviledges.FindAll(privt => privt.GetTableName() == priviledge.GetTableName());
+                if (tablePriviledges != null)
+                {
+                    foreach (Priviledge p in tablePriviledges)
+                    {
+                        if (p.GetPriviledgeType().Equals(priviledge.GetPriviledgeType()))
+                        {
+                            num = contador;
+                        }
+                        else
+                        {
+                            contador++;
+                        }
+                
+                    }
+                }
+                m_priviledges.RemoveAt(num);
             }
 
         }
@@ -60,17 +78,21 @@ namespace Database
 
         public bool CheckPriviledge(Priviledge priviledge)
         {
-            Priviledge match = 
-                m_priviledges.Find(priv => priv.GetTableName() == priviledge.GetTableName() && priv.GetType() == priviledge.GetType());
-            
-            if (match != null)
+            bool exists = false;
+            List<Priviledge> tablePriviledges=m_priviledges.FindAll(privt => privt.GetTableName() == priviledge.GetTableName());
+            if (tablePriviledges != null)
             {
-                return true;
+                foreach (Priviledge p in tablePriviledges)
+                {
+                    if (p.GetPriviledgeType().Equals(priviledge.GetPriviledgeType()))
+                    {
+                        exists = true;
+                    }
+                }
             }
-            else
-            {
-                return false;
-            }
+            return exists;
+
+        
         }
         public bool CheckUser(string userName)
         {
